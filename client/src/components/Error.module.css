@@ -1,0 +1,29 @@
+.container {
+    display: flex;
+    /* justify-content: center; */
+    width: 40%;
+    height: 100%;
+    margin: 0 auto;
+    align-items: center;
+    /* border: 1px solid blue; */
+}
+
+.messageContainer {
+    width: 50%;
+}
+
+.img {
+    width: 50%;
+    margin-left: 1em;
+}
+
+.title {
+    font-size: 3rem;
+    font-weight: 500;
+    margin-bottom: 0.3em;
+}
+
+.message {
+    margin-top: 0;
+    font-size: 1.5rem;
+}

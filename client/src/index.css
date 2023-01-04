@@ -1,0 +1,60 @@
+*, *::before, *::after {
+  box-sizing: border-box;     
+}
+
+:root {
+  /* https://colorhunt.co/palette/f4f3f3dfdfdfbfd8d5b1bed5 */
+  --primary-color: #F4F3F3;
+  --primary-text-color: #151922;
+  --error-text-color: red;
+  --secondary-color: #DFDFDF;
+  --accent-color: #B1BED5; 
+  --accent-color: #C0A597;
+  --card-bg-color: whitesmoke;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  margin: 0;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: var(--primary-text-color);
+  background-color: var(--primary-color);
+}
+
+header, main {
+  padding: 0 0.5em;
+}
+
+select {
+  font-family: inherit;
+  font-size: 1rem;
+  padding: 0.25em 0.5em;
+}
+
+select:focus {
+  outline: none;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.largeLabel {
+  display: inline-block;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+
+.required, .error {
+  color: var(--error-text-color);
+}
+

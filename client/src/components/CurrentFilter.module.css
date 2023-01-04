@@ -1,0 +1,17 @@
+.container {
+    display: flex;
+    align-items: baseline;
+    gap: 0.25em;
+    background-color: var(--secondary-color);
+    padding: 0.5em;
+}
+
+.filter {
+    margin: 0;
+}
+
+.remove {
+    cursor: pointer;
+    border: none;
+    background-color: var(--badge-bg);
+}

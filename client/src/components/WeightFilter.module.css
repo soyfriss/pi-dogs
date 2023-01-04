@@ -1,0 +1,50 @@
+.inputMin,
+.inputMax {
+    color: inherit;
+    font-family: inherit;
+    font-size: 1rem;
+    width: 5rem;
+    border: none;
+    border-bottom: 2px solid var(--accent-color);
+    background-color: transparent;
+}
+
+.inputMin:focus,
+.inputMax:focus {
+    outline: none;
+}
+
+.inputMin::placeholder,
+.inputMax::placeholder {
+    color: inherit;
+    font-family: inherit;
+}
+
+.inputMin {
+    margin-left: 0.5em;
+}
+
+.separator {
+    margin: 0 0.5em;
+}
+
+.btn {
+    cursor: pointer;
+    border: none;
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
+    padding: 0.25em 0.5em;
+    margin-left: 0.5em;
+    font-size: 1em;
+    font-family: inherit;
+    border-radius: 5px;
+}
+
+.btn:hover, .btn:focus {
+    opacity: 0.8;
+}
+
+.btnDisabled, .btnDisabled:hover, .btnDisabled:focus {
+    cursor: auto;
+    opacity: 0.4;
+}

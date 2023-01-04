@@ -1,0 +1,18 @@
+.container {
+    margin-bottom: 2em;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.5rem;
+}
+
+.orderByIcon {
+    width: 24px;
+}
+
+.select {
+    align-self: center;
+    border: none;
+    border-bottom: 2px solid var(--accent-color);
+    color: inherit;
+    background-color: inherit;
+}

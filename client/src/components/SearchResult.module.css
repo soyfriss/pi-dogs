@@ -1,0 +1,13 @@
+.container {
+    margin-bottom: 2em;
+}
+
+.searchedText {
+    font-size: 2rem;
+    margin: 0;
+}
+
+.searchResult {
+    font-size: 0.8rem;
+    margin: 0;
+}

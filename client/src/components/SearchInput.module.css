@@ -1,0 +1,43 @@
+.container {
+    margin: 3em auto;
+    padding: 0.3em 0.5em;
+    /* width: 100%; */
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--accent-color);
+    border-radius: 2em;
+}
+
+.input {
+    width: 100%;
+    padding: 0.3em 0.5em;
+    font-size: 1.3rem;
+    font-weight: 500;
+    color: var(--primary-text-color);
+    background-color: inherit;
+    font-family: inherit;
+    border: none;
+}
+
+.input:focus {
+    outline: none;
+}
+
+.input::placeholder {
+    font-size: 1.3rem;
+    color: var(--primary-text-color);
+}
+
+.submit {
+    border: none;
+    background-color: transparent;
+    padding: 0 0.5em;
+    cursor: pointer;
+}
+
+.icon {
+    width: 1.5rem;
+    vertical-align: middle;
+}

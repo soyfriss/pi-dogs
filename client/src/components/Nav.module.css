@@ -1,0 +1,26 @@
+.link {
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+
+.activeLink {
+    text-decoration: line-through;
+}
+
+nav ul {
+    padding: 0;
+}
+
+nav ul li {
+    margin-left: 1.5em;
+    display: inline-block;
+    vertical-align: middle;
+}
+nav ul li:last-child {
+    margin-left: 0.5em;
+}
+
+.img {
+    width: 1.5rem;
+    margin-left: 1.5em;
+}

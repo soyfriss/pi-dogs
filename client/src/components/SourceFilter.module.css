@@ -1,0 +1,9 @@
+.item {
+    margin-left: 0.5em;
+    cursor: pointer;
+}
+
+.noBreeds {
+    text-decoration: line-through;
+    cursor: auto;
+}

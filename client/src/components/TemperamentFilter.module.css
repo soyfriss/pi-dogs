@@ -1,0 +1,19 @@
+.item {
+    margin-left: 0.5em;
+    cursor: pointer;
+}
+
+.img {
+    margin-left: 0.5em;
+    width: 24px;
+}
+
+.showFilters {
+    font-weight: 500;
+    margin-left: 0.5em;
+    cursor: pointer;
+}
+
+.hidden {
+    display: none;
+}
