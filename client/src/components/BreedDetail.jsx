@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from './BreedDetail.module.css';
 import { fetchBreed } from '../redux/actions';
 import Loader from './Loader.jsx';
@@ -10,7 +10,7 @@ function BreedDetail({ match, location }) {
 
     // console.log('match: ', match);
     // console.log('location: ', location);
-    const history = useHistory();
+    // const history = useHistory();
     const id = match.params.id;
     const source = location.search;
     const dispatch = useDispatch();
@@ -37,12 +37,9 @@ function BreedDetail({ match, location }) {
                     <p>Height: <span className={styles.subtitle}>{`${breed.height} cm`}</span></p>
                     <p>Life span: <span className={styles.subtitle}>{breed.lifeSpan}</span></p>
                     <p>Temperaments: <span className={styles.subtitle}>{breed.temperament}</span></p>
-                    <button
-                        className={styles.btn}
-                        onClick={() => history.goBack()}
-                    >
+                    <NavLink to="/home" className={styles.navLink}>
                         Back
-                    </button>
+                    </NavLink>
                 </div>
                 <img className={styles.img} src={breed.image ? breed.image : noImage} alt="breed" />
             </div>

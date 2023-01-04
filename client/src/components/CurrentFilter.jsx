@@ -11,4 +11,3 @@ function CurrentFilter({ filter, removeFilter }) {
 }
 
 export default CurrentFilter;
-

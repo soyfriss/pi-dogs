@@ -13,12 +13,12 @@
 .form {
     /* box-sizing: border-box; */
     padding: 2rem;
-    border-radius: 1rem;
-    background-color: hsl(0, 0%, 100%);
-    border: 4px solid hsl(0, 0%, 90%);
+    /* border-radius: 1rem; */
+    /* background-color: hsl(0, 0%, 100%); */
+    /* border: 4px solid hsl(0, 0%, 90%); */
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
 }
 
 .fullWidth {
@@ -73,6 +73,7 @@
 
 .form select {
     background: url("../images/down-arrow.svg") no-repeat center right 0.75rem;
+    margin-bottom: 1em;
 }
 
 .largeLabel {
@@ -118,6 +119,7 @@
 .selectedTemperaments {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.5em;
 }
 
 .selectedTemperaments p {

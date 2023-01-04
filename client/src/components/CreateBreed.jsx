@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import styles from './CreateBreed.module.css';
 import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
-// import { fetchTemperaments } from '../redux/actions.js';
-// import { CreateBreed } 
+import { createBreed, clearCreateBreedStatus } from '../redux/actions.js';
+import Item from './Item.jsx';
+import Loader from './Loader.jsx';
+import Error from './Error.jsx';
 
 function CreateBreed() {
-    // const dispatch = useDispatch();
+    const dispatch = useDispatch();
+    const history = useHistory();
 
     const [breed, setBreed] = useState({
         name: '',
@@ -27,6 +31,9 @@ function CreateBreed() {
     const [canShowNameError, setCanShowNameError] = useState(false);
     const [selectedTemperaments, setSelectedTemperaments] = useState([]);
     const temperaments = useSelector(state => state.temperaments);
+    const status = useSelector(state => state.newBreed.status);
+    const error = useSelector(state => state.newBreed.error);
+    const createdBreed = useSelector(state => state.newBreed.item);
 
     const handleRangeChange = (name, min, max, error) => {
         setBreed({
@@ -56,12 +63,29 @@ function CreateBreed() {
     const handleSubmit = (event) => {
         event.preventDefault();
         // Create new breed
-        console.log('Creating new breed');
+        if (breed.nameError === '' &&
+        breed.heightError === '' &&
+        breed.weightError === '' &&
+        breed.lifeSpanError === ''
+        ) {
+            console.log('Creating new breed: ', breed);
+            const newBreed = {
+                name: breed.name,
+                height: `${breed.heightMin} - ${breed.heightMax}`,
+                weight: `${breed.weightMin} - ${breed.weightMax}`,
+                life_span: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
+                temperaments: getSelectedTemperaments()
+            }
+
+            dispatch(createBreed(newBreed));
+        }
+
     }
 
-    // useEffect(() => {
-    //     dispatch(fetchTemperaments());
-    // }, [dispatch]);
+
+    useEffect(() => {
+        dispatch(clearCreateBreedStatus());
+    }, [dispatch]);
 
     useEffect(() => {
         console.log('CreateBreed useEffect()');
@@ -81,6 +105,31 @@ function CreateBreed() {
         const id = Number(event.target.value);
         const temperament = temperaments.find(t => t.id === id);
         setSelectedTemperaments(old => [...old, temperament]);
+    }
+
+    const removeSelectedTemperament = (id) => {
+        setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
+    }
+
+    const getSelectedTemperaments = () => {
+        const temperaments = [];
+        for (const temperament of selectedTemperaments) {
+            temperaments.push(temperament.name);
+        }
+
+        return temperaments;
+    }
+
+    if (status === 'creating') {
+        return <Loader />;
+    }
+
+    if (status === 'failed') {
+        return <Error title='Oops!' message={error.message} />;
+    }
+
+    if (status === 'succeeded') {
+        history.push(`/breed/${createdBreed.id}?source=${createdBreed.source}`);
     }
 
     return <>
@@ -144,17 +193,18 @@ function CreateBreed() {
                             ))}
                         </select>
                         <div className={styles.selectedTemperaments}>
-                            {selectedTemperaments.map(t => <p>{t.name}</p>)}
+                            {selectedTemperaments.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeSelectedTemperament} />)}
                         </div>
                     </div>
                     <div className={styles.fullWidth}>
                         <button
                             type="submit"
                             className={`${styles.btn} ${isSubmitDisabled && styles.btnDisabled}`}
-                            disabled={true}
+                            disabled={isSubmitDisabled}
                         >
                             CREATE
                         </button>
+
                     </div>
                 </form>
             </div>

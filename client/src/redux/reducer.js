@@ -5,6 +5,11 @@ const initialState = {
         error: null
     },
     breedDetail: {},
+    newBreed: {
+        item: {},
+        status: 'idle',
+        error: null
+    },
     searchResults: [],
     searchText: '',
     temperaments: [],
@@ -88,6 +93,46 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 breedDetail: {}
+            }
+        case 'breeds/createBreedStatusCleared':
+            return {
+                ...state,
+                newBreed: {
+                    item: {},
+                    status: 'idle',
+                    error: null
+                }
+            }
+        case 'breeds/createBreedRequested':
+            return {
+                ...state,
+                newBreed: {
+                    ...state.newBreed,
+                    status: 'creating',
+                    error: null
+                }
+            }
+        case 'breeds/createBreedSucceeded':
+            return {
+                ...state,
+                newBreed: {
+                    ...state.newBreed,
+                    item: action.payload.breed,
+                    status: 'succeeded'
+                },
+                breeds: {
+                    ...state.breeds,
+                    items: action.payload.addToBreeds ? [...state.breeds.items, action.payload.breed] : state.breeds.items 
+                },
+                searchResults: action.payload.addToBreeds ? [...state.searchResults, action.payload.breed] : state.searchResults
+            };
+        case 'breeds/createBreedFailed':
+            return {
+                ...state,
+                newBreed: {
+                    status: 'failed',
+                    error: action.payload
+                }
             }
         case 'breeds/breedTemperamentFilterAdded':
             return {

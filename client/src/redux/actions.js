@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { getBreeds, getTemperaments } from './api.js';
+import { getBreeds, getBreed, postBreed, getTemperaments } from './api.js';
 
 export function changeSearchText(value) {
     return function (dispatch) {
@@ -18,15 +18,10 @@ export function fetchBreeds() {
             // console.log('endPoint: ', endPoint);
             const responseBreeds = await getBreeds(searchText);
             const responseTemperaments = await getTemperaments();
-
-            // const emptyFilters = {
-            //     temperaments: [],
-            //     source: '',
-            //     weight: { min: 0, max: 0 }
-            // }
+            const temperaments = responseTemperaments.data.sort(sortBreedsByNameAsc());
 
             // dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: { breeds: response.data, filters: emptyFilters } });
-            dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: { breeds: responseBreeds.data, temperaments: responseTemperaments.data } });
+            dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: { breeds: responseBreeds.data, temperaments } });
 
             // Sorting
             const { sort } = getState();
@@ -34,7 +29,7 @@ export function fetchBreeds() {
 
             dispatch({ type: 'breeds/fetchBreedsCompleted' })
         } catch (error) {
-            console.log('fetchBreeds error: ', error);  
+            console.log('fetchBreeds error: ', error);
             dispatch({
                 type: 'breeds/fetchBreedsFailed',
                 payload: {
@@ -48,13 +43,11 @@ export function fetchBreeds() {
 }
 
 export function fetchBreed(id, source) {
-    return async function (dispatch, getState) {
+    return async function (dispatch) {
         try {
             dispatch({ type: 'breeds/fetchBreedRequested' });
 
-            const endPoint = `http://localhost:3001/dogs/${id}${source}`;
-            // console.log('endPoint: ', endPoint);
-            const response = await axios.get(endPoint);
+            const response = await getBreed(id, source);
 
             dispatch({ type: 'breeds/fetchBreedSucceeded', payload: response.data });
         } catch (error) {
@@ -66,6 +59,39 @@ export function fetchBreed(id, source) {
                 }
             });
             // console.log(error);
+        }
+    }
+}
+
+export function clearCreateBreedStatus() {
+    return function (dispatch) {
+        dispatch({ type: 'breeds/createBreedStatusCleared' });
+    }
+}
+
+export function createBreed(breed) {
+    return async function (dispatch, getState) {
+
+        try {
+            dispatch({ type: 'breeds/createBreedRequested' });
+
+            const response = await postBreed(breed);
+
+            const { searchText, searchResults, sort } = getState();
+
+            if (!searchText || (searchText && breed.name.toLowerCase().includes(searchText.toLowerCase()))) {
+                const breeds = [...searchResults];
+                breeds.push(response.data);
+
+                dispatch({ type: 'breeds/createBreedSucceeded', payload: { breed: response.data, addToBreeds: true } });
+
+                dispatch(filterBreeds());
+            } else {
+                dispatch({ type: 'breeds/createBreedSucceeded', payload: { breed: response.data, addToBreeds: false } });
+            }
+        } catch (error) {
+            dispatch({ type: 'breeds/createBreedFailed', payload: error });
+            console.log('createBreed error: ', error);
         }
     }
 }

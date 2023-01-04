@@ -67,9 +67,12 @@ const getTemperaments = async () => {
 
     // Remove duplicate temperaments
     for (const breed of breeds.data) {
-        let temperamentsArr = breed.temperament?.split(', ');
-        for (const temperament of temperamentsArr) {
-            temperaments.add(temperament)
+        // console.log('breed: ', breed);
+        if (breed.temperament) {
+            let temperamentsArr = breed.temperament.split(', ');
+            for (const temperament of temperamentsArr) {
+                temperaments.add(temperament)
+            }
         }
     }
 

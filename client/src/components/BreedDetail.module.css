@@ -36,7 +36,10 @@
     font-weight: 500;
 }
 
-.btn {
+.navLink {
+    display: inline-block;
+    text-decoration: none;
+    color: inherit;
     cursor: pointer;
     border: none;
     background-color: var(--accent-color);
@@ -48,6 +51,6 @@
     border-radius: 5px;
 }
 
-.btn:hover, .btn:focus {
+.navLink:hover, .navLink:focus {
     opacity: 0.8;
 }
