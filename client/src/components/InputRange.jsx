@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './InputRange.module.css';
 
-function InputRange({ name, minValue, maxValue, label, isRequired, validRange = [0, 0], onChange }) {
+function InputRange({ name, minValue, maxValue, label, isRequired, validRange = [0, 0], onChange, showButton = false, handleButtonClick }) {
     // console.log('InputRange');
     const [showError, setShowError] = useState(false);
 
@@ -13,7 +13,7 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
             return 'This field is required';
         }
         if (minValue > maxValue) {
-            return 'This field has an invalid range';
+            return 'This field has an invalid range (min > max)';
         }
         if (isValidRangePresent() && (minValue < validRange[0] || maxValue > validRange[1])) {
             return `This field has an invalid range (valid range: ${validRange[0]} - ${validRange[1]})`;
@@ -24,7 +24,7 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
 
     const isValidRangePresent = () => {
         // console.log('isValidRangePresent: ', (validRange[0] && validRange[1]));
-        return (validRange[0] && validRange[1]);
+        return !!(validRange[0] || validRange[1]);
     }
 
     const error = validate(minValue, maxValue);
@@ -32,7 +32,9 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
     return <>
         {/* {console.log('Rendering InputRange')} */}
         <div className={styles.container}>
-            <label className="largeLabel">{label || 'label'} {isRequired && <span className="required">*</span>}</label>
+            {label &&
+                <label className="largeLabel">{label} {isValidRangePresent() && `(${validRange[0]} - ${validRange[1]})`} {isRequired && <span className="required">*</span>}</label>
+            }
             <div className={styles.rangeContainer}>
                 <input
                     type="text"
@@ -55,6 +57,15 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
                 />
+                {showButton &&
+                    <button
+                        className={`${styles.btn} ${error && styles.btnDisabled}`}
+                        disabled={error}
+                        onClick={handleButtonClick}
+                    >
+                        &#62;
+                    </button>
+                }
             </div>
             {showError && error &&
                 <p className="error">{error}</p>

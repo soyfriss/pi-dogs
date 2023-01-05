@@ -8,7 +8,7 @@ import Sort from './Sort.jsx';
 import Pagination from './Pagination.jsx';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
-import { fetchBreeds, fetchTemperaments } from '../redux/actions.js';
+import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../redux/actions.js';
 
 function Home() {
     const dispatch = useDispatch();
@@ -41,6 +41,10 @@ function Home() {
         return <Error title='Oops!' message={error.message} />;
     }
 
+    const setCurrentPage = (value) => {
+        dispatch(changeCurrentPage(value));
+    }
+
     return <>
         <SearchInput />
         <div className={styles.content}>
@@ -51,10 +55,14 @@ function Home() {
                 <Sort />
                 <Cards breeds={filterBreeds} />
                 {totalBreeds > breedsPerPage && (
-                    <Pagination
-                        totalBreeds={totalBreeds}
-                        breedsPerPage={breedsPerPage}
-                    />
+                    <div className={styles.centered}>
+                        <Pagination
+                            totalItems={totalBreeds}
+                            itemsPerPage={breedsPerPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
+                    </div>
                 )}
             </div>
         </div>

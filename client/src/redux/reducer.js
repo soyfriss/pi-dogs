@@ -19,6 +19,7 @@ const initialState = {
         weight: { min: 0, max: 0 }
     },
     currentPage: 1,
+    currentFilterPage: 1,
     sort: 'nameAsc'
 };
 
@@ -122,7 +123,7 @@ export default function reducer(state = initialState, action) {
                 },
                 breeds: {
                     ...state.breeds,
-                    items: action.payload.addToBreeds ? [...state.breeds.items, action.payload.breed] : state.breeds.items 
+                    items: action.payload.addToBreeds ? [...state.breeds.items, action.payload.breed] : state.breeds.items
                 },
                 searchResults: action.payload.addToBreeds ? [...state.searchResults, action.payload.breed] : state.searchResults
             };
@@ -183,6 +184,11 @@ export default function reducer(state = initialState, action) {
             return {
                 ...state,
                 currentPage: action.payload
+            }
+        case 'breeds/currentFilterPageChanged':
+            return {
+                ...state,
+                currentFilterPage: action.payload
             }
         case 'breeds/sortCriteriaChanged':
             return {

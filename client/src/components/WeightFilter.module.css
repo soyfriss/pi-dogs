@@ -48,3 +48,47 @@
     cursor: auto;
     opacity: 0.4;
 }
+
+.container {
+    margin-left: 0.5em;
+}
+
+.container input {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    /* box-sizing: border-box; */
+}
+
+.container input {
+    border-bottom: 2px solid var(--accent-color);
+    background-color: white;
+    background-color: var(--primary-color);
+}
+
+.container input:focus {
+    outline: none;
+    border-bottom: 2px solid var(--primary-text-color);
+    /* box-shadow: 0 0 0 4px hsl(213, 90%, 70%); */
+}
+
+.container input[type="text"] {
+    /* font: 1.25rem / 1.5 sans-serif; */
+    font-size: 1rem;
+    /* line-height: 1.5; */
+    font-family: inherit;
+    display: block;
+    /* box-sizing: border-box; */
+    width: 100%;
+    padding: 0.5rem;
+}
+
+.container input::placeholder {
+    opacity: 1;
+    /* Firefox */
+    color: var(--accent-color);
+}

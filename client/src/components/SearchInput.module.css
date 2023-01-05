@@ -6,8 +6,16 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: var(--accent-color);
+    background-color: #D1B6A9;
+    border: 1px solid var(--accent-color);
     border-radius: 2em;
+}
+
+.container:focus,
+.container:hover,
+.container:focus-within {
+    border-color: #4a5058;
+    border-color: #df85c6;
 }
 
 .input {

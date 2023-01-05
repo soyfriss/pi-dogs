@@ -2,12 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { applyBreedWeightFilter, filterBreeds, changeCurrentPage } from '../redux/actions.js';
 import styles from './WeightFilter.module.css';
+import InputRange from './InputRange.jsx';
 
 function WeightFilter() {
     const dispatch = useDispatch();
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-    const [min, setMin] = useState(0);
-    const [max, setMax] = useState(0);
+    const [min, setMin] = useState('');
+    const [max, setMax] = useState('');
     // const weight = useSelector(state => state.filters.weight);
 
     useEffect(() => {
@@ -22,16 +23,40 @@ function WeightFilter() {
         setIsSubmitDisabled(false);
     }, [min, max])
 
-    const changeWeight = (_) => {
+    const handleRangeChange = (name, min, max, error) => {
+        setMin(min);
+        setMax(max);
+        // setBreed({
+        //     ...breed,
+        //     [`${name}Min`]: min,
+        //     [`${name}Max`]: max,
+        //     [`${name}Error`]: error,
+        // });
+    }
+
+    const changeWeight = () => {
         dispatch(applyBreedWeightFilter({ min: Number(min), max: Number(max) }))
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
-        setMin(0);
-        setMax(0);
+        setMin('');
+        setMax('');
     }
 
     return <>
-        <input
+        <div className={styles.container}>
+            <InputRange
+                name="weight"
+                label="Filter by weight"
+                isRequired={false}
+                minValue={min}
+                maxValue={max}
+                validRange={[0, 150]}
+                onChange={handleRangeChange}
+                canShowError={true}
+                showButton={true}
+                handleButtonClick={changeWeight} />
+        </div>
+        {/* <input
             type="number"
             placeholder="MIN"
             className={styles.inputMin}
@@ -53,14 +78,14 @@ function WeightFilter() {
                     changeWeight();
                 }
             }}
-        />
-        <button
+        /> */}
+        {/* <button
             className={`${styles.btn} ${isSubmitDisabled && styles.btnDisabled}`}
             disabled={isSubmitDisabled}
             onClick={changeWeight}
         >
             &#62;
-        </button>
+        </button> */}
     </>
 }
 

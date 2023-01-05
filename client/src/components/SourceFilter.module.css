@@ -3,6 +3,12 @@
     cursor: pointer;
 }
 
+.item:hover,
+.item:focus {
+    font-weight: 500;
+}
+
+
 .noBreeds {
     text-decoration: line-through;
     cursor: auto;

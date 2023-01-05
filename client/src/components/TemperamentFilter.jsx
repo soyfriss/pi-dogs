@@ -1,16 +1,30 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import styles from './TemperamentFilter.module.css';
-// import viewMore from '../images/view-more-512.png';
+import Pagination from './Pagination.jsx';
+import { changeCurrentFilterPage } from '../redux/actions.js';
 
 function TemperamentFilter({ addTemperamentFilter }) {
-    const [showAllFilters, setShowAllFilters] = useState(false);
+    const dispatch = useDispatch();
+
     const temperaments = useSelector(state => state.temperaments);
     const breeds = useSelector(state => state.breeds.items);
     const activeFilters = useSelector(state => state.filters.temperaments);
 
-    // const [filters, setFilters] = useState(() => createFilters(breeds, temperaments));
     const [filters, setFilters] = useState([]);
+
+    // Pagination variables
+    const currentPage = useSelector(state => state.currentFilterPage);
+    const filtersPerPage = 10;
+    const totalFilters = filters.length;
+
+    const indexOfLastFilter = currentPage * filtersPerPage;
+    const indexOfFirstFilter = indexOfLastFilter - filtersPerPage;
+    const filterSlice = filters.slice(indexOfFirstFilter, indexOfLastFilter);
+
+    const setCurrentPage = (value) => {
+        dispatch(changeCurrentFilterPage(value));
+    }
 
     useEffect(() => {
         // console.log('useEffect in TemperamentFilter, breeds: ', breeds);
@@ -28,33 +42,31 @@ function TemperamentFilter({ addTemperamentFilter }) {
             newFilters[index] = { ...filter, isActive: true };
             return newFilters;
         })
-    }
 
-    const mapFilter = filter => (<p
-        key={filter.id}
-        className={styles.item}
-        onClick={event => handleFilterClicked(event, filter)}
-    >
-        {`${filter.name} (${filter.count})`}
-    </p>);
+        dispatch(changeCurrentFilterPage(1));
+    }
 
     return <>
         {console.log('render TemperamentFilter')}
-        {showAllFilters ?
-            filters.filter(f => !f.isActive).map(mapFilter)
-            :
-            filters.filter(f => !f.isActive).slice(0, 10).map(mapFilter)
-        }
+        {filterSlice.map(filter =>
+            <button
+                key={filter.id}
+                className={styles.item}
+                onClick={event => handleFilterClicked(event, filter)}
+            >
+                {`${filter.name} (${filter.count})`}
+            </button>
+        )}
 
-        {/* <p className={`${styles.temperamentItem} ${styles.filterItemShowMore}`}>Show more</p> */}
-        <p
-            className={`${styles.showFilters} ${showAllFilters && styles.hidden}`}
-            onClick={() => setShowAllFilters(true)}
-        >SHOW ALL</p>
-        <p
-            className={`${styles.showFilters} ${!showAllFilters && styles.hidden}`}
-            onClick={() => setShowAllFilters(false)}
-        >SHOW LESS</p>
+        {totalFilters > filtersPerPage && (
+            <Pagination
+                totalItems={totalFilters}
+                itemsPerPage={filtersPerPage}
+                currentPage={currentPage}
+                setCurrentPage={setCurrentPage}
+                enableScrollToTop={false}
+            />
+        )}
     </>
 }
 

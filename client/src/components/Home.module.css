@@ -20,3 +20,11 @@
     /* border: 1px solid green; */
 }
 
+.cards .pagination {
+    justify-content: center;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+}

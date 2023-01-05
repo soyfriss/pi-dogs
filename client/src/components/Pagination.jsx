@@ -1,24 +1,20 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { changeCurrentPage } from '../redux/actions';
 import styles from './Pagination.module.css';
 
-function Pagination({ totalBreeds, breedsPerPage }) {
-    const dispatch = useDispatch();
-    const currentPage = useSelector(state => state.currentPage);
-    const totalPages = Math.ceil(totalBreeds / breedsPerPage);
+function Pagination({ totalItems, itemsPerPage, currentPage, setCurrentPage, enableScrollToTop = true }) {
+    const totalPages = Math.ceil(totalItems / itemsPerPage);
 
     const handleScrollToTop = () => {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     const paginate = (value) => {
-        dispatch(changeCurrentPage(currentPage + value));
-        handleScrollToTop();
+        setCurrentPage(currentPage + value);
+        if (enableScrollToTop) handleScrollToTop();
     }
 
     return <>
-        <div className={styles.pagination}>
+        <div className={`${styles.pagination} pagination`}>
             <button
                 className={styles.previous}
                 onClick={() => paginate(-1)}

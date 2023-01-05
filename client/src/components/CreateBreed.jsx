@@ -6,7 +6,6 @@ import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
 import Select from './Select.jsx';
 import { createBreed } from '../redux/actions.js';
-import Item from './Item.jsx';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 
@@ -88,17 +87,6 @@ function CreateBreed() {
         setIsSubmitDisabled(true);
     }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError])
 
-    const handleChangeTemperaments = (event) => {
-        console.log(event.target.value);
-        const id = Number(event.target.value);
-        const temperament = temperaments.find(t => t.id === id);
-        setSelectedTemperaments(old => [...old, temperament]);
-    }
-
-    const removeSelectedTemperament = (id) => {
-        setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
-    }
-
     const getSelectedTemperaments = () => {
         const temperaments = [];
         for (const temperament of selectedTemperaments) {
@@ -127,7 +115,6 @@ function CreateBreed() {
     }
 
     if (status === 'succeeded') {
-        // history.push(`/breed/${createdBreed.id}?source=${createdBreed.source}`);
         return <Redirect
             to={{
                 pathname: `/breed/${createdBreed.id}`,
@@ -186,24 +173,13 @@ function CreateBreed() {
                             canShowError={canShowError} />
                     </div>
                     <div className={styles.fullWidth}>
-                        <Select label="Temperaments" items={selectedTemperaments} onChange={onChangeSelect} />
-                    </div>
-                    <div className={styles.fullWidth}>
-                        <label className={styles.largeLabel}>Temperaments</label>
-                        <select name="temperaments" className={styles.fieldSelect} defaultValue="default">
-                            <option value="default" hidden>
-                                Choose temperaments...
-                            </option>
-                            {temperaments?.filter(t => !selectedTemperaments.some(st => st.id === t.id)).map((temperament) => (
-                                <option value={temperament.id} key={temperament.id}>
-                                    {temperament.name}
-                                </option>
-                            ))}
-                        </select>
-                        <button className={styles.btnSelect} onClick={handleChangeTemperaments}>ADD</button>
-                        <div className={styles.selectedTemperaments}>
-                            {selectedTemperaments.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeSelectedTemperament} />)}
-                        </div>
+                        <Select
+                            label="Temperaments"
+                            minItemsSelected={1}
+                            maxItemsSelected={3}
+                            items={selectedTemperaments}
+                            onChange={onChangeSelect}
+                        />
                     </div>
                     <div className={styles.fullWidth}>
                         <button

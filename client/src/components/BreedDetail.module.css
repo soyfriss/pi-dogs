@@ -54,3 +54,7 @@
 .navLink:hover, .navLink:focus {
     opacity: 0.8;
 }
+
+.text p {
+    line-height: 1.5;
+}

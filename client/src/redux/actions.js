@@ -207,6 +207,12 @@ export function changeCurrentPage(value) {
     }
 }
 
+export function changeCurrentFilterPage(value) {
+    return function (dispatch) {
+        dispatch({ type: 'breeds/currentFilterPageChanged', payload: value });
+    }
+}
+
 export function clearAllFilters() {
     return function (dispatch) {
         const filters = {

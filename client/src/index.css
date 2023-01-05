@@ -10,7 +10,7 @@
   --secondary-color: #DFDFDF;
   --accent-color: #B1BED5; 
   --accent-color: #C0A597;
-  --card-bg-color: whitesmoke;
+  --card-bg-color: white;
 }
 
 body {
@@ -80,4 +80,3 @@ input[type=number] {
     cursor: auto;
     opacity: 0.4;
 }
-
