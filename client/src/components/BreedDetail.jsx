@@ -1,26 +1,29 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useParams, useLocation } from 'react-router-dom';
 import styles from './BreedDetail.module.css';
-import { fetchBreed } from '../redux/actions';
+import { fetchBreed, clearCreateBreedStatus } from '../redux/actions';
 import Loader from './Loader.jsx';
 import noImage from '../images/no-image.png';
 
-function BreedDetail({ match, location }) {
-
-    // console.log('match: ', match);
-    // console.log('location: ', location);
-    // const history = useHistory();
-    const id = match.params.id;
-    const source = location.search;
+function BreedDetail() {
+    const { id } = useParams();
+    const { search, state } = useLocation();
     const dispatch = useDispatch();
     const loading = useSelector(state => state.loadingBreedDetail);
     const breed = useSelector(state => state.breedDetail);
 
     useEffect(() => {
-        console.log('BreedDetail useEffect()');
-        dispatch(fetchBreed(id, source));
-    }, [dispatch, id, source]);
+        console.log('BreedDetail useEffect() to clear create breed status');
+        if (state && state.clearCreateBreedStatus) {
+            dispatch(clearCreateBreedStatus());
+        }
+    }, [dispatch, state]);
+
+    useEffect(() => {
+        console.log('BreedDetail useEffect() to fetch breed');
+        dispatch(fetchBreed(id, search));
+    }, [dispatch, id, search]);
 
     if (loading) {
         return <Loader />;
@@ -28,7 +31,7 @@ function BreedDetail({ match, location }) {
 
     return <>
         <div className={styles.section}>
-            <p className={styles.title}>Breed detail</p>
+            <p className={styles.title}>{ (state && state.title) ? state.title : 'Breed detail' }</p>
 
             <div className={styles.body}>
                 <div className={styles.text}>

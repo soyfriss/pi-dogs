@@ -59,7 +59,7 @@
 
 .form input[type="text"],
 .form input[type="email"],
-.form select,
+/* .form select, */
 .form textarea {
     /* font: 1.25rem / 1.5 sans-serif; */
     font-size: 1.25rem;
@@ -73,6 +73,12 @@
 
 .form select {
     background: url("../images/down-arrow.svg") no-repeat center right 0.75rem;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    font-family: inherit;
+    display: inline-block;
+    width: 90%;
+    padding: 0.5rem 0.75rem;
     margin-bottom: 1em;
 }
 
@@ -89,7 +95,8 @@
     color: var(--accent-color);
 }
 
-.form .btn {
+.form .btn, 
+.form .btnSelect {
     cursor: pointer;
     border: none;
     background-color: var(--accent-color);
@@ -101,12 +108,21 @@
     border-radius: 5px;
 }
 
+.form .btnSelect {
+    width: 8%;
+    margin-left: 2%;
+}
+
 .form .btn:hover,
-.form .btn:focus {
+.form .btn:focus,
+.form .btnSelect:hover,
+.form .btnSelect:focus {
     opacity: 0.8;
 }
 
-.form .btnDisabled, .form .btnDisabled:hover, .form .btnDisabled:focus {
+.form .btnDisabled,
+.form .btnDisabled:hover,
+.form .btnDisabled:focus {
     cursor: auto;
     opacity: 0.4;
 }

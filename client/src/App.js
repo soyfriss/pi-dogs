@@ -31,7 +31,9 @@ function App() {
           <Route exact path="/" component={Home} />
           <Route exact path="/home" component={Home} />
           <Route exact path="/breed/create" component={CreateBreed} />
-          <Route exact path="/breed/:id" component={BreedDetail} />
+          <Route exact path="/breed/:id">
+            <BreedDetail />
+          </Route>
           <Route exact path="/about" component={About} />
           <Route path='*'>
             <Error title='Oops!' message="We can't seem to find what you're looking for" />

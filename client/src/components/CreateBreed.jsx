@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, Redirect } from 'react-router-dom';
 import styles from './CreateBreed.module.css';
 import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
-import { createBreed, clearCreateBreedStatus } from '../redux/actions.js';
+import { createBreed } from '../redux/actions.js';
 import Item from './Item.jsx';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
@@ -52,21 +52,13 @@ function CreateBreed() {
         })
     }
 
-    const validate = () => {
-        if (breed.nameError || breed.heightError || breed.weightError || breed.lifeSpanError) {
-            return setIsSubmitDisabled(true);
-        }
-
-        setIsSubmitDisabled(false);
-    }
-
     const handleSubmit = (event) => {
         event.preventDefault();
         // Create new breed
         if (breed.nameError === '' &&
-        breed.heightError === '' &&
-        breed.weightError === '' &&
-        breed.lifeSpanError === ''
+            breed.heightError === '' &&
+            breed.weightError === '' &&
+            breed.lifeSpanError === ''
         ) {
             console.log('Creating new breed: ', breed);
             const newBreed = {
@@ -81,11 +73,6 @@ function CreateBreed() {
         }
 
     }
-
-
-    useEffect(() => {
-        dispatch(clearCreateBreedStatus());
-    }, [dispatch]);
 
     useEffect(() => {
         console.log('CreateBreed useEffect()');
@@ -129,7 +116,14 @@ function CreateBreed() {
     }
 
     if (status === 'succeeded') {
-        history.push(`/breed/${createdBreed.id}?source=${createdBreed.source}`);
+        // history.push(`/breed/${createdBreed.id}?source=${createdBreed.source}`);
+        return <Redirect
+            to={{
+                pathname: `/breed/${createdBreed.id}`,
+                search: `?source=${createdBreed.source}`,
+                state: { clearCreateBreedStatus: true, title: 'Your newly created breed' }
+            }}
+        />
     }
 
     return <>
@@ -182,7 +176,7 @@ function CreateBreed() {
                     </div>
                     <div className={styles.fullWidth}>
                         <label className={styles.largeLabel}>Temperaments</label>
-                        <select name="temperaments" className={styles.fieldSelect} defaultValue="default" onChange={handleChangeTemperaments}>
+                        <select name="temperaments" className={styles.fieldSelect} defaultValue="default">
                             <option value="default" hidden>
                                 Choose temperaments...
                             </option>
@@ -192,6 +186,7 @@ function CreateBreed() {
                                 </option>
                             ))}
                         </select>
+                        <button className={styles.btnSelect} onClick={handleChangeTemperaments}>ADD</button>
                         <div className={styles.selectedTemperaments}>
                             {selectedTemperaments.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeSelectedTemperament} />)}
                         </div>

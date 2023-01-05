@@ -222,17 +222,18 @@ export function filterBreeds() {
     return function (dispatch, getState) {
         const { searchResults, filters, sort } = getState();
 
+        const breeds = [...searchResults];
+
         // Return all breeds if filters are empty
         if (filters.temperaments.length === 0 &&
             (filters.weight.min === 0 && filters.weight.max === 0) &&
             filters.source === ''
         ) {
-            dispatch({ type: 'breeds/breedsFiltered', payload: searchResults });
-            dispatch(sortBreeds(sort));
+            dispatch({ type: 'breeds/breedsFiltered', payload: breeds });
+            return dispatch(sortBreeds(sort));
         }
 
         // Filter breeds
-        const breeds = [...searchResults];
         const filteredBreeds = [];
 
         for (const breed of breeds) {
