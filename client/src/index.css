@@ -58,3 +58,26 @@ input[type=number] {
   color: var(--error-text-color);
 }
 
+.btn-primary {
+    cursor: pointer;
+    border: none;
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
+    padding: 0.5em 1.5em;
+    font-size: 1.25em;
+    font-family: inherit;
+    border-radius: 5px;
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+    opacity: 0.8;
+}
+
+.btn-disabled,
+.btn-disabled:hover,
+.btn-disabled:focus {
+    cursor: auto;
+    opacity: 0.4;
+}
+

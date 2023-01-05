@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory, Redirect } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import styles from './CreateBreed.module.css';
 import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
+import Select from './Select.jsx';
 import { createBreed } from '../redux/actions.js';
 import Item from './Item.jsx';
 import Loader from './Loader.jsx';
@@ -11,7 +12,7 @@ import Error from './Error.jsx';
 
 function CreateBreed() {
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
 
     const [breed, setBreed] = useState({
         name: '',
@@ -107,6 +108,16 @@ function CreateBreed() {
         return temperaments;
     }
 
+    const onChangeSelect = (id, action) => {
+        console.log('onChangeSelect', id, action);
+        if (action === 'add') {
+            const temperament = temperaments.find(t => t.id === id);
+            setSelectedTemperaments(old => [...old, temperament]);
+        } else if (action === 'remove') {
+            setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
+        }
+    }
+
     if (status === 'creating') {
         return <Loader />;
     }
@@ -173,6 +184,9 @@ function CreateBreed() {
                             validRange={[0.5, 150]}
                             onChange={handleRangeChange}
                             canShowError={canShowError} />
+                    </div>
+                    <div className={styles.fullWidth}>
+                        <Select label="Temperaments" items={selectedTemperaments} onChange={onChangeSelect} />
                     </div>
                     <div className={styles.fullWidth}>
                         <label className={styles.largeLabel}>Temperaments</label>
