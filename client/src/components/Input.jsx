@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styles from './Input.module.css';
+import * as constants from '../constants/input.js';
 
 function Input({ name, value, label, isRequired, maxLength = 524288, onChange }) {
     // console.log('InputRange');
@@ -7,10 +8,10 @@ function Input({ name, value, label, isRequired, maxLength = 524288, onChange })
 
     const validate = (value) => {
         if (isRequired && !value) {
-            return 'This field is required';
+            return constants.FIELD_REQUIRED;
         }
         if (maxLength && value.length > maxLength) {
-            return `The maximum length (${maxLength}) of this field has been exceeded`;
+            return `${constants.MAX_LENGTH_EXCEEDED} (max: ${maxLength})`;
         }
 
         return '';

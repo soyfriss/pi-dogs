@@ -8,6 +8,7 @@ import Select from './Select.jsx';
 import { createBreed } from '../redux/actions.js';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
+import * as constants from '../constants/createBreed.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
@@ -135,6 +136,7 @@ function CreateBreed() {
                             name="name"
                             value={breed.name}
                             label="Name"
+                            maxLength={constants.MAX_LENGTH_NAME}
                             isRequired={true}
                             onChange={handleNameChange}
                             canShowError={canShowNameError}
@@ -157,7 +159,7 @@ function CreateBreed() {
                             isRequired={true}
                             minValue={breed.heightMin}
                             maxValue={breed.heightMax}
-                            validRange={[5, 200]}
+                            validRange={constants.VALID_RANGE_HEIGHT}
                             onChange={handleRangeChange}
                             canShowError={canShowError} />
                     </div>
@@ -168,15 +170,15 @@ function CreateBreed() {
                             isRequired={true}
                             minValue={breed.weightMin}
                             maxValue={breed.weightMax}
-                            validRange={[0.5, 150]}
+                            validRange={constants.VALID_RANGE_WEIGHT}
                             onChange={handleRangeChange}
                             canShowError={canShowError} />
                     </div>
                     <div className={styles.fullWidth}>
                         <Select
                             label="Temperaments"
-                            minItemsSelected={1}
-                            maxItemsSelected={3}
+                            minItemsSelected={constants.MIN_TEMPERAMENTS}
+                            maxItemsSelected={constants.MAX_TEMPERAMENTS}
                             items={selectedTemperaments}
                             onChange={onChangeSelect}
                         />

@@ -2,7 +2,8 @@ const { getBreeds: getBreedsFromDB, getBreed: getBreedFromDB, createBreed: creat
 const { getBreeds: getBreedsFromApi, getBreed: getBreedFromApi } = require('../integrations/theDogApi.js');
 const { findOrCreateTemperaments } = require('./temperament.js');
 const AppError = require('../utils/AppError.js');
-const httpStatusCodes = require('../utils/httpStatusCodes.js')
+const httpStatusCodes = require('../utils/httpStatusCodes.js');
+const breedValidations = require('../utils/constants.js');
 
 const getBreeds = async (name) => {
 
@@ -50,9 +51,19 @@ const getBreed = async (id, source) => {
 }
 
 const createBreed = async (name, height, weight, lifeSpan, temperaments, image) => {
+    // Validations
     if (!name || typeof name !== 'string' || !height || !weight) {
         throw new AppError('Missing data', httpStatusCodes.BAD_REQUEST);
     }
+    // name
+    if (name.length > breedValidations.MAX_LENGTH_NAME) {
+        throw new AppError(`The maximum length of name field has been exceeded (max: ${breedValidations.MAX_LENGTH_NAME})`, httpStatusCodes.BAD_REQUEST);
+    }
+
+    // TODO: Complete validations <-----------------------------------
+    // height
+    let [min, max] = height.split(' - ');
+
  
     // Create new temperaments
     const temperamentsList = await findOrCreateTemperaments(temperaments);

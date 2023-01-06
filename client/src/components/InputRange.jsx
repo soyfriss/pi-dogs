@@ -1,22 +1,39 @@
 import React, { useState } from 'react';
 import styles from './InputRange.module.css';
+import * as constants from '../constants/inputRange.js';
 
 function InputRange({ name, minValue, maxValue, label, isRequired, validRange = [0, 0], onChange, showButton = false, handleButtonClick }) {
     // console.log('InputRange');
     const [showError, setShowError] = useState(false);
 
     const validate = (min, max) => {
+        // Only one value entered?
+        if (!min.length && max.length) {
+            return constants.MIN_VALUE_MISSING;
+        }
+        if (min.length && !max.length) {
+            return constants.MAX_VALUE_MISSING;
+        }
+
+        // Is required?            
+        if (isRequired && (!min.length && !max.length)) {
+            return constants.FIELD_REQUIRED;
+        }
+
+        // Valid numbers?
+        console.log('valid numbers? ', Number.isNaN(Number(min)), Number.isNaN(Number(max)));
+        if (Number.isNaN(Number(min)) || Number.isNaN(Number(max))) {
+            return constants.INVALID_DATA;
+        }
+
         const minValue = Number(min);
         const maxValue = Number(max);
 
-        if (isRequired && (!minValue && !maxValue)) {
-            return 'This field is required';
-        }
         if (minValue > maxValue) {
-            return 'This field has an invalid range (min > max)';
+            return `${constants.INVALID_RANGE} (min > max)`;
         }
         if (isValidRangePresent() && (minValue < validRange[0] || maxValue > validRange[1])) {
-            return `This field has an invalid range (valid range: ${validRange[0]} - ${validRange[1]})`;
+            return `${constants.INVALID_RANGE} (valid range: ${validRange[0]} - ${validRange[1]})`;
         }
 
         return '';
@@ -33,7 +50,9 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
         {/* {console.log('Rendering InputRange')} */}
         <div className={styles.container}>
             {label &&
-                <label className="largeLabel">{label} {isValidRangePresent() && `(${validRange[0]} - ${validRange[1]})`} {isRequired && <span className="required">*</span>}</label>
+                <label className="largeLabel">
+                    {label} {isValidRangePresent() && `(${validRange[0]} - ${validRange[1]})`} {isRequired && <span className="required">*</span>}
+                </label>
             }
             <div className={styles.rangeContainer}>
                 <input
