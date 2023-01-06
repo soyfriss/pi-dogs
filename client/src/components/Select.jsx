@@ -98,6 +98,7 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
                     ))}
                 </select>
                 <button
+                    type="button"
                     className={`btn-primary ${isAddDisabled && 'btn-disabled'}`}
                     onClick={addTemperament}
                     disabled={isAddDisabled}

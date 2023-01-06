@@ -17,6 +17,15 @@ const getTemperaments = async () => {
     return flat(temperaments);
 }
 
+const getTemperament = async (name) => {
+    const temperament = await Temperament.findOne({
+        where: { name: name }
+    });
+
+    return temperament;
+}
+
+
 const createTemperaments = async (temperaments) => {
     const result = [];
     for (const name of temperaments) {
@@ -34,5 +43,6 @@ const createTemperaments = async (temperaments) => {
 
 module.exports = {
     getTemperaments,
+    getTemperament,
     createTemperaments,
 }

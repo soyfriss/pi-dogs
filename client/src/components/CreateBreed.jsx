@@ -54,6 +54,7 @@ function CreateBreed() {
     }
 
     const handleSubmit = (event) => {
+        console.log('handleSubmit()', event);
         event.preventDefault();
         // Create new breed
         if (breed.nameError === '' &&
@@ -145,7 +146,7 @@ function CreateBreed() {
                     <div>
                         <InputRange
                             name="lifeSpan"
-                            label="Life span"
+                            label="Life span (years)"
                             isRequired={false}
                             minValue={breed.lifeSpanMin}
                             maxValue={breed.lifeSpanMax}
@@ -155,7 +156,7 @@ function CreateBreed() {
                     <div>
                         <InputRange
                             name="height"
-                            label="Height"
+                            label="Height (cm)"
                             isRequired={true}
                             minValue={breed.heightMin}
                             maxValue={breed.heightMax}
@@ -166,7 +167,7 @@ function CreateBreed() {
                     <div>
                         <InputRange
                             name="weight"
-                            label="Weight"
+                            label="Weight (Kg)"
                             isRequired={true}
                             minValue={breed.weightMin}
                             maxValue={breed.weightMax}
