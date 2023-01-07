@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { NavLink, useParams, useLocation } from 'react-router-dom';
 import styles from './BreedDetail.module.css';
-import { fetchBreed, clearCreateBreedStatus } from '../redux/actions';
+import { fetchBreed, clearNewBreedStatus } from '../redux/actions';
 import Loader from './Loader.jsx';
 import Header from './Header.jsx';
 import Error from './Error.jsx';
@@ -10,6 +10,7 @@ import noImage from '../images/no-image.png';
 
 function BreedDetail() {
     const { id } = useParams();
+    console.log('BreedDetail id: ', id);
     const { search, state } = useLocation();
     const dispatch = useDispatch();
     const fetchStatus = useSelector(state => state.breedDetail.status);
@@ -18,8 +19,8 @@ function BreedDetail() {
 
     useEffect(() => {
         console.log('BreedDetail useEffect() to clear create breed status');
-        if (state && state.clearCreateBreedStatus) {
-            dispatch(clearCreateBreedStatus());
+        if (state && state.clearNewBreedStatus) {
+            dispatch(clearNewBreedStatus());
         }
     }, [dispatch, state]);
 

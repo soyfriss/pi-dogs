@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    addBreedTemperamentFilter,
-    removeBreedTemperamentFilter,
-    applyBreedWeightFilter,
-    applyBreedSourceFilter,
+    addTemperamentFilter as addBreedTemperamentFilter,
+    removeTemperamentFilter as removeBreedTemperamentFilter,
+    changeWeightFilter,
+    changeSourceFilter,
     filterBreeds,
     changeCurrentPage
 } from '../redux/actions.js';
@@ -37,13 +37,13 @@ function Filters() {
     }
 
     const removeWeight = () => {
-        dispatch(applyBreedWeightFilter({ min: 0, max: 0 }))
+        dispatch(changeWeightFilter({ min: 0, max: 0 }))
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
     }
 
     const removeSource = () => {
-        dispatch(applyBreedSourceFilter(''))
+        dispatch(changeSourceFilter(''))
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
     }

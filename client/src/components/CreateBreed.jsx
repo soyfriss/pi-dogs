@@ -147,7 +147,7 @@ function CreateBreed() {
             to={{
                 pathname: `/breed/${createdBreed.id}`,
                 search: `?source=${createdBreed.source}`,
-                state: { clearCreateBreedStatus: true, title: 'Your newly created breed' }
+                state: { clearNewBreedStatus: true, title: 'Your newly created breed' }
             }}
         />
     }

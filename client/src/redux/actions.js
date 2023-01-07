@@ -1,4 +1,5 @@
 import { getBreeds, getBreed, postBreed, getTemperaments } from './api.js';
+import * as actionTypes from './actionTypes.js';
 
 export function changeSearchText(value) {
     return function (dispatch) {
@@ -9,22 +10,22 @@ export function changeSearchText(value) {
 export function fetchBreeds() {
     return async function (dispatch, getState) {
         try {
-            dispatch({ type: 'breeds/fetchBreedsRequested' });
+            dispatch({ type: actionTypes.FETCH_BREEDS_REQUESTED });
 
             const { searchText } = getState();
             const response = await getBreeds(searchText);
 
-            dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: response.data });
+            dispatch({ type: actionTypes.FETCH_BREEDS_SUCCEEDED, payload: response.data });
 
             // Sorting
             const { sort } = getState();
             dispatch(sortBreeds(sort));
 
-            dispatch({ type: 'breeds/fetchBreedsCompleted' })
+            dispatch({ type: actionTypes.FETCH_BREEDS_COMPLETED })
         } catch (error) {
             console.log('fetchBreeds error: ', error);
             dispatch({
-                type: 'breeds/fetchBreedsFailed',
+                type: actionTypes.FETCH_BREEDS_FAILED,
                 payload: {
                     message: error.response.data,
                     status: error.response.status
@@ -38,14 +39,14 @@ export function fetchBreeds() {
 export function fetchBreed(id, source) {
     return async function (dispatch) {
         try {
-            dispatch({ type: 'breeds/fetchBreedRequested' });
+            dispatch({ type: actionTypes.FETCH_BREED_REQUESTED });
 
             const response = await getBreed(id, source);
 
-            dispatch({ type: 'breeds/fetchBreedSucceeded', payload: response.data });
+            dispatch({ type: actionTypes.FETCH_BREED_SUCCEEDED, payload: response.data });
         } catch (error) {
             dispatch({
-                type: 'breeds/fetchBreedFailed',
+                type: actionTypes.FETCH_BREED_FAILED,
                 payload: {
                     message: error.response.data,
                     status: error.response.status
@@ -56,9 +57,9 @@ export function fetchBreed(id, source) {
     }
 }
 
-export function clearCreateBreedStatus() {
+export function clearNewBreedStatus() {
     return function (dispatch) {
-        dispatch({ type: 'breeds/createBreedStatusCleared' });
+        dispatch({ type: actionTypes.NEW_BREED_STATUS_CLEARED });
     }
 }
 
@@ -66,7 +67,7 @@ export function createBreed(breed) {
     return async function (dispatch, getState) {
 
         try {
-            dispatch({ type: 'breeds/createBreedRequested' });
+            dispatch({ type: actionTypes.NEW_BREED_REQUESTED });
 
             const response = await postBreed(breed);
 
@@ -76,53 +77,53 @@ export function createBreed(breed) {
                 const breeds = [...searchResults];
                 breeds.push(response.data);
 
-                dispatch({ type: 'breeds/createBreedSucceeded', payload: { breed: response.data, addToBreeds: true } });
+                dispatch({ type: actionTypes.NEW_BREED_SUCCEEDED, payload: { breed: response.data, addToBreeds: true } });
 
                 dispatch(filterBreeds());
             } else {
-                dispatch({ type: 'breeds/createBreedSucceeded', payload: { breed: response.data, addToBreeds: false } });
+                dispatch({ type: actionTypes.NEW_BREED_SUCCEEDED, payload: { breed: response.data, addToBreeds: false } });
             }
         } catch (error) {
-            dispatch({ type: 'breeds/createBreedFailed', payload: error });
+            dispatch({ type: actionTypes.NEW_BREED_FAILED, payload: error });
             console.log('createBreed error: ', error);
         }
     }
 }
 
-export function clearBreed() {
+export function clearFetchBreed() {
     return function (dispatch) {
-        dispatch({ type: 'breeds/breedCleared' });
+        dispatch({ type: actionTypes.FETCH_BREED_CLEARED });
     }
 }
 
 export function sortBreeds(criteria) {
     return function (dispatch, getState) {
-        dispatch({ type: 'breeds/sortCriteriaChanged', payload: criteria })
+        dispatch({ type: actionTypes.SORT_CRITERIA_CHANGED, payload: criteria })
 
         const { breeds } = getState();
         const breedsSorted = [...breeds.items];
 
         if (criteria === 'nameAsc') {
             dispatch({
-                type: 'breeds/breedsByNameAscSorted',
+                type: actionTypes.BREEDS_SORTED_BY_NAME_ASC,
                 payload: breedsSorted.sort(sortByNameAsc())
             });
         }
         if (criteria === 'nameDesc') {
             dispatch({
-                type: 'breeds/breedsByNameDescSorted',
+                type: actionTypes.BREEDS_SORTED_BY_NAME_DESC,
                 payload: breedsSorted.sort(sortBreedsByNameDesc())
             });
         }
         if (criteria === 'minWeight') {
             dispatch({
-                type: 'breeds/breedsByMinWeightSorted',
+                type: actionTypes.BREEDS_SORTED_BY_MIN_WEIGHT,
                 payload: breedsSorted.sort(sortBreedsByMinWeight())
             });
         }
         if (criteria === 'maxWeight') {
             dispatch({
-                type: 'breeds/breedsByMaxWeightSorted',
+                type: actionTypes.BREEDS_SORTED_BY_MAX_WEIGHT,
                 payload: breedsSorted.sort(sortBreedsByMaxWeight())
             });
         }
@@ -167,42 +168,42 @@ function sortBreedsByMaxWeight() {
     });
 }
 
-export function addBreedTemperamentFilter(temperament) {
+export function addTemperamentFilter(temperament) {
     return function (dispatch) {
-        dispatch({ type: 'breeds/breedTemperamentFilterAdded', payload: temperament });
+        dispatch({ type: actionTypes.TEMPERAMENT_FILTER_ADDED, payload: temperament });
     }
 }
 
-export function removeBreedTemperamentFilter(temperament) {
+export function removeTemperamentFilter(temperament) {
     return function (dispatch, getState) {
         const { filters } = getState();
         const temperaments = filters.temperaments.filter(f => f !== temperament);
 
-        dispatch({ type: 'breeds/breedTemperamentFilterRemoved', payload: temperaments });
+        dispatch({ type: actionTypes.TEMPERAMENT_FILTER_REMOVED, payload: temperaments });
     }
 }
 
-export function applyBreedWeightFilter(weight) {
+export function changeWeightFilter(weight) {
     return function (dispatch) {
-        dispatch({ type: 'breeds/breedWeightFilterApplied', payload: weight });
+        dispatch({ type: actionTypes.WEIGHT_FILTER_CHANGED, payload: weight });
     }
 }
 
-export function applyBreedSourceFilter(source) {
+export function changeSourceFilter(source) {
     return function (dispatch) {
-        dispatch({ type: 'breeds/breedSourceFilterApplied', payload: source });
+        dispatch({ type: actionTypes.SOURCE_FILTER_CHANGED, payload: source });
     }
 }
 
 export function changeCurrentPage(value) {
     return function (dispatch) {
-        dispatch({ type: 'breeds/currentPageChanged', payload: value });
+        dispatch({ type: actionTypes.CURRENT_PAGE_CHANGED, payload: value });
     }
 }
 
 export function changeCurrentFilterPage(value) {
     return function (dispatch) {
-        dispatch({ type: 'breeds/currentFilterPageChanged', payload: value });
+        dispatch({ type: actionTypes.CURRENT_FILTER_PAGE_CHANGED, payload: value });
     }
 }
 
@@ -213,7 +214,7 @@ export function clearAllFilters() {
             source: '',
             weight: { min: 0, max: 0 }
         }
-        dispatch({ type: 'breeds/allFiltersCleared', payload: filters });
+        dispatch({ type: actionTypes.ALL_FILTERS_CLEARED, payload: filters });
     }
 }
 
@@ -228,7 +229,7 @@ export function filterBreeds() {
             (filters.weight.min === 0 && filters.weight.max === 0) &&
             filters.source === ''
         ) {
-            dispatch({ type: 'breeds/breedsFiltered', payload: breeds });
+            dispatch({ type: actionTypes.BREEDS_FILTERED, payload: breeds });
             return dispatch(sortBreeds(sort));
         }
 
@@ -254,7 +255,7 @@ export function filterBreeds() {
             filteredBreeds.push(breed)
         }
 
-        dispatch({ type: 'breeds/breedsFiltered', payload: filteredBreeds });
+        dispatch({ type: actionTypes.BREEDS_FILTERED, payload: filteredBreeds });
         dispatch(sortBreeds(sort));
     }
 }
@@ -304,15 +305,15 @@ function isFilterBySourceOK(breed, filter) {
 export function fetchTemperaments() {
     return async function (dispatch) {
         try {
-            await dispatch({ type: 'temperaments/fetchTemperamentsRequested' });
+            await dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_REQUESTED });
 
             const response = await getTemperaments();
             const temperaments = response.data.sort(sortByNameAsc());
-            dispatch({ type: 'temperaments/fetchTemperamentsSucceeded', payload: temperaments });
+            dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_SUCCEEDED, payload: temperaments });
 
         } catch (error) {
             dispatch({
-                type: 'temperaments/fetchTemperamentsFailed',
+                type: actionTypes.FETCH_TEMPERAMENTS_FAILED,
                 payload: {
                     message: error.response.data,
                     status: error.response.status

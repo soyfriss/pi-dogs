@@ -1,3 +1,5 @@
+import * as actionTypes from './actionTypes.js';
+
 const initialState = {
     breeds: {
         items: [],
@@ -33,12 +35,12 @@ const initialState = {
 
 export default function reducer(state = initialState, action) {
     switch (action.type) {
-        case 'breeds/searchTextChanged':
+        case actionTypes.SEARCH_TEXT_CHANGED:
             return {
                 ...state,
                 searchText: action.payload
             }
-        case 'breeds/fetchBreedsRequested':
+        case actionTypes.FETCH_BREEDS_REQUESTED:
             return {
                 ...state,
                 breeds: {
@@ -47,7 +49,7 @@ export default function reducer(state = initialState, action) {
                     error: null
                 }
             }
-        case 'breeds/fetchBreedsSucceeded':
+        case actionTypes.FETCH_BREEDS_SUCCEEDED:
             return {
                 ...state,
                 filters: {
@@ -61,7 +63,7 @@ export default function reducer(state = initialState, action) {
                 },
                 searchResults: action.payload
             }
-        case 'breeds/fetchBreedsFailed':
+        case actionTypes.FETCH_BREEDS_FAILED:
             return {
                 ...state,
                 breeds: {
@@ -71,7 +73,7 @@ export default function reducer(state = initialState, action) {
                     error: action.payload
                 }
             }
-        case 'breeds/fetchBreedsCompleted':
+        case actionTypes.FETCH_BREEDS_COMPLETED:
             return {
                 ...state,
                 breeds: {
@@ -79,7 +81,7 @@ export default function reducer(state = initialState, action) {
                     status: 'succeeded',
                 }
             }
-        case 'breeds/fetchBreedRequested':
+        case actionTypes.FETCH_BREED_REQUESTED:
             return {
                 ...state,
                 breedDetail: {
@@ -88,7 +90,7 @@ export default function reducer(state = initialState, action) {
                     error: null
                 }
             }
-        case 'breeds/fetchBreedSucceeded':
+        case actionTypes.FETCH_BREED_SUCCEEDED:
             return {
                 ...state,
                 breedDetail: {
@@ -97,7 +99,7 @@ export default function reducer(state = initialState, action) {
                     item: action.payload
                 }
             }
-        case 'breeds/fetchBreedFailed':
+        case actionTypes.FETCH_BREED_FAILED:
             return {
                 ...state,
                 breedDetail: {
@@ -107,12 +109,12 @@ export default function reducer(state = initialState, action) {
                     item: {}
                 }
             }
-        case 'breeds/breedCleared':
+        case actionTypes.FETCH_BREED_CLEARED:
             return {
                 ...state,
                 breedDetail: {}
             }
-        case 'breeds/createBreedStatusCleared':
+        case actionTypes.NEW_BREED_STATUS_CLEARED:
             return {
                 ...state,
                 newBreed: {
@@ -121,7 +123,7 @@ export default function reducer(state = initialState, action) {
                     error: null
                 }
             }
-        case 'breeds/createBreedRequested':
+        case actionTypes.NEW_BREED_REQUESTED:
             return {
                 ...state,
                 newBreed: {
@@ -130,7 +132,7 @@ export default function reducer(state = initialState, action) {
                     error: null
                 }
             }
-        case 'breeds/createBreedSucceeded':
+        case actionTypes.NEW_BREED_SUCCEEDED:
             return {
                 ...state,
                 newBreed: {
@@ -144,7 +146,7 @@ export default function reducer(state = initialState, action) {
                 },
                 searchResults: action.payload.addToBreeds ? [...state.searchResults, action.payload.breed] : state.searchResults
             };
-        case 'breeds/createBreedFailed':
+        case actionTypes.NEW_BREED_FAILED:
             return {
                 ...state,
                 newBreed: {
@@ -152,7 +154,7 @@ export default function reducer(state = initialState, action) {
                     error: action.payload
                 }
             }
-        case 'breeds/breedTemperamentFilterAdded':
+        case actionTypes.TEMPERAMENT_FILTER_ADDED:
             return {
                 ...state,
                 filters: {
@@ -160,7 +162,7 @@ export default function reducer(state = initialState, action) {
                     temperaments: [...state.filters.temperaments, action.payload]
                 }
             }
-        case 'breeds/breedTemperamentFilterRemoved':
+        case actionTypes.TEMPERAMENT_FILTER_REMOVED:
             return {
                 ...state,
                 filters: {
@@ -168,7 +170,7 @@ export default function reducer(state = initialState, action) {
                     temperaments: action.payload
                 }
             }
-        case 'breeds/breedWeightFilterApplied':
+        case actionTypes.WEIGHT_FILTER_CHANGED:
             return {
                 ...state,
                 filters: {
@@ -176,7 +178,7 @@ export default function reducer(state = initialState, action) {
                     weight: action.payload,
                 }
             }
-        case 'breeds/breedSourceFilterApplied':
+        case actionTypes.SOURCE_FILTER_CHANGED:
             return {
                 ...state,
                 filters: {
@@ -184,12 +186,12 @@ export default function reducer(state = initialState, action) {
                     source: action.payload,
                 }
             }
-        case 'breeds/allFiltersCleared':
+        case actionTypes.ALL_FILTERS_CLEARED:
             return {
                 ...state,
                 filters: action.payload
             }
-        case 'breeds/breedsFiltered':
+        case actionTypes.BREEDS_FILTERED:
             return {
                 ...state,
                 breeds: {
@@ -197,22 +199,22 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             }
-        case 'breeds/currentPageChanged':
+        case actionTypes.CURRENT_PAGE_CHANGED:
             return {
                 ...state,
                 currentPage: action.payload
             }
-        case 'breeds/currentFilterPageChanged':
+        case actionTypes.CURRENT_FILTER_PAGE_CHANGED:
             return {
                 ...state,
                 currentFilterPage: action.payload
             }
-        case 'breeds/sortCriteriaChanged':
+        case actionTypes.SORT_CRITERIA_CHANGED:
             return {
                 ...state,
                 sort: action.payload
             }
-        case 'breeds/breedsByNameAscSorted':
+        case actionTypes.BREEDS_SORTED_BY_NAME_ASC:
             return {
                 ...state,
                 breeds: {
@@ -220,7 +222,7 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             };
-        case 'breeds/breedsByNameDescSorted':
+        case actionTypes.BREEDS_SORTED_BY_NAME_DESC:
             return {
                 ...state,
                 breeds: {
@@ -228,7 +230,7 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             };
-        case 'breeds/breedsByMinWeightSorted':
+        case actionTypes.BREEDS_SORTED_BY_MIN_WEIGHT:
             return {
                 ...state,
                 breeds: {
@@ -236,7 +238,7 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             };
-        case 'breeds/breedsByMaxWeightSorted':
+        case actionTypes.BREEDS_SORTED_BY_MAX_WEIGHT:
             return {
                 ...state,
                 breeds: {
@@ -244,7 +246,7 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             };
-        case 'temperaments/fetchTemperamentsRequested':
+        case actionTypes.FETCH_TEMPERAMENTS_REQUESTED:
             return {
                 ...state,
                 temperaments: {
@@ -253,7 +255,7 @@ export default function reducer(state = initialState, action) {
                     error: null
                 }
             }
-        case 'temperaments/fetchTemperamentsSucceeded':
+        case actionTypes.FETCH_TEMPERAMENTS_SUCCEEDED:
             return {
                 ...state,
                 temperaments: {
@@ -262,7 +264,7 @@ export default function reducer(state = initialState, action) {
                     items: action.payload
                 }
             }
-        case 'temperaments/fetchTemperamentsFailed':
+        case actionTypes.FETCH_TEMPERAMENTS_FAILED:
             return {
                 ...state,
                 temperaments: {

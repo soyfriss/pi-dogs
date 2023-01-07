@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { applyBreedSourceFilter, filterBreeds, changeCurrentPage } from '../redux/actions';
+import { changeSourceFilter, filterBreeds, changeCurrentPage } from '../redux/actions';
 import styles from './SourceFilter.module.css';
 
 function SourceFilter() {
@@ -13,7 +13,7 @@ function SourceFilter() {
     }
 
     const applyFilter = (source) => {
-        dispatch(applyBreedSourceFilter(source));
+        dispatch(changeSourceFilter(source));
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
     }
