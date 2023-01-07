@@ -1,0 +1,1 @@
+export const NO_TEMPERAMENTS = "There aren't any temperaments entered for this breed";

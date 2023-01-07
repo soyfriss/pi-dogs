@@ -2,9 +2,38 @@ import React, { useState } from 'react';
 import styles from './InputRange.module.css';
 import * as constants from '../constants/inputRange.js';
 
-function InputRange({ name, minValue, maxValue, label, isRequired, validRange = [0, 0], onChange, showButton = false, handleButtonClick }) {
+function InputRange({ name, label, isRequired, validRange = [0, 0], onChange, showButton = false, handleButtonClick }) {
     // console.log('InputRange');
+    const [input, setInput] = useState({
+        min: '',
+        max: '',
+        error: isRequired ? constants.FIELD_REQUIRED : ''
+    });
     const [showError, setShowError] = useState(false);
+
+    const handleChangeMin = (event) => {
+        const error = validate(event.target.value, input.max);
+        
+        setInput(oldInput => ({
+            ...oldInput,
+            min: event.target.value,
+            error
+        }));
+
+        onChange(name, event.target.value, input.max, error);
+    }
+
+    const handleChangeMax = (event) => {
+        const error = validate(input.min, event.target.value);
+        
+        setInput(oldInput => ({
+            ...oldInput,
+            max: event.target.value,
+            error
+        }));
+
+        onChange(name, input.min, event.target.value, error);
+    }
 
     const validate = (min, max) => {
         // Only one value entered?
@@ -17,11 +46,12 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
 
         // Is required?            
         if (isRequired && (!min.length && !max.length)) {
+            console.log('Field is required!');
             return constants.FIELD_REQUIRED;
         }
 
         // Valid numbers?
-        console.log('valid numbers? ', Number.isNaN(Number(min)), Number.isNaN(Number(max)));
+        // console.log('valid numbers? ', Number.isNaN(Number(min)), Number.isNaN(Number(max)));
         if (Number.isNaN(Number(min)) || Number.isNaN(Number(max))) {
             return constants.INVALID_DATA;
         }
@@ -44,7 +74,7 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
         return !!(validRange[0] || validRange[1]);
     }
 
-    const error = validate(minValue, maxValue);
+    // const error = validate(minValue, maxValue);
 
     return <>
         {/* {console.log('Rendering InputRange')} */}
@@ -60,8 +90,8 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
                     name="min"
                     className={styles.minInput}
                     placeholder="Min"
-                    value={minValue}
-                    onChange={(e) => onChange(name, e.target.value, maxValue, validate(e.target.value, maxValue))}
+                    value={input.min}
+                    onChange={handleChangeMin}
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
                 />
@@ -71,23 +101,23 @@ function InputRange({ name, minValue, maxValue, label, isRequired, validRange = 
                     name="max"
                     className={styles.maxInput}
                     placeholder="Max"
-                    value={maxValue}
-                    onChange={(e) => onChange(name, minValue, e.target.value, validate(minValue, e.target.value))}
+                    value={input.max}
+                    onChange={handleChangeMax}
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
                 />
                 {showButton &&
                     <button
-                        className={`${styles.btn} ${error && styles.btnDisabled}`}
-                        disabled={error}
+                        className={`${styles.btn} ${input.error && styles.btnDisabled}`}
+                        disabled={input.error}
                         onClick={handleButtonClick}
                     >
                         &#62;
                     </button>
                 }
             </div>
-            {showError && error &&
-                <p className="error">{error}</p>
+            {showError && input.error &&
+                <p className="error">{input.error}</p>
             }
         </div>
     </>

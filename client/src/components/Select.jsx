@@ -1,49 +1,53 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { useSelector } from 'react-redux';
 import styles from './Select.module.css';
 import Item from './Item.jsx';
 
-function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0, onChange }) {
+function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, onChange }) {
+    const [selectedTemperaments, setSelectedTemperaments] = useState([]);
     const [showError, setShowError] = useState(false);
-    const [isAddDisabled, setIsAddDisabled] = useState(true);
+    const [input, setInput] = useState({
+        value: 'default',
+        isAddDisabled: true
+    })
     const temperaments = useSelector(state => state.temperaments.items);
     const selectRef = useRef();
 
-    const enableAddTemperament = () => {
-        console.log('enableAddTemperament: ', selectRef.current?.value);
-        if (!selectRef.current?.value) {
-            return setIsAddDisabled(true);
-        }
-        if (selectRef.current.value === 'default') {
-            return setIsAddDisabled(true);
-        }
+    const onChangeSelect = (id, action) => {
+        console.log('onChangeSelect', id, action);
+        let newSelectedTemperaments = [];
 
-        if (maxItemsSelected && maxItemsSelected === items.length) {
-            return setIsAddDisabled(true);
+        if (action === 'add') {
+            const temperament = temperaments.find(t => t.id === id);
+            newSelectedTemperaments = [...selectedTemperaments, temperament];
+            setSelectedTemperaments(newSelectedTemperaments);
+        } else if (action === 'remove') {
+            newSelectedTemperaments = selectedTemperaments.filter(t => t.id !== id);
+            setSelectedTemperaments(newSelectedTemperaments);
         }
-
-        setIsAddDisabled(false);
+        onChange(newSelectedTemperaments, validate(newSelectedTemperaments));
     }
-    // useEffect(() => {
-    //     console.log('Select useEffect()');
-    //     enableAddTemperament();
-    // }, []);
 
     const addTemperament = () => {
         // console.log('selectRef: ', selectRef.current.value);
-        const id = Number(selectRef.current.value);
+        const id = Number(input.value);
         // // const temperament = temperaments.find(t => t.id === id);
         // // setSelectedTemperaments(old => [...old, temperament]);
-        onChange(id, 'add');
+        onChangeSelect(id, 'add');
+        setInput(oldInput => ({
+            ...oldInput,
+            value: 'default',
+            isAddDisabled: true
+        }))
     }
 
     const removeTemperament = (id) => {
         // setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
-        onChange(id, 'remove');
+        onChangeSelect(id, 'remove');
     }
 
-    const validate = () => {
-        if (minItemsSelected && items.length < minItemsSelected) {
+    const validate = (temperaments) => {
+        if (minItemsSelected && temperaments.length < minItemsSelected) {
             return `Select at least ${minItemsSelected} ${minItemsSelected === 1 ? 'item' : 'items'}`;
         }
 
@@ -53,7 +57,14 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
     const createLabel = () => {
         const max = maxItemsSelected === 0 ? 'unlimited' : maxItemsSelected;
 
-        return `${label || 'label'} (${items.length} / ${max})`;
+        return `${label || 'label'} (${selectedTemperaments.length} / ${max})`;
+    }
+
+    const handleChange = (event) => {
+        return setInput({
+            value: event.target.value,
+            isAddDisabled: (event.target.value === 'default' || (maxItemsSelected && maxItemsSelected === selectedTemperaments.length))
+        });
     }
 
     return <>
@@ -66,16 +77,16 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
             <div className={styles.selectContainer}>
                 <select
                     name="temperaments"
-                    defaultValue="default"
                     ref={selectRef}
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
-                    onChange={(e) => enableAddTemperament()}
+                    value={input.value}
+                    onChange={handleChange}
                 >
                     <option value="default" hidden>
                         Choose...
                     </option>
-                    {temperaments?.filter(t => !items.some(st => st.id === t.id)).map((temperament) => (
+                    {temperaments?.filter(t => !selectedTemperaments.some(st => st.id === t.id)).map((temperament) => (
                         <option value={temperament.id} key={temperament.id}>
                             {temperament.name}
                         </option>
@@ -83,18 +94,20 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
                 </select>
                 <button
                     type="button"
-                    className={`btn-primary ${isAddDisabled && 'btn-disabled'}`}
+                    className={`btn-primary ${input.isAddDisabled && 'btn-disabled'}`}
                     onClick={addTemperament}
-                    disabled={isAddDisabled}
+                    disabled={input.isAddDisabled}
+                    onFocus={() => setShowError(false)}
+                    onBlur={() => setShowError(true)}
                 >
                     ADD
                 </button>
             </div>
-            {showError && validate() &&
-                <p className="error">{validate()}</p>
+            {showError && validate(selectedTemperaments) &&
+                <p className="error">{validate(selectedTemperaments)}</p>
             }
             <div className={styles.selectedTemperaments}>
-                {items.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeTemperament} />)}
+                {selectedTemperaments.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeTemperament} />)}
             </div>
         </div>
     </>;

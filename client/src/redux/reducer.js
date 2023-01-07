@@ -11,11 +11,6 @@ const initialState = {
         status: 'idle',
         error: null
     },
-    breedDetail: {
-        item: {},
-        status: 'idle',
-        error: null
-    },
     newBreed: {
         item: {},
         status: 'idle',
@@ -52,16 +47,16 @@ export default function reducer(state = initialState, action) {
         case actionTypes.FETCH_BREEDS_SUCCEEDED:
             return {
                 ...state,
-                filters: {
+                filters: action.payload.keepFilters ? state.filters : {
                     temperaments: [],
                     source: '',
                     weight: { min: 0, max: 0 }
                 },
                 breeds: {
                     ...state.breeds,
-                    items: action.payload
+                    items: action.payload.breeds
                 },
-                searchResults: action.payload
+                searchResults: action.payload.breeds
             }
         case actionTypes.FETCH_BREEDS_FAILED:
             return {
@@ -79,79 +74,6 @@ export default function reducer(state = initialState, action) {
                 breeds: {
                     ...state.breeds,
                     status: 'succeeded',
-                }
-            }
-        case actionTypes.FETCH_BREED_REQUESTED:
-            return {
-                ...state,
-                breedDetail: {
-                    ...state.breedDetail,
-                    status: 'loading',
-                    error: null
-                }
-            }
-        case actionTypes.FETCH_BREED_SUCCEEDED:
-            return {
-                ...state,
-                breedDetail: {
-                    ...state.breedDetail,
-                    status: 'succeeded',
-                    item: action.payload
-                }
-            }
-        case actionTypes.FETCH_BREED_FAILED:
-            return {
-                ...state,
-                breedDetail: {
-                    ...state.breedDetail,
-                    status: 'failed',
-                    error: action.payload,
-                    item: {}
-                }
-            }
-        case actionTypes.FETCH_BREED_CLEARED:
-            return {
-                ...state,
-                breedDetail: {}
-            }
-        case actionTypes.NEW_BREED_STATUS_CLEARED:
-            return {
-                ...state,
-                newBreed: {
-                    item: {},
-                    status: 'idle',
-                    error: null
-                }
-            }
-        case actionTypes.NEW_BREED_REQUESTED:
-            return {
-                ...state,
-                newBreed: {
-                    ...state.newBreed,
-                    status: 'creating',
-                    error: null
-                }
-            }
-        case actionTypes.NEW_BREED_SUCCEEDED:
-            return {
-                ...state,
-                newBreed: {
-                    ...state.newBreed,
-                    item: action.payload.breed,
-                    status: 'succeeded'
-                },
-                breeds: {
-                    ...state.breeds,
-                    items: action.payload.addToBreeds ? [...state.breeds.items, action.payload.breed] : state.breeds.items
-                },
-                searchResults: action.payload.addToBreeds ? [...state.searchResults, action.payload.breed] : state.searchResults
-            };
-        case actionTypes.NEW_BREED_FAILED:
-            return {
-                ...state,
-                newBreed: {
-                    status: 'failed',
-                    error: action.payload
                 }
             }
         case actionTypes.TEMPERAMENT_FILTER_ADDED:

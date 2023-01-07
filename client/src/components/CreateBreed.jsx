@@ -5,11 +5,12 @@ import styles from './CreateBreed.module.css';
 import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
 import Select from './Select.jsx';
-import { createBreed, fetchTemperaments } from '../redux/actions.js';
+import { fetchTemperaments, fetchBreeds } from '../redux/actions.js';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
+import { postBreed } from '../redux/api.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
@@ -26,15 +27,19 @@ function CreateBreed() {
         lifeSpanMin: '',
         lifeSpanMax: '',
         lifeSpanError: '',
+        temperaments: [],
+        temperamentsError: 'error'
     });
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-    const [selectedTemperaments, setSelectedTemperaments] = useState([]);
-    const temperaments = useSelector(state => state.temperaments.items);
+    // const [selectedTemperaments, setSelectedTemperaments] = useState([]);
+    const [newBreed, setNewBreed] = useState({
+        status: 'idle',
+        error: null,
+        item: {}
+    });
+    // const temperaments = useSelector(state => state.temperaments.items);
     const fetchTemperamentsStatus = useSelector(state => state.temperaments.status);
     const fetchTemperamentsError = useSelector(state => state.temperaments.error);
-    const status = useSelector(state => state.newBreed.status);
-    const error = useSelector(state => state.newBreed.error);
-    const createdBreed = useSelector(state => state.newBreed.item);
 
     const handleRangeChange = (name, min, max, error) => {
         setBreed({
@@ -53,27 +58,55 @@ function CreateBreed() {
         })
     }
 
+    const handleSelectChange = (temperaments, error) => {
+        console.log('handleSelectChange: ', temperaments, error);
+        setBreed({
+            ...breed,
+            temperaments,
+            temperamentsError: error
+        })
+    }
+
     const handleSubmit = (event) => {
-        console.log('handleSubmit()', event);
+        // console.log('handleSubmit()', event);
         event.preventDefault();
         // Create new breed
         if (breed.nameError === '' &&
             breed.heightError === '' &&
             breed.weightError === '' &&
-            breed.lifeSpanError === ''
+            breed.lifeSpanError === '' &&
+            breed.temperamentsError === ''
         ) {
-            console.log('Creating new breed: ', breed);
             const newBreed = {
                 name: breed.name,
                 height: `${breed.heightMin} - ${breed.heightMax}`,
                 weight: `${breed.weightMin} - ${breed.weightMax}`,
                 life_span: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
-                temperaments: getSelectedTemperaments()
+                temperaments: breed.temperaments.map(t => t.name)
             }
 
-            dispatch(createBreed(newBreed));
+            createBreed(newBreed);
         }
+    }
 
+    const createBreed = async (breed) => {
+        try {
+            const response = await postBreed(breed);
+            console.log('New breed created: ', response.data);
+            setNewBreed({
+                status: 'succeeded',
+                error: null,
+                item: response.data
+            });
+        } catch (error) {
+            setNewBreed({
+                status: 'failed',
+                error: {
+                    message: error.response.data,
+                    status: error.response.status
+                }
+            });
+        }
     }
 
     useEffect(() => {
@@ -84,36 +117,22 @@ function CreateBreed() {
     }, [fetchTemperamentsStatus, dispatch]);
 
     useEffect(() => {
-        console.log('CreateBreed useEffect()');
+        console.log('CreateBreed useEffect() to validate form');
         if (breed.nameError === '' &&
             breed.heightError === '' &&
             breed.weightError === '' &&
-            breed.lifeSpanError === ''
+            breed.lifeSpanError === '' &&
+            breed.temperamentsError === ''
         ) {
             return setIsSubmitDisabled(false);
         }
 
         setIsSubmitDisabled(true);
-    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError])
+    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError, breed.temperamentsError])
 
-    const getSelectedTemperaments = () => {
-        const temperaments = [];
-        for (const temperament of selectedTemperaments) {
-            temperaments.push(temperament.name);
-        }
-
-        return temperaments;
-    }
-
-    const onChangeSelect = (id, action) => {
-        console.log('onChangeSelect', id, action);
-        if (action === 'add') {
-            const temperament = temperaments.find(t => t.id === id);
-            setSelectedTemperaments(old => [...old, temperament]);
-        } else if (action === 'remove') {
-            setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
-        }
-    }
+    useEffect(() => {
+        console.log('CreateBreed useEffect() to view status and newBreed values: ', newBreed.status, newBreed.item);
+    }, [newBreed]);
 
     if (fetchTemperamentsStatus === 'failed') {
         return <>
@@ -124,7 +143,7 @@ function CreateBreed() {
         </>;
     }
 
-    if (status === 'creating' || fetchTemperamentsStatus === 'loading') {
+    if (newBreed.status === 'creating' || fetchTemperamentsStatus === 'loading') {
         return <>
             <Header />
             <main>
@@ -133,21 +152,23 @@ function CreateBreed() {
         </>;
     }
 
-    if (status === 'failed') {
+    if (newBreed.status === 'failed') {
         return <>
             <Header />
             <main>
-                <Error title='Oops!' message={error.message} />;
+                <Error title='Oops!' message={newBreed.error.message} />;
             </main>
         </>;
     }
 
-    if (status === 'succeeded') {
+    if (newBreed.status === 'succeeded') {
+        console.log('newBreed after succeeded: ', newBreed.item);
+        dispatch(fetchBreeds(true));
+
         return <Redirect
             to={{
-                pathname: `/breed/${createdBreed.id}`,
-                search: `?source=${createdBreed.source}`,
-                state: { clearNewBreedStatus: true, title: 'Your newly created breed' }
+                pathname: `/breed/${newBreed.item.id}`,
+                search: `?source=${newBreed.item.source}`
             }}
         />
     }
@@ -163,7 +184,6 @@ function CreateBreed() {
                         <div>
                             <Input
                                 name="name"
-                                value={breed.name}
                                 label="Name"
                                 maxLength={constants.MAX_LENGTH_NAME}
                                 isRequired={true}
@@ -175,8 +195,6 @@ function CreateBreed() {
                                 name="lifeSpan"
                                 label="Life span (years)"
                                 isRequired={false}
-                                minValue={breed.lifeSpanMin}
-                                maxValue={breed.lifeSpanMax}
                                 onChange={handleRangeChange}
                             />
                         </div>
@@ -185,8 +203,6 @@ function CreateBreed() {
                                 name="height"
                                 label="Height (cm)"
                                 isRequired={true}
-                                minValue={breed.heightMin}
-                                maxValue={breed.heightMax}
                                 validRange={constants.VALID_RANGE_HEIGHT}
                                 onChange={handleRangeChange}
                             />
@@ -196,8 +212,6 @@ function CreateBreed() {
                                 name="weight"
                                 label="Weight (Kg)"
                                 isRequired={true}
-                                minValue={breed.weightMin}
-                                maxValue={breed.weightMax}
                                 validRange={constants.VALID_RANGE_WEIGHT}
                                 onChange={handleRangeChange}
                             />
@@ -207,8 +221,7 @@ function CreateBreed() {
                                 label="Temperaments"
                                 minItemsSelected={constants.MIN_TEMPERAMENTS}
                                 maxItemsSelected={constants.MAX_TEMPERAMENTS}
-                                items={selectedTemperaments}
-                                onChange={onChangeSelect}
+                                onChange={handleSelectChange}
                             />
                         </div>
                         <div className={styles.fullWidth}>

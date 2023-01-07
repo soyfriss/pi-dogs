@@ -1,4 +1,4 @@
-import { getBreeds, getBreed, postBreed, getTemperaments } from './api.js';
+import { getBreeds, getTemperaments } from './api.js';
 import * as actionTypes from './actionTypes.js';
 
 export function changeSearchText(value) {
@@ -7,7 +7,7 @@ export function changeSearchText(value) {
     }
 }
 
-export function fetchBreeds() {
+export function fetchBreeds(keepFilters = false) {
     return async function (dispatch, getState) {
         try {
             dispatch({ type: actionTypes.FETCH_BREEDS_REQUESTED });
@@ -15,11 +15,17 @@ export function fetchBreeds() {
             const { searchText } = getState();
             const response = await getBreeds(searchText);
 
-            dispatch({ type: actionTypes.FETCH_BREEDS_SUCCEEDED, payload: response.data });
+            dispatch({ type: actionTypes.FETCH_BREEDS_SUCCEEDED, payload: {breeds: response.data, keepFilters} });
 
-            // Sorting
-            const { sort } = getState();
-            dispatch(sortBreeds(sort));
+            if (keepFilters) {
+                // Filtering
+                dispatch(filterBreeds());
+            } else {
+                // Sorting
+                const { sort } = getState();
+                dispatch(sortBreeds(sort));
+            }
+
 
             dispatch({ type: actionTypes.FETCH_BREEDS_COMPLETED })
         } catch (error) {
@@ -33,66 +39,6 @@ export function fetchBreeds() {
             });
             // console.log(error);
         }
-    }
-}
-
-export function fetchBreed(id, source) {
-    return async function (dispatch) {
-        try {
-            dispatch({ type: actionTypes.FETCH_BREED_REQUESTED });
-
-            const response = await getBreed(id, source);
-
-            dispatch({ type: actionTypes.FETCH_BREED_SUCCEEDED, payload: response.data });
-        } catch (error) {
-            dispatch({
-                type: actionTypes.FETCH_BREED_FAILED,
-                payload: {
-                    message: error.response.data,
-                    status: error.response.status
-                }
-            });
-            // console.log(error);
-        }
-    }
-}
-
-export function clearNewBreedStatus() {
-    return function (dispatch) {
-        dispatch({ type: actionTypes.NEW_BREED_STATUS_CLEARED });
-    }
-}
-
-export function createBreed(breed) {
-    return async function (dispatch, getState) {
-
-        try {
-            dispatch({ type: actionTypes.NEW_BREED_REQUESTED });
-
-            const response = await postBreed(breed);
-
-            const { searchText, searchResults } = getState();
-
-            if (!searchText || (searchText && breed.name.toLowerCase().includes(searchText.toLowerCase()))) {
-                const breeds = [...searchResults];
-                breeds.push(response.data);
-
-                dispatch({ type: actionTypes.NEW_BREED_SUCCEEDED, payload: { breed: response.data, addToBreeds: true } });
-
-                dispatch(filterBreeds());
-            } else {
-                dispatch({ type: actionTypes.NEW_BREED_SUCCEEDED, payload: { breed: response.data, addToBreeds: false } });
-            }
-        } catch (error) {
-            dispatch({ type: actionTypes.NEW_BREED_FAILED, payload: error });
-            console.log('createBreed error: ', error);
-        }
-    }
-}
-
-export function clearFetchBreed() {
-    return function (dispatch) {
-        dispatch({ type: actionTypes.FETCH_BREED_CLEARED });
     }
 }
 

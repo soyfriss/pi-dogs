@@ -2,8 +2,12 @@ import React, { useState } from 'react';
 import styles from './Input.module.css';
 import * as constants from '../constants/input.js';
 
-function Input({ name, value, label, isRequired, maxLength = 524288, onChange }) {
+function Input({ name, label, isRequired, maxLength = 524288, onChange }) {
     // console.log('InputRange');
+    const [input, setInput] = useState({
+        value: '',
+        error: isRequired ? constants.FIELD_REQUIRED : ''
+    })
     const [showError, setShowError] = useState(false);
 
     const validate = (value) => {
@@ -17,7 +21,16 @@ function Input({ name, value, label, isRequired, maxLength = 524288, onChange })
         return '';
     }
 
-    const error = validate(value);
+    const handleChange = (event) => {
+        const error = validate(event.target.value);
+
+        setInput({
+            value: event.target.value,
+            error
+        });
+
+        onChange(name, event.target.value, error);
+    }
 
     return <>
         <div className={styles.container}>
@@ -26,14 +39,14 @@ function Input({ name, value, label, isRequired, maxLength = 524288, onChange })
                 type="text"
                 name={name}
                 placeholder={label}
-                value={value}
+                value={input.value}
                 maxLength={maxLength}
-                onChange={(e) => onChange(name, e.target.value, validate(e.target.value))}
+                onChange={handleChange}
                 onFocus={() => setShowError(false)}
                 onBlur={() => setShowError(true)}
             />
-            {showError && error &&
-                <p className="error">{error}</p>
+            {showError && input.error &&
+                <p className="error">{input.error}</p>
             }
         </div>
     </>
