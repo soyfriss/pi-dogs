@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './Home.module.css';
 import SearchInput from './SearchInput.jsx';
@@ -14,16 +14,19 @@ import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../redux/acti
 function Home() {
     const dispatch = useDispatch();
     const breeds = useSelector(state => state.breeds.items);
-    const fetchStatus = useSelector(state => state.breeds.status);
-    const error = useSelector(state => state.breeds.error);
-    const currentPage = useSelector(state => state.currentPage)
+    const fetchBreedsStatus = useSelector(state => state.breeds.status);
+    const fetchBreedsError = useSelector(state => state.breeds.error);
+    const fetchTemperamentsStatus = useSelector(state => state.temperaments.status);
+    const fetchTemperamentsError = useSelector(state => state.temperaments.error);
+    const currentPage = useSelector(state => state.currentPage);
 
     useEffect(() => {
         console.log('Home useEffect()');
-        if (fetchStatus === 'idle')
+        if (fetchBreedsStatus === 'idle') {
             dispatch(fetchBreeds());
-        // dispatch(fetchTemperaments());
-    }, [fetchStatus, dispatch]);
+            dispatch(fetchTemperaments());
+        }
+    }, [fetchBreedsStatus, fetchTemperamentsStatus, dispatch]);
 
     console.log('Rendering Home');
     const breedsPerPage = 8;
@@ -34,7 +37,11 @@ function Home() {
     const filterBreeds = breeds.slice(indexOfFirstBreed, indexOfLastBreed);
     // console.log(indexOfFirstBreed, indexOfLastBreed);
 
-    if (fetchStatus === 'loading') {
+    const setCurrentPage = (value) => {
+        dispatch(changeCurrentPage(value));
+    }
+
+    if (fetchBreedsStatus === 'loading' || fetchTemperamentsStatus === 'loading') {
         return <>
             <Header />
             <main>
@@ -43,17 +50,22 @@ function Home() {
         </>;
     }
 
-    if (fetchStatus === 'failed') {
+    if (fetchBreedsStatus === 'failed') {
         return <>
             <Header />
             <main>
-                <Error title='Oops!' message={error.message} />;
+                <Error title='Oops!' message={fetchBreedsError.message} />
             </main>
         </>;
     }
 
-    const setCurrentPage = (value) => {
-        dispatch(changeCurrentPage(value));
+    if (fetchTemperamentsStatus === 'failed') {
+        return <>
+            <Header />
+            <main>
+                <Error title='Oops!' message={fetchTemperamentsError.message} />
+            </main>
+        </>;
     }
 
     return <>

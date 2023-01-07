@@ -3,14 +3,29 @@
     align-items: center;
 }
 
+.logoLink {
+    text-decoration: none;
+    color: var(--primary-text-color);
+}
+
+.logo {
+    background-color: var(--accent-color);
+    background-color: #4c3a27;
+    color: whitesmoke;
+    padding: 0.5em;
+    margin-right: 0.25em;
+    border-radius: 50%;
+    font-size: 1.0rem;
+    font-weight: bold;
+    text-transform: lowercase;
+}
+
+.logo, .text {
+    margin-top: 0;
+    margin-bottom: 0;
+}
+
 .text {
     font-size: 1.5rem;
-    margin: 0;
-    margin-left: 0.5em;
+    padding: 0.3em 0.1em;
 }
-
-.img {
-    width: 3rem;
-    /* vertical-align:middle; */
-}
-

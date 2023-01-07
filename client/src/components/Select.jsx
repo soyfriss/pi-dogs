@@ -1,25 +1,13 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { fetchTemperaments } from '../redux/actions';
+import { useSelector } from 'react-redux';
 import styles from './Select.module.css';
 import Item from './Item.jsx';
 
 function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0, onChange }) {
-    const dispatch = useDispatch();
     const [showError, setShowError] = useState(false);
     const [isAddDisabled, setIsAddDisabled] = useState(true);
-    // const [selectedTemperaments, setSelectedTemperaments] = useState([]);
-    const temperaments = useSelector(state => state.temperaments);
+    const temperaments = useSelector(state => state.temperaments.items);
     const selectRef = useRef();
-
-    // Enable after the next version of fetchTemperaments() !!!!!!!!!!!!!!!!!
-    // useEffect(() => {
-    //     dispatch(fetchTemperaments());
-    // }, [dispatch]);
-
-    // useEffect(() => {
-    //     onChange(name, selectedTemperaments);
-    // }, selectedTemperaments);
 
     const enableAddTemperament = () => {
         console.log('enableAddTemperament: ', selectRef.current?.value);
@@ -36,11 +24,10 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
 
         setIsAddDisabled(false);
     }
-
-    useEffect(() => {
-        console.log('Select useEffect()');
-        enableAddTemperament();
-    }, [enableAddTemperament]);
+    // useEffect(() => {
+    //     console.log('Select useEffect()');
+    //     enableAddTemperament();
+    // }, []);
 
     const addTemperament = () => {
         // console.log('selectRef: ', selectRef.current.value);
@@ -55,7 +42,6 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
         onChange(id, 'remove');
     }
 
-
     const validate = () => {
         if (minItemsSelected && items.length < minItemsSelected) {
             return `Select at least ${minItemsSelected} ${minItemsSelected === 1 ? 'item' : 'items'}`;
@@ -63,8 +49,6 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
 
         return '';
     }
-
-    const error = validate();
 
     const createLabel = () => {
         const max = maxItemsSelected === 0 ? 'unlimited' : maxItemsSelected;
@@ -106,8 +90,8 @@ function Select({ name, label, items, minItemsSelected = 0, maxItemsSelected = 0
                     ADD
                 </button>
             </div>
-            {showError && error &&
-                <p className="error">{error}</p>
+            {showError && validate() &&
+                <p className="error">{validate()}</p>
             }
             <div className={styles.selectedTemperaments}>
                 {items.map(t => <Item id={t.id} key={t.id} name={t.name} remove={removeTemperament} />)}

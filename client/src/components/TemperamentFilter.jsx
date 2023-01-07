@@ -7,7 +7,7 @@ import { changeCurrentFilterPage } from '../redux/actions.js';
 function TemperamentFilter({ addTemperamentFilter }) {
     const dispatch = useDispatch();
 
-    const temperaments = useSelector(state => state.temperaments);
+    const temperaments = useSelector(state => state.temperaments.items);
     const breeds = useSelector(state => state.breeds.items);
     const activeFilters = useSelector(state => state.filters.temperaments);
 

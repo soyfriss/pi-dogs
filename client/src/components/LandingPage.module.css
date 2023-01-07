@@ -12,6 +12,10 @@
         "element3 element4 element4";
 }
 
+.div1, .div2 {
+    margin-top: 1em;
+}
+
 .div1 {
     grid-area: element1;
 }
@@ -21,7 +25,6 @@
     display: flex;
     justify-content: flex-end;
     align-items: flex-start;
-    margin-top: 0.25em;
 }
 
 .div3 {

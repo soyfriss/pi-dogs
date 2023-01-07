@@ -1,5 +1,4 @@
 import { Route, Switch } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
 import Header from './components/Header.jsx';
 import Home from './components/Home.jsx';
 import CreateBreed from './components/CreateBreed.jsx';
@@ -11,8 +10,6 @@ import LandingPage from './components/LandingPage.jsx';
 
 
 function App() {
-  const dispatch = useDispatch();
-
   useEffect(() => {
     console.log('App useEffect()');
   }, []);

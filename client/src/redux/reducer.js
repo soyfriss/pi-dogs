@@ -4,7 +4,16 @@ const initialState = {
         status: 'idle',
         error: null
     },
-    breedDetail: {},
+    temperaments: {
+        items: [],
+        status: 'idle',
+        error: null
+    },
+    breedDetail: {
+        item: {},
+        status: 'idle',
+        error: null
+    },
     newBreed: {
         item: {},
         status: 'idle',
@@ -12,7 +21,6 @@ const initialState = {
     },
     searchResults: [],
     searchText: '',
-    temperaments: [],
     filters: {
         temperaments: [],
         source: '',
@@ -20,7 +28,7 @@ const initialState = {
     },
     currentPage: 1,
     currentFilterPage: 1,
-    sort: 'nameAsc'
+    sort: 'nameAsc',
 };
 
 export default function reducer(state = initialState, action) {
@@ -49,10 +57,9 @@ export default function reducer(state = initialState, action) {
                 },
                 breeds: {
                     ...state.breeds,
-                    items: action.payload.breeds
+                    items: action.payload
                 },
-                searchResults: action.payload.breeds,
-                temperaments: action.payload.temperaments
+                searchResults: action.payload
             }
         case 'breeds/fetchBreedsFailed':
             return {
@@ -75,20 +82,30 @@ export default function reducer(state = initialState, action) {
         case 'breeds/fetchBreedRequested':
             return {
                 ...state,
-                loadingBreedDetail: true,
-                error: undefined
+                breedDetail: {
+                    ...state.breedDetail,
+                    status: 'loading',
+                    error: null
+                }
             }
         case 'breeds/fetchBreedSucceeded':
             return {
                 ...state,
-                loadingBreedDetail: false,
-                breedDetail: action.payload,
+                breedDetail: {
+                    ...state.breedDetail,
+                    status: 'succeeded',
+                    item: action.payload
+                }
             }
         case 'breeds/fetchBreedFailed':
             return {
                 ...state,
-                loadingBreedDetail: false,
-                error: action.payload
+                breedDetail: {
+                    ...state.breedDetail,
+                    status: 'failed',
+                    error: action.payload,
+                    item: {}
+                }
             }
         case 'breeds/breedCleared':
             return {
@@ -230,20 +247,30 @@ export default function reducer(state = initialState, action) {
         case 'temperaments/fetchTemperamentsRequested':
             return {
                 ...state,
-                loadingTemperaments: true,
-                error: ''
+                temperaments: {
+                    ...state.temperaments,
+                    status: 'loading',
+                    error: null
+                }
             }
         case 'temperaments/fetchTemperamentsSucceeded':
             return {
                 ...state,
-                loadingTemperaments: false,
-                temperaments: action.payload
+                temperaments: {
+                    ...state.temperaments,
+                    status: 'succeeded',
+                    items: action.payload
+                }
             }
         case 'temperaments/fetchTemperamentsFailed':
             return {
                 ...state,
-                loadingTemperaments: false,
-                error: action.payload
+                temperaments: {
+                    ...state.temperaments,
+                    status: 'failed',
+                    error: action.payload,
+                    items: []
+                }
             }
         default:
             return state;

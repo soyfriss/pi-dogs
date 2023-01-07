@@ -5,7 +5,7 @@ import styles from './CreateBreed.module.css';
 import InputRange from './InputRange.jsx';
 import Input from './Input.jsx';
 import Select from './Select.jsx';
-import { createBreed } from '../redux/actions.js';
+import { createBreed, fetchTemperaments } from '../redux/actions.js';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 import Header from './Header.jsx';
@@ -13,7 +13,6 @@ import * as constants from '../constants/createBreed.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
-    // const history = useHistory();
 
     const [breed, setBreed] = useState({
         name: '',
@@ -29,10 +28,10 @@ function CreateBreed() {
         lifeSpanError: '',
     });
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
-    const [canShowError, setCanShowError] = useState(true);
-    const [canShowNameError, setCanShowNameError] = useState(false);
     const [selectedTemperaments, setSelectedTemperaments] = useState([]);
-    const temperaments = useSelector(state => state.temperaments);
+    const temperaments = useSelector(state => state.temperaments.items);
+    const fetchTemperamentsStatus = useSelector(state => state.temperaments.status);
+    const fetchTemperamentsError = useSelector(state => state.temperaments.error);
     const status = useSelector(state => state.newBreed.status);
     const error = useSelector(state => state.newBreed.error);
     const createdBreed = useSelector(state => state.newBreed.item);
@@ -78,6 +77,13 @@ function CreateBreed() {
     }
 
     useEffect(() => {
+        console.log('CreateBreed useEffect() to fetch temperaments');
+        if (fetchTemperamentsStatus === 'idle') {
+            dispatch(fetchTemperaments());
+        }
+    }, [fetchTemperamentsStatus, dispatch]);
+
+    useEffect(() => {
         console.log('CreateBreed useEffect()');
         if (breed.nameError === '' &&
             breed.heightError === '' &&
@@ -109,7 +115,16 @@ function CreateBreed() {
         }
     }
 
-    if (status === 'creating') {
+    if (fetchTemperamentsStatus === 'failed') {
+        return <>
+            <Header />
+            <main>
+                <Error title='Oops!' message={fetchTemperamentsError.message} />
+            </main>
+        </>;
+    }
+
+    if (status === 'creating' || fetchTemperamentsStatus === 'loading') {
         return <>
             <Header />
             <main>
@@ -153,7 +168,6 @@ function CreateBreed() {
                                 maxLength={constants.MAX_LENGTH_NAME}
                                 isRequired={true}
                                 onChange={handleNameChange}
-                                canShowError={canShowNameError}
                             />
                         </div>
                         <div>
@@ -164,7 +178,7 @@ function CreateBreed() {
                                 minValue={breed.lifeSpanMin}
                                 maxValue={breed.lifeSpanMax}
                                 onChange={handleRangeChange}
-                                canShowError={canShowError} />
+                            />
                         </div>
                         <div>
                             <InputRange
@@ -175,7 +189,7 @@ function CreateBreed() {
                                 maxValue={breed.heightMax}
                                 validRange={constants.VALID_RANGE_HEIGHT}
                                 onChange={handleRangeChange}
-                                canShowError={canShowError} />
+                            />
                         </div>
                         <div>
                             <InputRange
@@ -186,7 +200,7 @@ function CreateBreed() {
                                 maxValue={breed.weightMax}
                                 validRange={constants.VALID_RANGE_WEIGHT}
                                 onChange={handleRangeChange}
-                                canShowError={canShowError} />
+                            />
                         </div>
                         <div className={styles.fullWidth}>
                             <Select

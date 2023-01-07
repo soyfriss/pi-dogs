@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { getBreeds, getBreed, postBreed, getTemperaments } from './api.js';
 
 export function changeSearchText(value) {
@@ -12,16 +11,10 @@ export function fetchBreeds() {
         try {
             dispatch({ type: 'breeds/fetchBreedsRequested' });
 
-            // const baseEndpoint = 'http://localhost:3001/dogs';
             const { searchText } = getState();
-            // const endPoint = searchText ? `${baseEndpoint}?name=${searchText}` : baseEndpoint;
-            // console.log('endPoint: ', endPoint);
-            const responseBreeds = await getBreeds(searchText);
-            const responseTemperaments = await getTemperaments();
-            const temperaments = responseTemperaments.data.sort(sortBreedsByNameAsc());
+            const response = await getBreeds(searchText);
 
-            // dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: { breeds: response.data, filters: emptyFilters } });
-            dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: { breeds: responseBreeds.data, temperaments } });
+            dispatch({ type: 'breeds/fetchBreedsSucceeded', payload: response.data });
 
             // Sorting
             const { sort } = getState();
@@ -77,7 +70,7 @@ export function createBreed(breed) {
 
             const response = await postBreed(breed);
 
-            const { searchText, searchResults, sort } = getState();
+            const { searchText, searchResults } = getState();
 
             if (!searchText || (searchText && breed.name.toLowerCase().includes(searchText.toLowerCase()))) {
                 const breeds = [...searchResults];
@@ -112,7 +105,7 @@ export function sortBreeds(criteria) {
         if (criteria === 'nameAsc') {
             dispatch({
                 type: 'breeds/breedsByNameAscSorted',
-                payload: breedsSorted.sort(sortBreedsByNameAsc())
+                payload: breedsSorted.sort(sortByNameAsc())
             });
         }
         if (criteria === 'nameDesc') {
@@ -136,7 +129,7 @@ export function sortBreeds(criteria) {
     }
 }
 
-function sortBreedsByNameAsc() {
+function sortByNameAsc() {
     return ((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 }
 
@@ -313,9 +306,9 @@ export function fetchTemperaments() {
         try {
             await dispatch({ type: 'temperaments/fetchTemperamentsRequested' });
 
-            const baseEndpoint = 'http://localhost:3001/temperaments';
-            const response = await axios.get(baseEndpoint);
-            dispatch({ type: 'temperaments/fetchTemperamentsSucceeded', payload: response.data });
+            const response = await getTemperaments();
+            const temperaments = response.data.sort(sortByNameAsc());
+            dispatch({ type: 'temperaments/fetchTemperamentsSucceeded', payload: temperaments });
 
         } catch (error) {
             dispatch({

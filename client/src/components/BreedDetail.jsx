@@ -5,14 +5,16 @@ import styles from './BreedDetail.module.css';
 import { fetchBreed, clearCreateBreedStatus } from '../redux/actions';
 import Loader from './Loader.jsx';
 import Header from './Header.jsx';
+import Error from './Error.jsx';
 import noImage from '../images/no-image.png';
 
 function BreedDetail() {
     const { id } = useParams();
     const { search, state } = useLocation();
     const dispatch = useDispatch();
-    const loading = useSelector(state => state.loadingBreedDetail);
-    const breed = useSelector(state => state.breedDetail);
+    const fetchStatus = useSelector(state => state.breedDetail.status);
+    const breed = useSelector(state => state.breedDetail.item);
+    const error = useSelector(state => state.breedDetail.error);
 
     useEffect(() => {
         console.log('BreedDetail useEffect() to clear create breed status');
@@ -26,7 +28,7 @@ function BreedDetail() {
         dispatch(fetchBreed(id, search));
     }, [dispatch, id, search]);
 
-    if (loading) {
+    if (fetchStatus === 'loading') {
         return <>
             <Header />
             <main>
@@ -35,7 +37,14 @@ function BreedDetail() {
         </>;
     }
 
-    // Check for error!!!!!!!!!!!!!!!!!!
+    if (fetchStatus === 'failed') {
+        return <>
+            <Header />
+            <main>
+                <Error title='Oops!' message={error.message} />;
+            </main>
+        </>;
+    }
 
     return <>
         <Header />

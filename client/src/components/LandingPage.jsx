@@ -24,7 +24,7 @@ function LandingPage() {
                         <NavLink to="/home">
                             <button type='button' className={`${styles.cta} ${styles.big}`}>Try it free</button>
                         </NavLink>
-                        <p className={styles.small}>No credit card required</p>
+                        <p className={styles.small}>No registration required</p>
                     </div>
                 </div>
                 <div className={styles.div4}>
