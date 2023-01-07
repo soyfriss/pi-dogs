@@ -8,6 +8,7 @@ import Sort from './Sort.jsx';
 import Pagination from './Pagination.jsx';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
+import Header from './Header.jsx';
 import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../redux/actions.js';
 
 function Home() {
@@ -34,11 +35,21 @@ function Home() {
     // console.log(indexOfFirstBreed, indexOfLastBreed);
 
     if (fetchStatus === 'loading') {
-        return <Loader />;
+        return <>
+            <Header />
+            <main>
+                <Loader />;
+            </main>
+        </>;
     }
 
     if (fetchStatus === 'failed') {
-        return <Error title='Oops!' message={error.message} />;
+        return <>
+            <Header />
+            <main>
+                <Error title='Oops!' message={error.message} />;
+            </main>
+        </>;
     }
 
     const setCurrentPage = (value) => {
@@ -46,26 +57,29 @@ function Home() {
     }
 
     return <>
-        <SearchInput />
-        <div className={styles.content}>
-            <div className={styles.filters}>
-                <Filters />
+        <Header />
+        <main>
+            <SearchInput />
+            <div className={styles.content}>
+                <div className={styles.filters}>
+                    <Filters />
+                </div>
+                <div className={styles.cards}>
+                    <Sort />
+                    <Cards breeds={filterBreeds} />
+                    {totalBreeds > breedsPerPage && (
+                        <div className={styles.centered}>
+                            <Pagination
+                                totalItems={totalBreeds}
+                                itemsPerPage={breedsPerPage}
+                                currentPage={currentPage}
+                                setCurrentPage={setCurrentPage}
+                            />
+                        </div>
+                    )}
+                </div>
             </div>
-            <div className={styles.cards}>
-                <Sort />
-                <Cards breeds={filterBreeds} />
-                {totalBreeds > breedsPerPage && (
-                    <div className={styles.centered}>
-                        <Pagination
-                            totalItems={totalBreeds}
-                            itemsPerPage={breedsPerPage}
-                            currentPage={currentPage}
-                            setCurrentPage={setCurrentPage}
-                        />
-                    </div>
-                )}
-            </div>
-        </div>
+        </main>
     </>;
 }
 

@@ -8,6 +8,7 @@ import Select from './Select.jsx';
 import { createBreed } from '../redux/actions.js';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
+import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
 
 function CreateBreed() {
@@ -109,11 +110,21 @@ function CreateBreed() {
     }
 
     if (status === 'creating') {
-        return <Loader />;
+        return <>
+            <Header />
+            <main>
+                <Loader />;
+            </main>
+        </>;
     }
 
     if (status === 'failed') {
-        return <Error title='Oops!' message={error.message} />;
+        return <>
+            <Header />
+            <main>
+                <Error title='Oops!' message={error.message} />;
+            </main>
+        </>;
     }
 
     if (status === 'succeeded') {
@@ -128,75 +139,78 @@ function CreateBreed() {
 
     return <>
         {console.log('Rendering CreateBreed')}
-        <div className={styles.section}>
-            <p className={styles.title}>New breed</p>
-            <div className={styles.body}>
-                <form className={styles.form} onSubmit={handleSubmit}>
-                    <div>
-                        <Input
-                            name="name"
-                            value={breed.name}
-                            label="Name"
-                            maxLength={constants.MAX_LENGTH_NAME}
-                            isRequired={true}
-                            onChange={handleNameChange}
-                            canShowError={canShowNameError}
-                        />
-                    </div>
-                    <div>
-                        <InputRange
-                            name="lifeSpan"
-                            label="Life span (years)"
-                            isRequired={false}
-                            minValue={breed.lifeSpanMin}
-                            maxValue={breed.lifeSpanMax}
-                            onChange={handleRangeChange}
-                            canShowError={canShowError} />
-                    </div>
-                    <div>
-                        <InputRange
-                            name="height"
-                            label="Height (cm)"
-                            isRequired={true}
-                            minValue={breed.heightMin}
-                            maxValue={breed.heightMax}
-                            validRange={constants.VALID_RANGE_HEIGHT}
-                            onChange={handleRangeChange}
-                            canShowError={canShowError} />
-                    </div>
-                    <div>
-                        <InputRange
-                            name="weight"
-                            label="Weight (Kg)"
-                            isRequired={true}
-                            minValue={breed.weightMin}
-                            maxValue={breed.weightMax}
-                            validRange={constants.VALID_RANGE_WEIGHT}
-                            onChange={handleRangeChange}
-                            canShowError={canShowError} />
-                    </div>
-                    <div className={styles.fullWidth}>
-                        <Select
-                            label="Temperaments"
-                            minItemsSelected={constants.MIN_TEMPERAMENTS}
-                            maxItemsSelected={constants.MAX_TEMPERAMENTS}
-                            items={selectedTemperaments}
-                            onChange={onChangeSelect}
-                        />
-                    </div>
-                    <div className={styles.fullWidth}>
-                        <button
-                            type="submit"
-                            className={`${styles.btn} ${isSubmitDisabled && styles.btnDisabled}`}
-                            disabled={isSubmitDisabled}
-                        >
-                            CREATE
-                        </button>
+        <Header />
+        <main>
+            <div className={styles.section}>
+                <p className={styles.title}>New breed</p>
+                <div className={styles.body}>
+                    <form className={styles.form} onSubmit={handleSubmit}>
+                        <div>
+                            <Input
+                                name="name"
+                                value={breed.name}
+                                label="Name"
+                                maxLength={constants.MAX_LENGTH_NAME}
+                                isRequired={true}
+                                onChange={handleNameChange}
+                                canShowError={canShowNameError}
+                            />
+                        </div>
+                        <div>
+                            <InputRange
+                                name="lifeSpan"
+                                label="Life span (years)"
+                                isRequired={false}
+                                minValue={breed.lifeSpanMin}
+                                maxValue={breed.lifeSpanMax}
+                                onChange={handleRangeChange}
+                                canShowError={canShowError} />
+                        </div>
+                        <div>
+                            <InputRange
+                                name="height"
+                                label="Height (cm)"
+                                isRequired={true}
+                                minValue={breed.heightMin}
+                                maxValue={breed.heightMax}
+                                validRange={constants.VALID_RANGE_HEIGHT}
+                                onChange={handleRangeChange}
+                                canShowError={canShowError} />
+                        </div>
+                        <div>
+                            <InputRange
+                                name="weight"
+                                label="Weight (Kg)"
+                                isRequired={true}
+                                minValue={breed.weightMin}
+                                maxValue={breed.weightMax}
+                                validRange={constants.VALID_RANGE_WEIGHT}
+                                onChange={handleRangeChange}
+                                canShowError={canShowError} />
+                        </div>
+                        <div className={styles.fullWidth}>
+                            <Select
+                                label="Temperaments"
+                                minItemsSelected={constants.MIN_TEMPERAMENTS}
+                                maxItemsSelected={constants.MAX_TEMPERAMENTS}
+                                items={selectedTemperaments}
+                                onChange={onChangeSelect}
+                            />
+                        </div>
+                        <div className={styles.fullWidth}>
+                            <button
+                                type="submit"
+                                className={`${styles.btn} ${isSubmitDisabled && styles.btnDisabled}`}
+                                disabled={isSubmitDisabled}
+                            >
+                                CREATE
+                            </button>
 
-                    </div>
-                </form>
-            </div>
-        </div >
+                        </div>
+                    </form>
+                </div>
+            </div >
+        </main>
     </>;
 }
 

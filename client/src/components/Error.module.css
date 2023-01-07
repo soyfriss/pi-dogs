@@ -1,19 +1,18 @@
 .container {
     display: flex;
-    /* justify-content: center; */
-    width: 40%;
-    height: 100%;
-    margin: 0 auto;
+    justify-content: center;
     align-items: center;
     /* border: 1px solid blue; */
 }
 
 .messageContainer {
-    width: 50%;
+    max-width: 10em;
+    /* border: 1px solid pink; */
 }
 
 .img {
-    width: 50%;
+    width: 100%;
+    max-width: 30em;
     margin-left: 1em;
 }
 

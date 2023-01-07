@@ -1,0 +1,96 @@
+.container {
+    height: 100vh;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(4, 1fr);
+    grid-column-gap: 2em;
+    grid-row-gap: 2em;
+    grid-template-areas:
+        "element1 element1 element2"
+        "element3 element4 element4"
+        "element3 element4 element4"
+        "element3 element4 element4";
+}
+
+.div1 {
+    grid-area: element1;
+}
+
+.div2 {
+    grid-area: element2;
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-start;
+    margin-top: 0.25em;
+}
+
+.div3 {
+    grid-area: element3;
+}
+
+.div4 {
+    grid-area: element4;
+}
+
+.landingImg {
+    width: 100%;
+}
+
+.div3 h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: #cf924d;
+    text-transform: uppercase;
+}
+
+.div3 h1 {
+    margin: 0;
+    line-height: 1.2;
+    font-size: 2.3rem;
+}
+
+.div3 p {
+    margin-top: 0.5em;
+    font-size: 1.2rem;
+}
+
+.div3 .small {
+    font-size: 0.9rem;
+}
+
+.cta {
+    cursor: pointer;
+    border: none;
+    background-color: #4c3a27;
+    color: whitesmoke;
+    padding: 0.5em 1.5em;
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 1.25em;
+}
+
+.big {
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.cta:hover,
+.cta:focus {
+    opacity: 0.8;
+}
+
+.ctaBigContainer {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: auto;
+}
+
+.highlight {
+    background: linear-gradient(120deg, #cf924d 0%, #cf924d 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 90%;
+}

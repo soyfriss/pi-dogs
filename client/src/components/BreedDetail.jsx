@@ -4,6 +4,7 @@ import { NavLink, useParams, useLocation } from 'react-router-dom';
 import styles from './BreedDetail.module.css';
 import { fetchBreed, clearCreateBreedStatus } from '../redux/actions';
 import Loader from './Loader.jsx';
+import Header from './Header.jsx';
 import noImage from '../images/no-image.png';
 
 function BreedDetail() {
@@ -26,27 +27,37 @@ function BreedDetail() {
     }, [dispatch, id, search]);
 
     if (loading) {
-        return <Loader />;
+        return <>
+            <Header />
+            <main>
+                <Loader />;
+            </main>
+        </>;
     }
 
-    return <>
-        <div className={styles.section}>
-            <p className={styles.title}>{ (state && state.title) ? state.title : 'Breed detail' }</p>
+    // Check for error!!!!!!!!!!!!!!!!!!
 
-            <div className={styles.body}>
-                <div className={styles.text}>
-                    <p className={styles.breedName}>{breed.name}</p>
-                    <p>Weight: <span className={styles.subtitle}>{`${breed.weight} Kg`}</span></p>
-                    <p>Height: <span className={styles.subtitle}>{`${breed.height} cm`}</span></p>
-                    <p>Life span: <span className={styles.subtitle}>{breed.lifeSpan}</span></p>
-                    <p>Temperaments: <span className={styles.subtitle}>{breed.temperament}</span></p>
-                    <NavLink to="/home" className={styles.navLink}>
-                        Back
-                    </NavLink>
+    return <>
+        <Header />
+        <main>
+            <div className={styles.section}>
+                <p className={styles.title}>{(state && state.title) ? state.title : 'Breed detail'}</p>
+
+                <div className={styles.body}>
+                    <div className={styles.text}>
+                        <p className={styles.breedName}>{breed.name}</p>
+                        <p>Weight: <span className={styles.subtitle}>{`${breed.weight} Kg`}</span></p>
+                        <p>Height: <span className={styles.subtitle}>{`${breed.height} cm`}</span></p>
+                        <p>Life span: <span className={styles.subtitle}>{breed.lifeSpan}</span></p>
+                        <p>Temperaments: <span className={styles.subtitle}>{breed.temperament}</span></p>
+                        <NavLink to="/home" className={styles.navLink}>
+                            Back
+                        </NavLink>
+                    </div>
+                    <img className={styles.img} src={breed.image ? breed.image : noImage} alt="breed" />
                 </div>
-                <img className={styles.img} src={breed.image ? breed.image : noImage} alt="breed" />
             </div>
-        </div>
+        </main>
     </>;
 }
 

@@ -7,39 +7,41 @@ import BreedDetail from './components/BreedDetail.jsx';
 import About from './components/About.jsx'
 import Error from './components/Error.jsx';
 import { useEffect } from 'react';
-import { fetchBreeds, fetchTemperaments } from './redux/actions.js';
+import LandingPage from './components/LandingPage.jsx';
 
 
 function App() {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   console.log('App useEffect()');
-  //   dispatch(fetchBreeds());
-  //   dispatch(fetchTemperaments());
-  // }, [dispatch]);
-
   useEffect(() => {
-        console.log('App useEffect()');
+    console.log('App useEffect()');
   }, []);
 
   return (
     <>
-      <Header />
-      <main>
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route exact path="/home" component={Home} />
-          <Route exact path="/breed/create" component={CreateBreed} />
-          <Route exact path="/breed/:id">
-            <BreedDetail />
-          </Route>
-          <Route exact path="/about" component={About} />
-          <Route path='*'>
+      <Switch>
+        <Route exact path="/">
+          <LandingPage />
+        </Route>
+        <Route exact path="/home">
+          <Home />
+        </Route>
+        <Route exact path="/breed/create">
+          <CreateBreed />
+        </Route>
+        <Route exact path="/breed/:id">
+          <BreedDetail />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route path='*'>
+          <Header />
+          <main>
             <Error title='Oops!' message="We can't seem to find what you're looking for" />
-          </Route>
-        </Switch>
-      </main>
+          </main>
+        </Route>
+      </Switch>
     </>
   );
 }
