@@ -24,7 +24,11 @@ const getBreeds = async (name) => {
     // console.log('breeds from API: ', breeds);
 
     if (name) {
-        breeds = breeds.filter(breed => breed.name.toLowerCase().includes(name.toLowerCase()));
+        if (name.length === 1) {
+            breeds = breeds.filter(breed => breed.name.toLowerCase().startsWith(name.toLowerCase()));
+        } else {
+            breeds = breeds.filter(breed => breed.name.toLowerCase().includes(name.toLowerCase()));
+        }
     }
 
     breeds = breeds.map(breed => ({

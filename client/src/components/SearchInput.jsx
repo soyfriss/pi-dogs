@@ -15,7 +15,7 @@ function SearchInput() {
     }, [oldSearchText]);
 
     const handleFetchBreeds = () => {
-        dispatch(changeSearchText(searchText));
+        dispatch(changeSearchText(searchText.trim()));
         dispatch(fetchBreeds());
         dispatch(changeCurrentPage(1));
     }

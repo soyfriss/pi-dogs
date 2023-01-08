@@ -168,7 +168,8 @@ function CreateBreed() {
         return <Redirect
             to={{
                 pathname: `/breed/${newBreed.item.id}`,
-                search: `?source=${newBreed.item.source}`
+                search: `?source=${newBreed.item.source}`,
+                state: {title: 'Your newly created breed'}
             }}
         />
     }

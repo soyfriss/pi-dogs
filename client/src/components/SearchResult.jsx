@@ -4,6 +4,12 @@ import styles from './SearchResult.module.css';
 
 function SearchResult({ totalBreeds }) {
     const searchedText = useSelector(state => state.searchText);
+
+    let searchedTextToShow = searchedText ? searchedText : 'All breeds';
+    if (searchedText.length === 1) {
+        searchedTextToShow = `Breeds with letter ${searchedText.toUpperCase()}`;
+    }
+
     let searchResult;
     if (totalBreeds === 0) {
         searchResult = 'No breeds found';
@@ -15,7 +21,7 @@ function SearchResult({ totalBreeds }) {
 
     return <>
         <div className={styles.container}>
-            <p className={styles.searchedText}>{searchedText ? searchedText : 'All breeds'}</p>
+            <p className={styles.searchedText}>{searchedTextToShow}</p>
             <p className={styles.searchResult}>{searchResult}</p>
         </div>
     </>
