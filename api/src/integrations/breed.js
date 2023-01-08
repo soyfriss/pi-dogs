@@ -2,21 +2,15 @@ const { Op } = require('sequelize');
 const { Breed, Temperament } = require('../db.js');
 
 const getBreeds = async (name) => {
-    let options = {};
+    const options = {};
     if (name) {
-        if (name.length === 1) {
-            console.log('breeds with letter: ', name);
-            // Search by first letter
-            options = { where: { name: { [Op.iLike]: `${name}%` } } };
-        } else {
-            options = { where: { name: { [Op.iLike]: `%${name}%` } } }
-        }
+        options.where = { name: { [Op.iLike]: `${name}%` } };
     }
     options.attributes = ['id', 'name', 'weight'];
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];
 
     let breeds = await Breed.findAll(options);
-    console.log('breeds from db: ', breeds);
+    // console.log('breeds from db: ', breeds);
 
     breeds = breeds.map(breed => ({
         id: breed.dataValues.id,
