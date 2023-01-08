@@ -2,10 +2,10 @@ import React, { useState } from 'react';
 import styles from './Input.module.css';
 import * as constants from '../constants/input.js';
 
-function Input({ name, label, isRequired, maxLength = 524288, onChange }) {
-    // console.log('InputRange');
+function Input({ name, label, isRequired, maxLength = 524288, value, onChange }) {
+    console.log('InputRange');
     const [input, setInput] = useState({
-        value: '',
+        value: value,
         error: isRequired ? constants.FIELD_REQUIRED : ''
     })
     const [showError, setShowError] = useState(false);
@@ -33,6 +33,7 @@ function Input({ name, label, isRequired, maxLength = 524288, onChange }) {
     }
 
     return <>
+        { console.log('Rendering Input, value: ', input.value)}
         <div className={styles.container}>
             <label className="largeLabel">{label || 'label'} {isRequired && <span className="required">*</span>}</label>
             <input

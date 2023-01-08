@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import styles from './InputRange.module.css';
 import * as constants from '../constants/inputRange.js';
 
-function InputRange({ name, label, isRequired, validRange = [0, 0], onChange, showButton = false, handleButtonClick }) {
-    // console.log('InputRange');
+function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, onChange, showButton = false, handleButtonClick }) {
+    console.log('InputRange, min max: ', min, max);
     const [input, setInput] = useState({
-        min: '',
-        max: '',
+        min,
+        max,
         error: isRequired ? constants.FIELD_REQUIRED : ''
     });
     const [showError, setShowError] = useState(false);
@@ -74,10 +74,8 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], onChange, sh
         return !!(validRange[0] || validRange[1]);
     }
 
-    // const error = validate(minValue, maxValue);
-
     return <>
-        {/* {console.log('Rendering InputRange')} */}
+        {console.log('Rendering InputRange, value:', input.min, input.max)}
         <div className={styles.container}>
             {label &&
                 <label className="largeLabel">
@@ -108,9 +106,17 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], onChange, sh
                 />
                 {showButton &&
                     <button
-                        className={`${styles.btn} ${input.error && styles.btnDisabled}`}
-                        disabled={input.error}
-                        onClick={handleButtonClick}
+                        className={`${styles.btn} ${(input.error || (input.min === '' && input.max === '')) && styles.btnDisabled}`}
+                        disabled={(input.error || (input.min === '' && input.max === ''))}
+                        onClick={() => {
+                            handleButtonClick();
+                            setInput(input => ({
+                                ...input,
+                                min: '',
+                                max: '',
+                                error: isRequired ? constants.FIELD_REQUIRED : ''
+                            }))
+                        }}
                     >
                         &#62;
                     </button>

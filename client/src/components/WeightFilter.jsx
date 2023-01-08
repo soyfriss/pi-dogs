@@ -19,18 +19,16 @@ function WeightFilter() {
         dispatch(changeWeightFilter({ min: Number(min), max: Number(max) }))
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
-        setMin('');
-        setMax('');
     }
 
     return <>
         <div className={styles.container}>
             <InputRange
                 name="weight"
-                label="Filter by weight"
+                label="Filter by weight (Kg)"
                 isRequired={false}
-                minValue={min}
-                maxValue={max}
+                min={min}
+                max={max}
                 validRange={[0, 150]}
                 onChange={handleRangeChange}
                 canShowError={true}

@@ -7,6 +7,7 @@ import About from './components/About.jsx'
 import Error from './components/Error.jsx';
 import { useEffect } from 'react';
 import LandingPage from './components/LandingPage.jsx';
+import * as errors from './constants/errors.js';
 
 
 function App() {
@@ -35,7 +36,7 @@ function App() {
         <Route path='*'>
           <Header />
           <main>
-            <Error title='Oops!' message="We can't seem to find what you're looking for" />
+            <Error title='Oops!' message={errors.NOT_FOUND_MESSAGE} />
           </main>
         </Route>
       </Switch>

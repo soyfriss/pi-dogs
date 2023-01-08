@@ -10,6 +10,7 @@ import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
+import * as errors from '../constants/errors.js';
 import { postBreed } from '../redux/api.js';
 
 function CreateBreed() {
@@ -35,6 +36,7 @@ function CreateBreed() {
     const [newBreed, setNewBreed] = useState({
         status: 'idle',
         error: null,
+        errorCount: 0,
         item: {}
     });
     // const temperaments = useSelector(state => state.temperaments.items);
@@ -92,20 +94,32 @@ function CreateBreed() {
     const createBreed = async (breed) => {
         try {
             const response = await postBreed(breed);
-            console.log('New breed created: ', response.data);
-            setNewBreed({
-                status: 'succeeded',
-                error: null,
-                item: response.data
-            });
+
+            if (response.ok) {
+                console.log('New breed created: ', response.data);
+                setNewBreed({
+                    status: 'succeeded',
+                    item: response.data,
+                    error: null
+                });
+            } else {
+                setNewBreed(breed => ({
+                    status: 'failed',
+                    item: {},
+                    error: response.error,
+                    errorCount: breed.errorCount + 1
+                }));
+            }
         } catch (error) {
-            setNewBreed({
+            setNewBreed(breed => ({
                 status: 'failed',
+                item: {},
                 error: {
-                    message: error.response.data,
-                    status: error.response.status
-                }
-            });
+                    message: errors.DEFAULT_ERROR_MESSAGE,
+                    status: errors.DEFAULT_ERROR_STATUS
+                },
+                errorCount: breed.errorCount + 1
+            }));
         }
     }
 
@@ -134,6 +148,16 @@ function CreateBreed() {
         console.log('CreateBreed useEffect() to view status and newBreed values: ', newBreed.status, newBreed.item);
     }, [newBreed]);
 
+    const handleRestartAfterError = () => {
+        setNewBreed(breed => ({
+            ...breed,
+            status: 'idle',
+            error: null,
+            item: {}
+        }));
+        console.log('input', breed);
+    }
+
     if (fetchTemperamentsStatus === 'failed') {
         return <>
             <Header />
@@ -156,9 +180,13 @@ function CreateBreed() {
         return <>
             <Header />
             <main>
-                <Error title='Oops!' message={newBreed.error.message} />;
+                <Error title='Oops!' message={newBreed.error.message} />
+                {console.log('newBreed.errorCount: ', newBreed.errorCount)}
+                {newBreed.errorCount <= constants.MAX_ERROR_COUNT &&
+                    <p className={styles.goBackText} onClick={handleRestartAfterError}>Go back to the form</p>
+                }
             </main>
-        </>;
+        </>
     }
 
     if (newBreed.status === 'succeeded') {
@@ -169,7 +197,7 @@ function CreateBreed() {
             to={{
                 pathname: `/breed/${newBreed.item.id}`,
                 search: `?source=${newBreed.item.source}`,
-                state: {title: 'Your newly created breed'}
+                state: { title: 'Your newly created breed' }
             }}
         />
     }
@@ -188,6 +216,7 @@ function CreateBreed() {
                                 label="Name"
                                 maxLength={constants.MAX_LENGTH_NAME}
                                 isRequired={true}
+                                value={breed.name}
                                 onChange={handleNameChange}
                             />
                         </div>
@@ -196,6 +225,8 @@ function CreateBreed() {
                                 name="lifeSpan"
                                 label="Life span (years)"
                                 isRequired={false}
+                                min={breed.lifeSpanMin}
+                                max={breed.lifeSpanMax}
                                 onChange={handleRangeChange}
                             />
                         </div>
@@ -205,6 +236,8 @@ function CreateBreed() {
                                 label="Height (cm)"
                                 isRequired={true}
                                 validRange={constants.VALID_RANGE_HEIGHT}
+                                min={breed.heightMin}
+                                max={breed.heightMax}
                                 onChange={handleRangeChange}
                             />
                         </div>
@@ -214,6 +247,8 @@ function CreateBreed() {
                                 label="Weight (Kg)"
                                 isRequired={true}
                                 validRange={constants.VALID_RANGE_WEIGHT}
+                                min={breed.weightMin}
+                                max={breed.weightMax}
                                 onChange={handleRangeChange}
                             />
                         </div>
@@ -222,6 +257,7 @@ function CreateBreed() {
                                 label="Temperaments"
                                 minItemsSelected={constants.MIN_TEMPERAMENTS}
                                 maxItemsSelected={constants.MAX_TEMPERAMENTS}
+                                value={breed.temperaments}
                                 onChange={handleSelectChange}
                             />
                         </div>

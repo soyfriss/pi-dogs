@@ -66,7 +66,8 @@ export default function reducer(state = initialState, action) {
                     items: [],
                     status: 'failed',
                     error: action.payload
-                }
+                },
+                searchResults: []
             }
         case actionTypes.FETCH_BREEDS_COMPLETED:
             return {

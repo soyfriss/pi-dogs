@@ -141,3 +141,10 @@
 .selectedTemperaments p {
     margin-right: 0.5em;
 }
+
+.goBackText {
+    font-size: 1.3rem;
+    text-align: center;
+    cursor: pointer;
+
+}

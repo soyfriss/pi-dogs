@@ -10,6 +10,7 @@ import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 import Header from './Header.jsx';
 import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../redux/actions.js';
+import * as constants from '../constants/home.js';
 
 function Home() {
     const dispatch = useDispatch();
@@ -29,7 +30,7 @@ function Home() {
     }, [fetchBreedsStatus, fetchTemperamentsStatus, dispatch]);
 
     console.log('Rendering Home');
-    const breedsPerPage = 8;
+    const breedsPerPage = constants.BREEDS_PER_PAGE;
     const totalBreeds = breeds.length;
 
     const indexOfLastBreed = currentPage * breedsPerPage;
@@ -53,6 +54,7 @@ function Home() {
     if (fetchBreedsStatus === 'failed') {
         return <>
             <Header />
+            <SearchInput />
             <main>
                 <Error title='Oops!' message={fetchBreedsError.message} />
             </main>
@@ -62,6 +64,7 @@ function Home() {
     if (fetchTemperamentsStatus === 'failed') {
         return <>
             <Header />
+            <SearchInput />
             <main>
                 <Error title='Oops!' message={fetchTemperamentsError.message} />
             </main>

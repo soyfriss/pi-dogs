@@ -3,8 +3,8 @@ import { useSelector } from 'react-redux';
 import styles from './Select.module.css';
 import Item from './Item.jsx';
 
-function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, onChange }) {
-    const [selectedTemperaments, setSelectedTemperaments] = useState([]);
+function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, value = [], onChange }) {
+    const [selectedTemperaments, setSelectedTemperaments] = useState(value);
     const [showError, setShowError] = useState(false);
     const [input, setInput] = useState({
         value: 'default',

@@ -1,5 +1,6 @@
 import { getBreeds, getTemperaments } from './api.js';
 import * as actionTypes from './actionTypes.js';
+import * as errors from '../constants/errors.js';
 
 export function changeSearchText(value) {
     return function (dispatch) {
@@ -15,7 +16,14 @@ export function fetchBreeds(keepFilters = false) {
             const { searchText } = getState();
             const response = await getBreeds(searchText);
 
-            dispatch({ type: actionTypes.FETCH_BREEDS_SUCCEEDED, payload: {breeds: response.data, keepFilters} });
+            if (!response.ok) {
+                return dispatch({
+                    type: actionTypes.FETCH_BREEDS_FAILED,
+                    payload: response.error
+                });
+            }
+
+            dispatch({ type: actionTypes.FETCH_BREEDS_SUCCEEDED, payload: { breeds: response.data, keepFilters } });
 
             if (keepFilters) {
                 // Filtering
@@ -33,14 +41,44 @@ export function fetchBreeds(keepFilters = false) {
             dispatch({
                 type: actionTypes.FETCH_BREEDS_FAILED,
                 payload: {
-                    message: error.response.data,
-                    status: error.response.status
+                    message: errors.DEFAULT_ERROR_MESSAGE,
+                    status: errors.DEFAULT_ERROR_STATUS
                 }
             });
-            // console.log(error);
         }
     }
 }
+
+export function fetchTemperaments() {
+    return async function (dispatch) {
+        try {
+            await dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_REQUESTED });
+
+            const response = await getTemperaments();
+
+            if (!response.ok) {
+                return dispatch({
+                    type: actionTypes.FETCH_TEMPERAMENTS_FAILED,
+                    payload: response.error
+                });
+            }
+
+            const temperaments = response.data.sort(sortByNameAsc());
+            dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_SUCCEEDED, payload: temperaments });
+
+        } catch (error) {
+            console.log('fetchTemperaments error: ', error);
+            dispatch({
+                type: actionTypes.FETCH_TEMPERAMENTS_FAILED,
+                payload: {
+                    message: errors.DEFAULT_ERROR_MESSAGE,
+                    status: errors.DEFAULT_ERROR_STATUS
+                }
+            });
+        }
+    }
+}
+
 
 export function sortBreeds(criteria) {
     return function (dispatch, getState) {
@@ -247,25 +285,3 @@ function isFilterBySourceOK(breed, filter) {
 
     return (breed.source === filter);
 }
-
-export function fetchTemperaments() {
-    return async function (dispatch) {
-        try {
-            await dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_REQUESTED });
-
-            const response = await getTemperaments();
-            const temperaments = response.data.sort(sortByNameAsc());
-            dispatch({ type: actionTypes.FETCH_TEMPERAMENTS_SUCCEEDED, payload: temperaments });
-
-        } catch (error) {
-            dispatch({
-                type: actionTypes.FETCH_TEMPERAMENTS_FAILED,
-                payload: {
-                    message: error.response.data,
-                    status: error.response.status
-                }
-            });
-        }
-    }
-}
-
