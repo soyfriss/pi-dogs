@@ -115,11 +115,13 @@ export function sortBreeds(criteria) {
 }
 
 function sortByNameAsc() {
-    return ((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
+    return ((a, b) => (a.localeCompare(b, undefined, {sensitivity: 'base'})));
+    // return ((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 }
 
 function sortBreedsByNameDesc() {
-    return ((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? 1 : a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 0));
+    return ((a, b) => (b.localeCompare(a, undefined, {sensitivity: 'base'})));
+    // return ((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? 1 : a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 0));
 }
 
 function sortBreedsByMinWeight() {
