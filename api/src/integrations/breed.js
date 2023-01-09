@@ -1,10 +1,10 @@
 const { Op } = require('sequelize');
 const { Breed, Temperament } = require('../db.js');
 
-const getBreeds = async (name) => {
+const getBreeds = async (name, exactSearch) => {
     const options = {};
     if (name) {
-        options.where = { name: { [Op.iLike]: `${name}%` } };
+        options.where = { name: { [Op.iLike]: exactSearch ? `${name}%` : `${name}` } };
     }
     options.attributes = ['id', 'name', 'weight'];
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];
@@ -22,19 +22,6 @@ const getBreeds = async (name) => {
     }));
 
     return breeds;
-}
-
-const breedExists = async (name) => {
-    const options = {};
-    if (name) {
-        options.where = { name: { [Op.iLike]: `${name}` } };
-    }
-    options.attributes = ['id'];
-
-    const breed = await Breed.findOne(options);
-    console.log('breed by name from db: ', breed);
-
-    return (!!breed);
 }
 
 const getBreed = async (id) => {
@@ -80,5 +67,4 @@ module.exports = {
     getBreeds,
     getBreed,
     createBreed,
-    breedExists
 }

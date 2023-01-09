@@ -3,11 +3,50 @@ import styles from './InputRange.module.css';
 import * as constants from '../constants/inputRange.js';
 
 function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, onChange, showButton = false, handleButtonClick }) {
-    console.log('InputRange, min max: ', min, max);
+    // console.log('InputRange, min max: ', min, max);
+    const validate = (min, max) => {
+        // Only one value entered?
+        if (!min.length && max.length) {
+            return constants.MIN_VALUE_MISSING;
+        }
+        if (min.length && !max.length) {
+            return constants.MAX_VALUE_MISSING;
+        }
+
+        // Is required?            
+        if (isRequired && (!min.length && !max.length)) {
+            // console.log('Field is required!');
+            return constants.FIELD_REQUIRED;
+        }
+
+        // Valid numbers?
+        // console.log('valid numbers? ', Number.isNaN(Number(min)), Number.isNaN(Number(max)));
+        if (Number.isNaN(Number(min)) || Number.isNaN(Number(max))) {
+            return constants.INVALID_DATA;
+        }
+
+        const minValue = Number(min);
+        const maxValue = Number(max);
+
+        if (minValue > maxValue) {
+            return `${constants.INVALID_RANGE} (min > max)`;
+        }
+        if (isValidRangePresent() && (minValue < validRange[0] || maxValue > validRange[1])) {
+            return `${constants.INVALID_RANGE} (valid range: ${validRange[0]} - ${validRange[1]})`;
+        }
+
+        return '';
+    }
+
+    const isValidRangePresent = () => {
+        // console.log('isValidRangePresent: ', (validRange[0] && validRange[1]));
+        return !!(validRange[0] || validRange[1]);
+    }
+    
     const [input, setInput] = useState({
         min,
         max,
-        error: isRequired ? constants.FIELD_REQUIRED : ''
+        error: validate(min, max)
     });
     const [showError, setShowError] = useState(false);
 
@@ -35,47 +74,8 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
         onChange(name, input.min, event.target.value, error);
     }
 
-    const validate = (min, max) => {
-        // Only one value entered?
-        if (!min.length && max.length) {
-            return constants.MIN_VALUE_MISSING;
-        }
-        if (min.length && !max.length) {
-            return constants.MAX_VALUE_MISSING;
-        }
-
-        // Is required?            
-        if (isRequired && (!min.length && !max.length)) {
-            console.log('Field is required!');
-            return constants.FIELD_REQUIRED;
-        }
-
-        // Valid numbers?
-        // console.log('valid numbers? ', Number.isNaN(Number(min)), Number.isNaN(Number(max)));
-        if (Number.isNaN(Number(min)) || Number.isNaN(Number(max))) {
-            return constants.INVALID_DATA;
-        }
-
-        const minValue = Number(min);
-        const maxValue = Number(max);
-
-        if (minValue > maxValue) {
-            return `${constants.INVALID_RANGE} (min > max)`;
-        }
-        if (isValidRangePresent() && (minValue < validRange[0] || maxValue > validRange[1])) {
-            return `${constants.INVALID_RANGE} (valid range: ${validRange[0]} - ${validRange[1]})`;
-        }
-
-        return '';
-    }
-
-    const isValidRangePresent = () => {
-        // console.log('isValidRangePresent: ', (validRange[0] && validRange[1]));
-        return !!(validRange[0] || validRange[1]);
-    }
 
     return <>
-        {console.log('Rendering InputRange, value:', input.min, input.max)}
         <div className={styles.container}>
             {label &&
                 <label className="largeLabel">

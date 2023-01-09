@@ -4,21 +4,9 @@ import * as httpStatusCodes from '../constants/httpStatusCodes.js';
 
 axios.defaults.baseURL = "http://localhost:3001";
 
-export async function getBreeds(searchText) {
+export async function getBreeds(searchText, exactSearch = false) {
     try {
-        const endpoint = searchText ? `/dogs?name=${searchText}` : '/dogs';
-        const response = await axios.get(endpoint);
-        response.ok = true;
-
-        return response;
-    } catch (error) {
-        return handleError(error);
-    }
-}
-
-export async function breedExists(name) {
-    try {
-        const endpoint = `/dog?name=${name}`;
+        const endpoint = searchText ? `/dogs?name=${searchText}&exactSearch=${exactSearch}` : '/dogs';
         const response = await axios.get(endpoint);
         response.ok = true;
 

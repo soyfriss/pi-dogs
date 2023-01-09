@@ -88,7 +88,7 @@ input[type=number] {
 
 /* Loader */
 .animated-paw {
-  height: 64px;
+  height: 4em;
 }
 
 @keyframes loader {

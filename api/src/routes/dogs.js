@@ -4,14 +4,14 @@ const httpStatusCodes = require('../utils/httpStatusCodes.js');
 
 const router = Router();
 
-// GET /dogs, /dogs?name=breed
+// GET /dogs, /dogs?name=breed&exactSearch=bool
 router.get(
     '/',
     async (req, res, next) => {
         try {
-            const { name } = req.query;
+            const { name, exactSearch } = req.query;
 
-            const breeds = await getBreeds(name);
+            const breeds = await getBreeds(name && name.trim(), exactSearch);
 
             res.status(httpStatusCodes.OK).json(breeds);
         } catch (error) {
@@ -45,7 +45,7 @@ router.post(
                 name,
                 height,
                 weight,
-                life_span,
+                lifeSpan,
                 temperaments,
                 image
             } = req.body;
@@ -54,12 +54,12 @@ router.post(
 
             const breed = await
                 createBreed(
-                    name,
-                    height,
-                    weight,
-                    life_span,
+                    name.trim(),
+                    height.trim(),
+                    weight.trim(),
+                    lifeSpan && lifeSpan.trim(),
                     temperaments,
-                    image
+                    image && image.trim()
                 );
 
                 res.status(httpStatusCodes.OK).json(breed);

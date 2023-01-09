@@ -11,7 +11,7 @@ import Error from './Error.jsx';
 import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
 import * as errors from '../constants/errors.js';
-import { postBreed, breedExists } from '../redux/api.js';
+import { postBreed, getBreeds } from '../redux/api.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
@@ -19,6 +19,7 @@ function CreateBreed() {
     const [breed, setBreed] = useState({
         name: '',
         nameError: '',
+        breedExistsError: '',
         heightMin: '',
         heightMax: '',
         heightError: 'error',
@@ -57,11 +58,12 @@ function CreateBreed() {
             ...breed,
             [name]: value,
             [`${name}Error`]: error,
+            breedExistsError: ''
         })
     }
 
     const handleSelectChange = (temperaments, error) => {
-        console.log('handleSelectChange: ', temperaments, error);
+        // console.log('handleSelectChange: ', temperaments, error);
         setBreed({
             ...breed,
             temperaments,
@@ -69,42 +71,63 @@ function CreateBreed() {
         })
     }
 
-    const checkBreedName = async (_, value) => {
+    const isBreedOK = async (value) => {
         try {
-            const response = await breedExists(value);
+            const response = await getBreeds(value, true);
 
-            if (response.ok) {
-                console.log('breed exists: ', response.data);
-                
-                if (response.data[`${value}`]) {
-                    return 'This breed already exists';
-                }
+            console.log('checkBreedName breed exists ?: ', response.data);
 
-                return '';
-            } else {
-                return '';
+            if (response.ok && response.data) {
+                return false;
             }
 
+            return true;
         } catch (error) {
-            return '';
+            return true;
         }
     }
 
-    const handleSubmit = (event) => {
+    const handleSubmit = async (event) => {
         // console.log('handleSubmit()', event);
         event.preventDefault();
+
+        console.log('handleSubmit setting new breed status = creating ');
+        setNewBreed(breed => ({
+            ...breed,
+            status: 'creating'
+        }));
+
         // Create new breed
+        console.log('handleSubmit creating new breed');
         if (breed.nameError === '' &&
             breed.heightError === '' &&
             breed.weightError === '' &&
             breed.lifeSpanError === '' &&
             breed.temperamentsError === ''
         ) {
+            // breed exists ?
+            console.log('handleSubmit breed exists?');
+            if (!await isBreedOK(breed.name)) {
+                console.log('breed exists');
+                setBreed(breed => ({
+                    ...breed,
+                    breedExistsError: constants.BREED_EXISTS_MESSAGE
+                }));
+
+                console.log('setting new breed status to idle');
+                setNewBreed(breed => ({
+                    ...breed,
+                    status: 'idle'
+                }));
+
+                return;
+            }
+
             const newBreed = {
                 name: breed.name,
                 height: `${breed.heightMin} - ${breed.heightMax}`,
                 weight: `${breed.weightMin} - ${breed.weightMax}`,
-                life_span: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
+                lifeSpan: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
                 temperaments: breed.temperaments.map(t => t.name)
             }
 
@@ -117,7 +140,7 @@ function CreateBreed() {
             const response = await postBreed(breed);
 
             if (response.ok) {
-                console.log('New breed created: ', response.data);
+                // console.log('New breed created: ', response.data);
                 setNewBreed({
                     status: 'succeeded',
                     item: response.data,
@@ -157,16 +180,17 @@ function CreateBreed() {
             breed.heightError === '' &&
             breed.weightError === '' &&
             breed.lifeSpanError === '' &&
-            breed.temperamentsError === ''
+            breed.temperamentsError === '' &&
+            breed.breedExistsError === ''
         ) {
             return setIsSubmitDisabled(false);
         }
 
         setIsSubmitDisabled(true);
-    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError, breed.temperamentsError])
+    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError, breed.temperamentsError, breed.breedExistsError])
 
     useEffect(() => {
-        console.log('CreateBreed useEffect() to view status and newBreed values: ', newBreed.status, newBreed.item);
+        // console.log('CreateBreed useEffect() to view status and newBreed values: ', newBreed.status, newBreed.item);
     }, [newBreed]);
 
     const handleRestartAfterError = () => {
@@ -176,7 +200,7 @@ function CreateBreed() {
             error: null,
             item: {}
         }));
-        console.log('input', breed);
+        // console.log('input', breed);
     }
 
     if (fetchTemperamentsStatus === 'failed') {
@@ -202,7 +226,6 @@ function CreateBreed() {
             <Header />
             <main>
                 <Error title='Oops!' message={newBreed.error.message} />
-                {console.log('newBreed.errorCount: ', newBreed.errorCount)}
                 {newBreed.errorCount <= constants.MAX_ERROR_COUNT &&
                     <p className={styles.goBackText} onClick={handleRestartAfterError}>Go back to the form</p>
                 }
@@ -211,7 +234,7 @@ function CreateBreed() {
     }
 
     if (newBreed.status === 'succeeded') {
-        console.log('newBreed after succeeded: ', newBreed.item);
+        // console.log('newBreed after succeeded: ', newBreed.item);
         dispatch(fetchBreeds(true));
 
         return <Redirect
@@ -224,7 +247,6 @@ function CreateBreed() {
     }
 
     return <>
-        {console.log('Rendering CreateBreed')}
         <Header />
         <main>
             <div className={styles.section}>
@@ -239,7 +261,7 @@ function CreateBreed() {
                                 isRequired={true}
                                 value={breed.name}
                                 onChange={handleNameChange}
-                                validate={checkBreedName}
+                                parentError={breed.breedExistsError}
                             />
                         </div>
                         <div>
@@ -291,7 +313,6 @@ function CreateBreed() {
                             >
                                 CREATE
                             </button>
-
                         </div>
                     </form>
                 </div>

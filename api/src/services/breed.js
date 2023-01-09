@@ -14,15 +14,15 @@ const AppError = require('../utils/AppError.js');
 const httpStatusCodes = require('../utils/httpStatusCodes.js');
 const constants = require('../utils/constants.js');
 
-const getBreeds = async (name) => {
+const getBreeds = async (name, exactSearch = false) => {
 
     let breeds;
 
     // Get breeds from DB
-    const breedsFromDB = await getBreedsFromDB(name);
+    const breedsFromDB = await getBreedsFromDB(name, exactSearch);
 
     // Get breeds from thedogapi
-    const breedsFromApi = await getBreedsFromApi(name);
+    const breedsFromApi = await getBreedsFromApi(name, exactSearch);
 
     breeds = [...breedsFromDB, ...breedsFromApi];
     // console.log('breeds from services: ', breeds);
@@ -32,12 +32,6 @@ const getBreeds = async (name) => {
     }
 
     return breeds;
-}
-
-const breedExists = async (name) => {
-    return {
-        [name]: await breedExistsInDB(name) || await breedExistsInAPI(name)
-    };
 }
 
 const getBreed = async (id, source) => {
@@ -109,10 +103,10 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
     }
 
     // name
-    if (!name.trim()) {
+    if (!name) {
         throw new AppError(`name: ${constants.FIELD_REQUIRED}`, httpStatusCodes.BAD_REQUEST);
     }
-    if (name.trim().length > constants.MAX_LENGTH_NAME) {
+    if (name.length > constants.MAX_LENGTH_NAME) {
         throw new AppError(`name: ${constants.MAX_LENGTH_EXCEEDED} (max: ${constants.MAX_LENGTH_NAME})`, httpStatusCodes.BAD_REQUEST);
     }
 
@@ -145,7 +139,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
                 throw new AppError(`${temperament}: ${constants.INCORRECT_TYPE}`, httpStatusCodes.BAD_REQUEST);
             }
             // Empty temperament
-            if (!temperament.trim()) {
+            if (!temperament) {
                 throw new AppError(`temperaments: ${constants.EMPTY_ITEM_IN_LIST}`, httpStatusCodes.BAD_REQUEST);
             }
             // Verify if temperament exists
@@ -157,7 +151,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
             }
         }
     } else {
-        if (temperaments.trim()) {
+        if (temperaments) {
             throw new AppError(`temperaments: ${constants.INCORRECT_TYPE}`, httpStatusCodes.BAD_REQUEST);
         }
     }
@@ -172,10 +166,10 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
     // Create breed
     const newBreed = await createBreedFromDB(
-        name.trim(),
-        height.trim(),
-        weight.trim(),
-        lifeSpan.trim(),
+        name,
+        height,
+        weight,
+        lifeSpan,
         temperamentsList
     );
 
@@ -186,5 +180,4 @@ module.exports = {
     getBreeds,
     getBreed,
     createBreed,
-    breedExists
 }

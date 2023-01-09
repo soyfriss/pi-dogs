@@ -18,13 +18,19 @@ const getBreedsFromApi = async () => {
     return breeds.data;
 };
 
-const getBreeds = async (name) => {
+const getBreeds = async (name, exactSearch) => {
 
     let breeds = await getBreedsFromApi();
     // console.log('breeds from API: ', breeds);
 
     if (name) {
-        breeds = breeds.filter(breed => breed.name.toLowerCase().startsWith(name.toLowerCase()));
+        breeds = breeds.filter(breed => {
+            if (exactSearch) {
+                return breed.name.toLowerCase() === name.toLowerCase();
+            }
+
+            return breed.name.toLowerCase().startsWith(name.toLowerCase());
+        });
     }
 
     breeds = breeds.map(breed => ({
@@ -37,15 +43,6 @@ const getBreeds = async (name) => {
     }));
 
     return breeds;
-};
-
-const breedExists = async (name) => {
-    let breeds = await getBreedsFromApi();
-    
-    let breed = breeds.find(breed => breed.name.toLowerCase() === name.toLowerCase());
-    console.log('breed by name from thedogapi: ', breed);
-
-    return (!!breed);
 };
 
 const getBreed = async (id) => {
@@ -92,7 +89,6 @@ module.exports = {
     getBreeds,
     getBreed,
     getTemperaments,
-    breedExists
 }
 
 

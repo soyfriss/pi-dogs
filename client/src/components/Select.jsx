@@ -14,7 +14,7 @@ function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, value = [],
     const selectRef = useRef();
 
     const onChangeSelect = (id, action) => {
-        console.log('onChangeSelect', id, action);
+        // console.log('onChangeSelect', id, action);
         let newSelectedTemperaments = [];
 
         if (action === 'add') {

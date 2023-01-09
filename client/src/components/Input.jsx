@@ -2,21 +2,9 @@ import React, { useState } from 'react';
 import styles from './Input.module.css';
 import * as constants from '../constants/input.js';
 
-function Input({ name, label, isRequired, maxLength = 524288, value, onChange, validate}) {
-    console.log('InputRange');
-    const [input, setInput] = useState({
-        value: value,
-        error: isRequired ? constants.FIELD_REQUIRED : ''
-    })
-    const [showError, setShowError] = useState(false);
-
+function Input({ name, label, isRequired, maxLength = 524288, value, onChange, parentError }) {
+    // console.log('InputRange');
     const validateInput = (value) => {
-        // External validation
-        const result = validate ? validate(name, value) : '';
-        if (result) {
-            return result;
-        }
-
         if (isRequired && !value) {
             return constants.FIELD_REQUIRED;
         }
@@ -26,6 +14,13 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, v
 
         return '';
     }
+
+    const [input, setInput] = useState({
+        value: value,
+        error: parentError !== '' ? parentError : validateInput(value)
+    })
+    const [showError, setShowError] = useState( parentError !== '' ? true : false);
+
 
     const handleChange = (event) => {
         const error = validateInput(event.target.value);
@@ -39,7 +34,6 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, v
     }
 
     return <>
-        { console.log('Rendering Input, value: ', input.value)}
         <div className={styles.container}>
             <label className="largeLabel">{label || 'label'} {isRequired && <span className="required">*</span>}</label>
             <input
@@ -52,7 +46,7 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, v
                 onFocus={() => setShowError(false)}
                 onBlur={() => setShowError(true)}
             />
-            {showError && input.error &&
+            { showError && input.error &&
                 <p className="error">{input.error}</p>
             }
         </div>
