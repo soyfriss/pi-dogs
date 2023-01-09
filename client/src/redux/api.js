@@ -16,6 +16,18 @@ export async function getBreeds(searchText) {
     }
 }
 
+export async function breedExists(name) {
+    try {
+        const endpoint = `/dog?name=${name}`;
+        const response = await axios.get(endpoint);
+        response.ok = true;
+
+        return response;
+    } catch (error) {
+        return handleError(error);
+    }
+}
+
 export async function getBreed(id, source) {
     try {
         const endPoint = `/dogs/${id}${source}`;

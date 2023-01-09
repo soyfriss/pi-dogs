@@ -11,7 +11,7 @@ import Error from './Error.jsx';
 import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
 import * as errors from '../constants/errors.js';
-import { postBreed } from '../redux/api.js';
+import { postBreed, breedExists } from '../redux/api.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
@@ -69,6 +69,27 @@ function CreateBreed() {
         })
     }
 
+    const checkBreedName = async (_, value) => {
+        try {
+            const response = await breedExists(value);
+
+            if (response.ok) {
+                console.log('breed exists: ', response.data);
+                
+                if (response.data[`${value}`]) {
+                    return 'This breed already exists';
+                }
+
+                return '';
+            } else {
+                return '';
+            }
+
+        } catch (error) {
+            return '';
+        }
+    }
+
     const handleSubmit = (event) => {
         // console.log('handleSubmit()', event);
         event.preventDefault();
@@ -124,7 +145,7 @@ function CreateBreed() {
     }
 
     useEffect(() => {
-        console.log('CreateBreed useEffect() to fetch temperaments');
+        console.log('CreateBreed useEffect()');
         if (fetchTemperamentsStatus === 'idle') {
             dispatch(fetchTemperaments());
         }
@@ -218,6 +239,7 @@ function CreateBreed() {
                                 isRequired={true}
                                 value={breed.name}
                                 onChange={handleNameChange}
+                                validate={checkBreedName}
                             />
                         </div>
                         <div>

@@ -1,5 +1,14 @@
-const { getBreeds: getBreedsFromDB, getBreed: getBreedFromDB, createBreed: createBreedFromDB } = require('../integrations/breed.js');
-const { getBreeds: getBreedsFromApi, getBreed: getBreedFromApi } = require('../integrations/theDogApi.js');
+const {
+    getBreeds: getBreedsFromDB,
+    getBreed: getBreedFromDB,
+    createBreed: createBreedFromDB,
+    breedExists: breedExistsInDB
+} = require('../integrations/breed.js');
+const {
+    getBreeds: getBreedsFromApi,
+    getBreed: getBreedFromApi,
+    breedExists: breedExistsInAPI
+} = require('../integrations/theDogApi.js');
 const { findOrCreateTemperaments, getTemperament } = require('./temperament.js');
 const AppError = require('../utils/AppError.js');
 const httpStatusCodes = require('../utils/httpStatusCodes.js');
@@ -23,6 +32,12 @@ const getBreeds = async (name) => {
     }
 
     return breeds;
+}
+
+const breedExists = async (name) => {
+    return {
+        [name]: await breedExistsInDB(name) || await breedExistsInAPI(name)
+    };
 }
 
 const getBreed = async (id, source) => {
@@ -136,7 +151,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
             // Verify if temperament exists
             const temperamentInDB = await getTemperament(temperament.trim());
             console.log('temperamentInDB: ', temperamentInDB);
-            
+
             if (!temperamentInDB) {
                 throw new AppError(`${temperament}: ${constants.TEMPERAMENT_NOT_IN_LIST}`, httpStatusCodes.BAD_REQUEST);
             }
@@ -171,4 +186,5 @@ module.exports = {
     getBreeds,
     getBreed,
     createBreed,
+    breedExists
 }

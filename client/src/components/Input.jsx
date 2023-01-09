@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import styles from './Input.module.css';
 import * as constants from '../constants/input.js';
 
-function Input({ name, label, isRequired, maxLength = 524288, value, onChange }) {
+function Input({ name, label, isRequired, maxLength = 524288, value, onChange, validate}) {
     console.log('InputRange');
     const [input, setInput] = useState({
         value: value,
@@ -10,7 +10,13 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange })
     })
     const [showError, setShowError] = useState(false);
 
-    const validate = (value) => {
+    const validateInput = (value) => {
+        // External validation
+        const result = validate ? validate(name, value) : '';
+        if (result) {
+            return result;
+        }
+
         if (isRequired && !value) {
             return constants.FIELD_REQUIRED;
         }
@@ -22,7 +28,7 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange })
     }
 
     const handleChange = (event) => {
-        const error = validate(event.target.value);
+        const error = validateInput(event.target.value);
 
         setInput({
             value: event.target.value,

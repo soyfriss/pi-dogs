@@ -20,7 +20,7 @@ const getBreedsFromApi = async () => {
 
 const getBreeds = async (name) => {
 
-    let breeds = await getBreedsFromApi(name);
+    let breeds = await getBreedsFromApi();
     // console.log('breeds from API: ', breeds);
 
     if (name) {
@@ -37,6 +37,15 @@ const getBreeds = async (name) => {
     }));
 
     return breeds;
+};
+
+const breedExists = async (name) => {
+    let breeds = await getBreedsFromApi();
+    
+    let breed = breeds.find(breed => breed.name.toLowerCase() === name.toLowerCase());
+    console.log('breed by name from thedogapi: ', breed);
+
+    return (!!breed);
 };
 
 const getBreed = async (id) => {
@@ -82,7 +91,8 @@ const getTemperaments = async () => {
 module.exports = {
     getBreeds,
     getBreed,
-    getTemperaments
+    getTemperaments,
+    breedExists
 }
 
 

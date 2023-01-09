@@ -25,6 +25,8 @@ function Home() {
         console.log('Home useEffect()');
         if (fetchBreedsStatus === 'idle') {
             dispatch(fetchBreeds());
+        }
+        if (fetchTemperamentsStatus === 'idle') {
             dispatch(fetchTemperaments());
         }
     }, [fetchBreedsStatus, fetchTemperamentsStatus, dispatch]);
@@ -80,7 +82,7 @@ function Home() {
                     <Filters />
                 </div>
                 <div className={styles.cards}>
-                    <Sort />
+                    {breeds.length > 1 && <Sort />}
                     <Cards breeds={filterBreeds} />
                     {totalBreeds > breedsPerPage && (
                         <div className={styles.centered}>

@@ -24,6 +24,19 @@ const getBreeds = async (name) => {
     return breeds;
 }
 
+const breedExists = async (name) => {
+    const options = {};
+    if (name) {
+        options.where = { name: { [Op.iLike]: `${name}` } };
+    }
+    options.attributes = ['id'];
+
+    const breed = await Breed.findOne(options);
+    console.log('breed by name from db: ', breed);
+
+    return (!!breed);
+}
+
 const getBreed = async (id) => {
     let breed = await Breed.findByPk(id, { include: [Temperament] });
     // console.log('breed: ', breed);
@@ -66,5 +79,6 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 module.exports = {
     getBreeds,
     getBreed,
-    createBreed
+    createBreed,
+    breedExists
 }
