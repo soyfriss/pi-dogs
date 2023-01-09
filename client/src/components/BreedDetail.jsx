@@ -5,7 +5,7 @@ import Loader from './Loader.jsx';
 import Header from './Header.jsx';
 import Error from './Error.jsx';
 import noImage from '../images/no-image.png';
-import { getBreed } from '../redux/api.js';
+import { getBreed } from '../integrations/api.js';
 import * as constants from '../constants/breedDetail.js';
 import * as errors from '../constants/errors.js';
 

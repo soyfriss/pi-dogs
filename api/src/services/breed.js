@@ -157,6 +157,9 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
     }
 
     // image
+    if (image && !(/^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(image.toLowerCase()))) {
+        throw new AppError(`image: ${constants.INVALID_DATA}`, httpStatusCodes.BAD_REQUEST);
+    }
 
     // End validations
 
@@ -166,11 +169,12 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
     // Create breed
     const newBreed = await createBreedFromDB(
-        name,
+        name.toUpperCase(),
         height,
         weight,
         lifeSpan,
-        temperamentsList
+        temperamentsList,
+        image
     );
 
     return await getBreedFromDB(newBreed.dataValues.id);

@@ -11,7 +11,7 @@ import Error from './Error.jsx';
 import Header from './Header.jsx';
 import * as constants from '../constants/createBreed.js';
 import * as errors from '../constants/errors.js';
-import { postBreed, getBreeds } from '../redux/api.js';
+import { postBreed, getBreeds } from '../integrations/api.js';
 
 function CreateBreed() {
     const dispatch = useDispatch();
@@ -30,7 +30,10 @@ function CreateBreed() {
         lifeSpanMax: '',
         lifeSpanError: '',
         temperaments: [],
-        temperamentsError: 'error'
+        temperamentsError: 'error',
+        image: '',
+        imageError: '',
+        imageUrlError: ''
     });
     const [isSubmitDisabled, setIsSubmitDisabled] = useState(true);
     // const [selectedTemperaments, setSelectedTemperaments] = useState([]);
@@ -62,6 +65,15 @@ function CreateBreed() {
         })
     }
 
+    const handleImageChange = (name, value, error) => {
+        setBreed({
+            ...breed,
+            [name]: value,
+            [`${name}Error`]: error,
+            imageUrlError: ''
+        })
+    }
+
     const handleSelectChange = (temperaments, error) => {
         // console.log('handleSelectChange: ', temperaments, error);
         setBreed({
@@ -85,7 +97,11 @@ function CreateBreed() {
         } catch (error) {
             return true;
         }
-    }
+    };
+
+    const isImgUrl = async (url) => {
+        return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase());
+    };
 
     const handleSubmit = async (event) => {
         // console.log('handleSubmit()', event);
@@ -103,7 +119,8 @@ function CreateBreed() {
             breed.heightError === '' &&
             breed.weightError === '' &&
             breed.lifeSpanError === '' &&
-            breed.temperamentsError === ''
+            breed.temperamentsError === '' &&
+            breed.imageError === ''
         ) {
             // breed exists ?
             console.log('handleSubmit breed exists?');
@@ -123,12 +140,31 @@ function CreateBreed() {
                 return;
             }
 
+            // Is image URL ok ?
+            if (breed.image && !await isImgUrl(breed.image)) {
+                console.log('image url is not ok');
+
+                setBreed(breed => ({
+                    ...breed,
+                    imageUrlError: constants.IMAGE_URL_MESSAGE
+                }));
+
+                console.log('setting new breed status to idle');
+                setNewBreed(breed => ({
+                    ...breed,
+                    status: 'idle'
+                }));
+
+                return;
+            }
+
             const newBreed = {
                 name: breed.name,
                 height: `${breed.heightMin} - ${breed.heightMax}`,
                 weight: `${breed.weightMin} - ${breed.weightMax}`,
                 lifeSpan: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
-                temperaments: breed.temperaments.map(t => t.name)
+                temperaments: breed.temperaments.map(t => t.name),
+                image: breed.image
             }
 
             createBreed(newBreed);
@@ -181,27 +217,29 @@ function CreateBreed() {
             breed.weightError === '' &&
             breed.lifeSpanError === '' &&
             breed.temperamentsError === '' &&
-            breed.breedExistsError === ''
+            breed.breedExistsError === '' &&
+            breed.imageError === '' &&
+            breed.imageUrlError === ''
         ) {
             return setIsSubmitDisabled(false);
         }
 
         setIsSubmitDisabled(true);
-    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError, breed.temperamentsError, breed.breedExistsError])
+    }, [breed.nameError, breed.heightError, breed.weightError, breed.lifeSpanError, breed.temperamentsError, breed.breedExistsError, breed.imageError, breed.imageUrlError])
 
     useEffect(() => {
         // console.log('CreateBreed useEffect() to view status and newBreed values: ', newBreed.status, newBreed.item);
     }, [newBreed]);
 
-    const handleRestartAfterError = () => {
-        setNewBreed(breed => ({
-            ...breed,
-            status: 'idle',
-            error: null,
-            item: {}
-        }));
-        // console.log('input', breed);
-    }
+    // const handleRestartAfterError = () => {
+    //     setNewBreed(breed => ({
+    //         ...breed,    
+    //         status: 'idle',
+    //         error: null,
+    //         item: {}
+    //     }));
+    //     // console.log('input', breed);
+    // }
 
     if (fetchTemperamentsStatus === 'failed') {
         return <>
@@ -227,7 +265,19 @@ function CreateBreed() {
             <main>
                 <Error title='Oops!' message={newBreed.error.message} />
                 {newBreed.errorCount <= constants.MAX_ERROR_COUNT &&
-                    <p className={styles.goBackText} onClick={handleRestartAfterError}>Go back to the form</p>
+                    <p
+                        className={styles.goBackText}
+                        onClick={() => {
+                            setNewBreed(breed => ({
+                                ...breed,
+                                status: 'idle',
+                                error: null,
+                                item: {}
+                            }));
+                        }}
+                    >
+                        Go back to the form
+                    </p>
                 }
             </main>
         </>
@@ -253,7 +303,7 @@ function CreateBreed() {
                 <p className={styles.title}>New breed</p>
                 <div className={styles.body}>
                     <form className={styles.form} onSubmit={handleSubmit}>
-                        <div>
+                        <div className={styles.fullWidth}>
                             <Input
                                 name="name"
                                 label="Name"
@@ -272,6 +322,16 @@ function CreateBreed() {
                                 min={breed.lifeSpanMin}
                                 max={breed.lifeSpanMax}
                                 onChange={handleRangeChange}
+                            />
+                        </div>
+                        <div>
+                            <Input
+                                name="image"
+                                label="Image URL"
+                                isRequired={false}
+                                value={breed.image}
+                                onChange={handleImageChange}
+                                parentError={breed.imageUrlError}
                             />
                         </div>
                         <div>

@@ -29,7 +29,11 @@ module.exports = (sequelize) => {
     lifeSpan: {
       type: DataTypes.STRING(50),
       field: 'LifeSpan'
-    }
+    },
+    image: {
+      type: DataTypes.STRING,
+      field: 'Image'
+    },
   }, {
     timestamps: false,
     freezeTableName: true

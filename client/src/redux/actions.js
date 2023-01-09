@@ -1,4 +1,4 @@
-import { getBreeds, getTemperaments } from './api.js';
+import { getBreeds, getTemperaments } from '../integrations/api.js';
 import * as actionTypes from './actionTypes.js';
 import * as errors from '../constants/errors.js';
 
@@ -119,7 +119,7 @@ function sortByNameAsc() {
 }
 
 function sortBreedsByNameDesc() {
-    return ((a, b) => (a.name < b.name ? 1 : a.name > b.name ? -1 : 0));
+    return ((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? 1 : a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 0));
 }
 
 function sortBreedsByMinWeight() {
