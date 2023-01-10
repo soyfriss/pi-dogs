@@ -4,13 +4,13 @@ const { Breed, Temperament } = require('../db.js');
 const getBreeds = async (name, exactSearch) => {
     const options = {};
     if (name) {
-        options.where = { name: { [Op.iLike]: exactSearch ? `${name}%` : `${name}` } };
+        options.where = { name: { [Op.iLike]: exactSearch ? `${name}` : `${name}%` } };
     }
     options.attributes = ['id', 'name', 'weight'];
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];
 
     let breeds = await Breed.findAll(options);
-    // console.log('breeds from db: ', breeds);
+    console.log('options and breeds from db: ', options, breeds);
 
     breeds = breeds.map(breed => ({
         id: breed.dataValues.id,

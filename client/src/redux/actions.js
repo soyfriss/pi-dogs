@@ -115,12 +115,22 @@ export function sortBreeds(criteria) {
 }
 
 function sortByNameAsc() {
-    return ((a, b) => (a.localeCompare(b, undefined, {sensitivity: 'base'})));
+    const collator = new Intl.Collator("en", {
+        numeric: true,
+        sensitivity: "base",
+    });
+
+    return (a, b) => collator.compare(a.name, b.name);
     // return ((a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0));
 }
 
 function sortBreedsByNameDesc() {
-    return ((a, b) => (b.localeCompare(a, undefined, {sensitivity: 'base'})));
+    const collator = new Intl.Collator("en", {
+        numeric: true,
+        sensitivity: "base",
+    });
+
+    return (a, b) => collator.compare(b.name, a.name);
     // return ((a, b) => (a.name.toLowerCase() < b.name.toLowerCase() ? 1 : a.name.toLowerCase() > b.name.toLowerCase() ? -1 : 0));
 }
 

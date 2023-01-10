@@ -19,16 +19,14 @@ const getBreedsFromApi = async () => {
 };
 
 const getBreeds = async (name, exactSearch) => {
-
+    console.log('exactSearch: ', exactSearch);
     let breeds = await getBreedsFromApi();
-    // console.log('breeds from API: ', breeds);
-
+    
     if (name) {
         breeds = breeds.filter(breed => {
             if (exactSearch) {
-                return breed.name.toLowerCase() === name.toLowerCase();
+                return breed.name === name;
             }
-
             return breed.name.toLowerCase().startsWith(name.toLowerCase());
         });
     }

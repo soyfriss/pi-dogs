@@ -11,7 +11,7 @@ router.get(
         try {
             const { name, exactSearch } = req.query;
 
-            const breeds = await getBreeds(name && name.trim(), exactSearch);
+            const breeds = await getBreeds(name && name.trim(), exactSearch === 'true');
 
             res.status(httpStatusCodes.OK).json(breeds);
         } catch (error) {
