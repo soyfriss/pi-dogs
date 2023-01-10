@@ -82,17 +82,21 @@ function Home() {
                     <Filters />
                 </div>
                 <div className={styles.cards}>
-                    {breeds.length > 1 && <Sort />}
-                    <Cards breeds={filterBreeds} />
-                    {totalBreeds > breedsPerPage && (
-                        <div className={styles.centered}>
-                            <Pagination
-                                totalItems={totalBreeds}
-                                itemsPerPage={breedsPerPage}
-                                currentPage={currentPage}
-                                setCurrentPage={setCurrentPage}
-                            />
+                    {breeds.length > 1 &&
+                        <div className={styles.sort}>
+                            <Sort />
                         </div>
+                    }
+                    <Cards breeds={filterBreeds} />
+                </div>
+                <div className={styles.pagination}>
+                    {totalBreeds > breedsPerPage && (
+                        <Pagination
+                            totalItems={totalBreeds}
+                            itemsPerPage={breedsPerPage}
+                            currentPage={currentPage}
+                            setCurrentPage={setCurrentPage}
+                        />
                     )}
                 </div>
             </div>

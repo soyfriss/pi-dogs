@@ -59,13 +59,15 @@ function TemperamentFilter({ addTemperamentFilter }) {
         )}
 
         {totalFilters > filtersPerPage && (
-            <Pagination
-                totalItems={totalFilters}
-                itemsPerPage={filtersPerPage}
-                currentPage={currentPage}
-                setCurrentPage={setCurrentPage}
-                enableScrollToTop={false}
-            />
+            <div className={styles.paginationContainer}>
+                <Pagination
+                    totalItems={totalFilters}
+                    itemsPerPage={filtersPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                    enableScrollToTop={false}
+                />
+            </div>
         )}
     </>
 }

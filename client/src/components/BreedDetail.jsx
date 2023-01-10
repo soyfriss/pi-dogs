@@ -77,20 +77,24 @@ function BreedDetail() {
         <Header />
         <main>
             <div className={styles.section}>
-                <p className={styles.title}>{(state && state.title) ? state.title : 'Breed detail'}</p>
+                {/* <p className={styles.title}>{(state && state.title) ? state.title : 'Breed detail'}</p> */}
+                <p className={styles.breedName}>{breed.item.name}</p>
 
                 <div className={styles.body}>
-                    <div className={styles.text}>
-                        <p className={styles.breedName}>{breed.item.name}</p>
-                        <p>Weight: <span className={styles.subtitle}>{`${breed.item.weight} Kg`}</span></p>
-                        <p>Height: <span className={styles.subtitle}>{`${breed.item.height} cm`}</span></p>
-                        <p>Life span: <span className={styles.subtitle}>{breed.item.lifeSpan}</span></p>
-                        <p>Temperaments: <span className={styles.subtitle}>{breed.item.temperament ? breed.item.temperament : constants.NO_TEMPERAMENTS}</span></p>
-                        <NavLink to="/home" className={styles.navLink}>
-                            Back
-                        </NavLink>
+                    <div className={styles.imgContainer}>
+                        <img className={styles.img} src={breed.item.image ? breed.item.image : noImage} alt="breed" />
                     </div>
-                    <img className={styles.img} src={breed.item.image ? breed.item.image : noImage} alt="breed" />
+                    <div className={styles.data}>
+                        <p><span className={styles.subtitle}>{`${breed.item.weight} Kg`}</span> weight</p>
+                        <p><span className={styles.subtitle}>{`${breed.item.height} cm`}</span> height</p>
+                        <p><span className={styles.subtitle}>{breed.item.lifeSpan}</span> life span</p>
+                        <p><span className={styles.subtitle}>{breed.item.temperament ? breed.item.temperament : constants.NO_TEMPERAMENTS}</span></p>
+                    </div>
+                </div>
+                <div className={styles.footer}>
+                    <NavLink to="/home" className={styles.navLink}>
+                        Explore more breeds
+                    </NavLink>
                 </div>
             </div>
         </main>

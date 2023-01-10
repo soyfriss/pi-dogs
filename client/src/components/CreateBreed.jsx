@@ -300,7 +300,7 @@ function CreateBreed() {
         <Header />
         <main>
             <div className={styles.section}>
-                <p className={styles.title}>New breed</p>
+                {/* <p className={styles.title}>New breed</p> */}
                 <div className={styles.body}>
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.fullWidth}>

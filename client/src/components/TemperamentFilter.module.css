@@ -30,3 +30,7 @@
 .hidden {
     display: none;
 }
+
+.paginationContainer {
+    margin: 1em 0;
+}

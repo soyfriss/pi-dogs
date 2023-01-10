@@ -25,7 +25,7 @@ function WeightFilter() {
         <div className={styles.container}>
             <InputRange
                 name="weight"
-                label="Filter by weight (Kg)"
+                label="(Kg)"
                 isRequired={false}
                 min={min}
                 max={max}

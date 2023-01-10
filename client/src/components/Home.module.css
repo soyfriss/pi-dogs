@@ -1,30 +1,50 @@
 .content {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(12, 1fr);
+    grid-template-rows: auto auto;
+    grid-column-gap: 1em;
+    grid-row-gap: 2em;
+    grid-template-areas:
+        "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
+        "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
     margin-bottom: 2em;
+    /* border: 1px dashed darkgoldenrod; */
 }
 
 .filters {
-    /* width: 35%; */
-    flex-basis: 35%;
-    max-width: 360px;
-    /* margin-bottom: 2em; */
+    grid-area: element1;
     /* border: 1px solid blue; */
 }
 
+.sort {
+    margin-bottom: 2em;
+}
+
 .cards {
-    /* width: 65%; */
-    flex-basis: 65%;
-    margin-left: 1em;
-    /* max-width: 840px; */
+    grid-area: element2;
     /* border: 1px solid green; */
 }
 
-.cards .pagination {
-    justify-content: center;
-}
-
-.centered {
+.pagination {
+    grid-area: element3;
     display: flex;
     justify-content: center;
+    /* border: 1px dotted seagreen; */
+}
+
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+@media (min-width: 769px) {}
+
+@media (min-width: 1025px) {
+    .content {
+        grid-template-areas:
+            "element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2 element2"
+            "element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3 element3";
+        /* border: 1px dashed darkgoldenrod; */
+    }
 }
