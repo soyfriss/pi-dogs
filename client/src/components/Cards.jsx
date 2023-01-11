@@ -4,7 +4,7 @@ import Card from './Card.jsx';
 import useMediaQuery from '../hooks/useMediaQuery.js';
 
 function Cards({ breeds }) {
-    const isTwoColumns = useMediaQuery('(max-width: 767px)');
+    const isTwoColumns = useMediaQuery('(max-width: 1024px)');
 
     let orderedBreeds = masonryOrder(breeds, isTwoColumns ? 2 : 4);
 

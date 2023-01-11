@@ -1,63 +1,46 @@
 .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
     height: 100vh;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(4, 1fr);
-    grid-column-gap: 2em;
-    grid-row-gap: 2em;
-    grid-template-areas:
-        "element1 element1 element2"
-        "element3 element4 element4"
-        "element3 element4 element4"
-        "element3 element4 element4";
 }
 
-.div1, .div2 {
+.logo,
+.ctaTop,
+.breedExplorer,
+.img {
     margin-top: 1em;
 }
 
-.div1 {
-    grid-area: element1;
+.img {
+    margin-bottom: 1em;
 }
 
-.div2 {
-    grid-area: element2;
-    display: flex;
-    justify-content: flex-end;
-    align-items: flex-start;
+.ctaTop,
+.img {
+    display: none;
 }
 
-.div3 {
-    grid-area: element3;
-}
-
-.div4 {
-    grid-area: element4;
-}
-
-.landingImg {
-    width: 100%;
-}
-
-.div3 h3 {
+.breedExplorer h3 {
     margin-top: 0;
     margin-bottom: 0.5em;
     color: #cf924d;
     text-transform: uppercase;
 }
 
-.div3 h1 {
+.breedExplorer h1 {
     margin: 0;
     line-height: 1.2;
     font-size: 2.3rem;
 }
 
-.div3 p {
+.breedExplorer p {
     margin-top: 0.5em;
     font-size: 1.2rem;
 }
 
-.div3 .small {
+.breedExplorer .small {
     font-size: 0.9rem;
 }
 
@@ -73,22 +56,21 @@
     border-radius: 1.25em;
 }
 
-.big {
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-top: 1em;
-}
-
 .cta:hover,
 .cta:focus {
     opacity: 0.8;
 }
 
-.ctaBigContainer {
+.big {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.ctaBig {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    margin-left: auto;
 }
 
 .highlight {
@@ -96,4 +78,76 @@
     background-repeat: no-repeat;
     background-size: 100% 40%;
     background-position: 0 90%;
+}
+
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+@media (min-width: 481px) {
+    .container {
+        gap: 2em;
+    }
+    .img {
+        display: block;
+        width: 100%;
+        background-image: url('../images/man-walking-dog.png');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        flex-grow: 1;
+    }
+}
+
+@media (min-width: 1025px) {
+    .container {
+        justify-content:unset;
+        align-items:unset;
+    
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: unset;
+        grid-column-gap: 2em;
+        /* grid-row-gap: 2em; */
+        grid-template-areas:
+            "logo          logo          logo ctaTop ctaTop ctaTop"
+            "breedExplorer breedExplorer img  img    img    img"
+            "ctaBig        ctaBig        img  img    img    img"
+            "ctaBig        ctaBig        img  img    img    img";
+    }
+
+    .logo {
+        grid-area: logo;
+    }
+    
+    .ctaTop {
+        grid-area: ctaTop;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+
+    .breedExplorer {
+        grid-area: breedExplorer;
+    }
+    
+    .ctaBig {
+        grid-area: ctaBig;
+        align-items: unset;
+    }
+
+    .img {
+        display: unset;
+        grid-area: img;
+        background-position: top;
+        /* overflow: hidden; */
+        /* border: 2px solid green */
+    }
+
+    .big {
+        margin-top: 0;
+    }
 }
