@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     addTemperamentFilter as addBreedTemperamentFilter,
@@ -6,7 +6,13 @@ import {
     changeWeightFilter,
     changeSourceFilter,
     filterBreeds,
-    changeCurrentPage
+    changeCurrentPage,
+    collapseTemperamentFilter,
+    expandTemperamentFilter,
+    collapseWeightFilter,
+    expandWeightFilter,
+    collapseSourceFilter,
+    expandSourceFilter
 } from '../redux/actions.js';
 import styles from './Filters.module.css';
 import SearchResult from './SearchResult.jsx';
@@ -48,6 +54,30 @@ function Filters() {
         dispatch(changeCurrentPage(1));
     }
 
+    const handleCollapseTemperamentFilter = () => {
+        if (filters.isTemperamentCollapsed) {
+            dispatch(expandTemperamentFilter());
+        } else {
+            dispatch(collapseTemperamentFilter());
+        }
+    }
+
+    const handleCollapseWeightFilter = () => {
+        if (filters.isWeightCollapsed) {
+            dispatch(expandWeightFilter());
+        } else {
+            dispatch(collapseWeightFilter());
+        }
+    }
+
+    const handleCollapseSourceFilter = () => {
+        if (filters.isSourceCollapsed) {
+            dispatch(expandSourceFilter());
+        } else {
+            dispatch(collapseSourceFilter());
+        }
+    }
+
     return <>
         <SearchResult totalBreeds={breeds.length} />
         <CurrentFilters
@@ -59,14 +89,14 @@ function Filters() {
 
         {breeds && breeds.length > 1 &&
             <>
-                <p className={styles.filterTitle}>TEMPERAMENTS</p>
-                <TemperamentFilter addTemperamentFilter={addTemperamentFilter} />
+                <p className={styles.filterTitle} onClick={handleCollapseTemperamentFilter}>TEMPERAMENTS <span className={styles.collapse}>{filters.isTemperamentCollapsed ? '[+]' : '[-]'}</span></p>
+                {!filters.isTemperamentCollapsed && <TemperamentFilter addTemperamentFilter={addTemperamentFilter} />}
 
-                <p className={styles.filterTitle}>WEIGHT</p>
-                <WeightFilter />
+                <p className={styles.filterTitle} onClick={handleCollapseWeightFilter}>WEIGHT <span className={styles.collapse}>{filters.isWeightCollapsed ? '[+]' : '[-]'}</span></p>
+                {!filters.isWeightCollapsed && <WeightFilter />}
 
-                {filters.source === '' && <p className={styles.filterTitle}>SOURCE</p>}
-                <SourceFilter />
+                {filters.source === '' && <p className={styles.filterTitle} onClick={handleCollapseSourceFilter}>SOURCE <span className={styles.collapse}>{filters.isSourceCollapsed ? '[+]' : '[-]'}</span></p>}
+                {!filters.isSourceCollapsed && <SourceFilter />}
             </>
         }
 

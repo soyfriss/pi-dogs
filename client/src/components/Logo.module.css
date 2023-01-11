@@ -9,16 +9,21 @@
 }
 
 .logo {
-    background-color: var(--accent-color);
-    background-color: #4c3a27;
-    color: whitesmoke;
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
     padding: 0.5em;
     margin-right: 0.25em;
     border-radius: 50%;
-    font-size: 1.0rem;
-    font-weight: bold;
+    background-color: var(--accent-color);
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
     text-transform: lowercase;
+    font-family: inherit;
+    font-size: 1rem;
+    font-weight: bold;
 }
+
 
 .logo, .text {
     margin-top: 0;
@@ -26,6 +31,13 @@
 }
 
 .text {
+    display: none;
     font-size: 1.5rem;
     padding: 0.3em 0.1em;
+}
+
+@media (min-width: 481px) {
+    .text {
+        display: block;
+    }    
 }

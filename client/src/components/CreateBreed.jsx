@@ -291,7 +291,7 @@ function CreateBreed() {
             to={{
                 pathname: `/breed/${newBreed.item.id}`,
                 search: `?source=${newBreed.item.source}`,
-                state: { title: 'Your newly created breed' }
+                state: { message: 'Your newly created breed' }
             }}
         />
     }
@@ -303,7 +303,7 @@ function CreateBreed() {
                 {/* <p className={styles.title}>New breed</p> */}
                 <div className={styles.body}>
                     <form className={styles.form} onSubmit={handleSubmit}>
-                        <div className={styles.fullWidth}>
+                        <div className={styles.name}>
                             <Input
                                 name="name"
                                 label="Name"
@@ -314,7 +314,7 @@ function CreateBreed() {
                                 parentError={breed.breedExistsError}
                             />
                         </div>
-                        <div>
+                        <div className={styles.lifeSpan}>
                             <InputRange
                                 name="lifeSpan"
                                 label="Life span (years)"
@@ -324,7 +324,7 @@ function CreateBreed() {
                                 onChange={handleRangeChange}
                             />
                         </div>
-                        <div>
+                        <div className={styles.image}>
                             <Input
                                 name="image"
                                 label="Image URL"
@@ -334,7 +334,7 @@ function CreateBreed() {
                                 parentError={breed.imageUrlError}
                             />
                         </div>
-                        <div>
+                        <div className={styles.height}>
                             <InputRange
                                 name="height"
                                 label="Height (cm)"
@@ -345,7 +345,7 @@ function CreateBreed() {
                                 onChange={handleRangeChange}
                             />
                         </div>
-                        <div>
+                        <div className={styles.weight}>
                             <InputRange
                                 name="weight"
                                 label="Weight (Kg)"
@@ -356,7 +356,7 @@ function CreateBreed() {
                                 onChange={handleRangeChange}
                             />
                         </div>
-                        <div className={styles.fullWidth}>
+                        <div className={styles.temperaments}>
                             <Select
                                 label="Temperaments"
                                 minItemsSelected={constants.MIN_TEMPERAMENTS}
@@ -365,7 +365,7 @@ function CreateBreed() {
                                 onChange={handleSelectChange}
                             />
                         </div>
-                        <div className={styles.fullWidth}>
+                        <div className={styles.submit}>
                             <button
                                 type="submit"
                                 className={`${styles.btn} ${isSubmitDisabled && styles.btnDisabled}`}

@@ -94,7 +94,7 @@ function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, value = [],
                 </select>
                 <button
                     type="button"
-                    className={`btn-primary ${input.isAddDisabled && 'btn-disabled'}`}
+                    className={`btn-small ${input.isAddDisabled && 'btn-disabled'}`}
                     onClick={addTemperament}
                     disabled={input.isAddDisabled}
                     onFocus={() => setShowError(false)}

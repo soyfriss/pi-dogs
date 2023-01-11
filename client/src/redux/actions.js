@@ -179,9 +179,33 @@ export function removeTemperamentFilter(temperament) {
     }
 }
 
+export function collapseTemperamentFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.COLLAPSE_TEMPERAMENT_FILTER });
+    }
+}
+
+export function expandTemperamentFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.EXPAND_TEMPERAMENT_FILTER });
+    }
+}
+
 export function changeWeightFilter(weight) {
     return function (dispatch) {
         dispatch({ type: actionTypes.WEIGHT_FILTER_CHANGED, payload: weight });
+    }
+}
+
+export function collapseWeightFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.COLLAPSE_WEIGHT_FILTER });
+    }
+}
+
+export function expandWeightFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.EXPAND_WEIGHT_FILTER });
     }
 }
 
@@ -190,6 +214,19 @@ export function changeSourceFilter(source) {
         dispatch({ type: actionTypes.SOURCE_FILTER_CHANGED, payload: source });
     }
 }
+
+export function collapseSourceFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.COLLAPSE_SOURCE_FILTER });
+    }
+}
+
+export function expandSourceFilter() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.EXPAND_SOURCE_FILTER });
+    }
+}
+
 
 export function changeCurrentPage(value) {
     return function (dispatch) {

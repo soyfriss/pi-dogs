@@ -7,7 +7,7 @@ function Logo() {
     return <>
         <NavLink to="/" className={styles.logoLink}>
             <div className={styles.container}>
-                <p className={styles.logo}>BX</p>
+                <button className={styles.logo}>BX</button>
                 <p className={styles.text}>BREED EXPLORER</p>
             </div>
         </NavLink>

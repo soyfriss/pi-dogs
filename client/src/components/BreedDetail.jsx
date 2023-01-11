@@ -77,7 +77,7 @@ function BreedDetail() {
         <Header />
         <main>
             <div className={styles.section}>
-                {/* <p className={styles.title}>{(state && state.title) ? state.title : 'Breed detail'}</p> */}
+                {state && state.message && <p className={styles.message}>({state.message})</p>}
                 <p className={styles.breedName}>{breed.item.name}</p>
 
                 <div className={styles.body}>

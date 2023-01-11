@@ -24,9 +24,15 @@ body {
   background-color: var(--primary-color);
 }
 
+/* header {
+  width: 100%;
+  min-width: 320px;
+} */
+
 header,
 main {
-  margin: 0 2em;
+  margin: 0 1em;
+  /* min-width: 320px; */
   /* border: 1px dotted green; */
 }
 
@@ -69,7 +75,7 @@ input[type=number] {
   background-color: var(--accent-color);
   color: var(--primary-text-color);
   padding: 0.5em 1.5em;
-  font-size: 1.25em;
+  font-size: 1.25rem;
   font-family: inherit;
   border-radius: 5px;
 }
@@ -85,6 +91,18 @@ input[type=number] {
   cursor: auto;
   opacity: 0.4;
 }
+
+.btn-small {
+  cursor: pointer;
+  border: none;
+  background-color: var(--accent-color);
+  color: var(--primary-text-color);
+  padding: 0.25em;
+  font-size: 1rem;
+  font-family: inherit;
+  border-radius: 5px;
+}
+
 
 /* Loader */
 .animated-paw {

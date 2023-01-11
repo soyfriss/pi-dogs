@@ -56,8 +56,10 @@ function Home() {
     if (fetchBreedsStatus === 'failed') {
         return <>
             <Header />
-            <SearchInput />
             <main>
+                <div className={styles.searchInput}>
+                    <SearchInput />
+                </div>
                 <Error title='Oops!' message={fetchBreedsError.message} />
             </main>
         </>;
@@ -65,18 +67,24 @@ function Home() {
 
     if (fetchTemperamentsStatus === 'failed') {
         return <>
-            <Header />
-            <SearchInput />
-            <main>
-                <Error title='Oops!' message={fetchTemperamentsError.message} />
-            </main>
+            <div className={styles.errorContainer}>
+                <Header />
+                <main>
+                    <div className={styles.searchInput}>
+                        <SearchInput />
+                    </div>
+                    <Error title='Oops!' message={fetchTemperamentsError.message} />
+                </main>
+            </div>
         </>;
     }
 
     return <>
         <Header />
         <main>
-            <SearchInput />
+            <div className={styles.searchInput}>
+                <SearchInput />
+            </div>
             <div className={styles.content}>
                 <div className={styles.filters}>
                     <Filters />

@@ -21,7 +21,10 @@ const initialState = {
     filters: {
         temperaments: [],
         source: '',
-        weight: { min: 0, max: 0 }
+        weight: { min: 0, max: 0 },
+        isTemperamentCollapsed: false,
+        isWeightCollapsed: false,
+        isSourceCollapsed: false
     },
     currentPage: 1,
     currentFilterPage: 1,
@@ -93,6 +96,22 @@ export default function reducer(state = initialState, action) {
                     temperaments: action.payload
                 }
             }
+        case actionTypes.COLLAPSE_TEMPERAMENT_FILTER:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isTemperamentCollapsed: true
+                }
+            }
+        case actionTypes.EXPAND_TEMPERAMENT_FILTER:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isTemperamentCollapsed: false
+                }
+            }
         case actionTypes.WEIGHT_FILTER_CHANGED:
             return {
                 ...state,
@@ -101,12 +120,45 @@ export default function reducer(state = initialState, action) {
                     weight: action.payload,
                 }
             }
+        case actionTypes.COLLAPSE_WEIGHT_FILTER:
+            console.log('reducer COLLAPSE_WEIGHT_FILTER');
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isWeightCollapsed: true
+                }
+            }
+        case actionTypes.EXPAND_WEIGHT_FILTER:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isWeightCollapsed: false
+                }
+            }
         case actionTypes.SOURCE_FILTER_CHANGED:
             return {
                 ...state,
                 filters: {
                     ...state.filters,
                     source: action.payload,
+                }
+            }
+        case actionTypes.COLLAPSE_SOURCE_FILTER:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isSourceCollapsed: true
+                }
+            }
+        case actionTypes.EXPAND_SOURCE_FILTER:
+            return {
+                ...state,
+                filters: {
+                    ...state.filters,
+                    isSourceCollapsed: false
                 }
             }
         case actionTypes.ALL_FILTERS_CLEARED:

@@ -3,12 +3,14 @@ import { NavLink } from 'react-router-dom';
 import styles from './Nav.module.css';
 import github from '../images/github-mark.png';
 import linkedin from '../images/linkedin.png';
+import Logo from './Logo.jsx';
 
 function Nav() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)
 
     return <>
         <nav className={styles.navigation}>
+            <Logo />
             <button
                 className={styles.hamburger}
                 onClick={() => {
@@ -20,7 +22,7 @@ function Nav() {
                     xmlns="http://www.w3.org/2000/svg"
                     className="h-5 w-5"
                     viewBox="0 0 20 20"
-                    fill="white"
+                    fill="#151922"
                 >
                     <path
                         fillRule="evenodd"

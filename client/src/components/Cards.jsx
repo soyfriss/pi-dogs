@@ -4,12 +4,18 @@ import Card from './Card.jsx';
 import useMediaQuery from '../hooks/useMediaQuery.js';
 
 function Cards({ breeds }) {
-    const isTwoColumns = useMediaQuery('(max-width: 1024px)');
+    let nbColumns = 1;
+    if (useMediaQuery('(min-width: 769px)')) {
+        nbColumns = 2;
+    }
+    if (useMediaQuery('(min-width: 1025px)')) {
+        nbColumns = 4;
+    }
 
-    let orderedBreeds = masonryOrder(breeds, isTwoColumns ? 2 : 4);
+    let orderedBreeds = masonryOrder(breeds, nbColumns);
 
     return <>
-        {console.log('Cards isTwoColumns: ', isTwoColumns)}
+        {console.log('Cards number of columns: ', nbColumns)}
         <div className={styles.container}>
             {orderedBreeds.map(breed => (
                 <Card key={`${breed.id}-${breed.name}`} breed={breed} />
@@ -19,6 +25,10 @@ function Cards({ breeds }) {
 }
 
 function masonryOrder(breeds, columns) {
+    if (columns === 1) {
+        return [...breeds];
+    }
+
     const breedsPerPage = 8;
     const breedsFilled = [...breeds];
     if (breedsFilled.length < breedsPerPage) {
@@ -35,7 +45,7 @@ function masonryOrder(breeds, columns) {
     const result = [];
     
     let index;
-    console.log('breeds before masonry order: ', breedsFilled);
+    // console.log('breeds before masonry order: ', breedsFilled);
 
 
 
@@ -51,7 +61,7 @@ function masonryOrder(breeds, columns) {
         }
     }
 
-    console.log('masonryOrder: ', result);
+    // console.log('masonryOrder: ', result);
 
     return result;
 }

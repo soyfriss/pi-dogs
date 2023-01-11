@@ -1,4 +1,16 @@
 .filterTitle {
     font-weight: 700;
     margin-top: 2em;
+    cursor: pointer;
+    text-align: center;
+}
+
+.collapse {
+    margin-left: 0.5em;
+}
+
+@media (min-width: 481px) {
+    .filterTitle {
+        text-align: start;
+    }
 }

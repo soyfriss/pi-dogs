@@ -4,6 +4,10 @@
     align-items: stretch;
 }
 
+.selectContainer button {
+    margin-left: 0.25em;
+}
+
 .selectedTemperaments {
     display: flex;
     flex-wrap: wrap;

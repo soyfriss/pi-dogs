@@ -11,8 +11,9 @@
     color: var(--primary-text-color);
 }
 
-.activeLink {
+.navigationMenu li a.activeLink {
     text-decoration: line-through;
+    cursor: auto;
 }
 
 .navigationMenu {
@@ -22,31 +23,29 @@
 .navigationMenu ul {
     padding: 0;
     margin: 0;
-    /* navigation menu is positioned to start 60px from the top of the document (which is directly below the navbar) */
     display: none;
     position: absolute;
-    top: 60px;
+    top: 4rem;
     left: 0;
-    /* stacks the li tags vertically  */
     flex-direction: column;
-    /* makes menu span full height and width */
+    align-items: center;
     width: 100%;
-    height: calc(100vh - 77px);
     background-color: white;
-    border-top: 1px solid black;
+    border-top: 2px solid var(--accent-color);
 }
 
 .navigationMenu li {
     list-style-type: none;
     /* centers link text and strips off margin */
-    text-align: center;
-    margin: 0;
+    /* text-align: center; */
+    margin: 1em;
+    font-size: 1.2rem;
 }
 
 .navigationMenu li a {
     text-decoration: none;
-    display: block;
-    color: black;
+    /* display: block; */
+    color: inherit;
     /* increases the surface area of the anchor tag to span the full width of the menu */
     width: 100%;
     padding: 1.5rem 0;
@@ -57,21 +56,21 @@
 }
 
 .navigationMenu.expanded ul {
-    display: block;
+    display: flex;
 }
 
 .hamburger {
-    border: 0;
-    height: 40px;
-    width: 40px;
-    padding: 0.5rem;
+    border: none;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0.5em;
     border-radius: 50%;
     background-color: var(--accent-color);
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     position: absolute;
     top: 50%;
-    right: 25px;
+    right: 0;
     transform: translateY(-50%);
     display: block;
 }
@@ -80,24 +79,10 @@
     opacity: 0.8;
 }
 
-/* nav ul {
-    padding: 0;
-    margin: 0;
-}
-
-nav ul li {
-    margin-left: 1.5em;
-    display: inline-block;
-    vertical-align: middle;
-}
-
-nav ul li:last-child {
-    margin-left: 0.5em;
-} */
-
 .img {
     width: 1.5rem;
-    margin-left: 1.5em;
+    display: block;
+    /* margin-left: 1.5em; */
 }
 
 @media screen and (min-width: 1025px) {
@@ -106,13 +91,12 @@ nav ul li:last-child {
     }
 
     .navigationMenu ul {
-        /* padding: 0; */
-        /* margin: 0; */
-        /* navigation menu is positioned to start 60px from the top of the document (which is directly below the navbar) */
-        display: flex;
-        position: unset;
+        padding: 0;
+        align-items: center;
+        position: static;
         top: unset;
         left: unset;
+        display: flex;
         flex-direction: row;
         /* makes menu span full height and width */
         width: unset;
@@ -122,7 +106,12 @@ nav ul li:last-child {
     }
 
     .navigationMenu li {
-        margin: 0 1rem;
+        margin: 0;
+        margin-left: 2rem;
+    }
+
+    .navigationMenu li a {
+        padding: 0;
     }
 
 }
