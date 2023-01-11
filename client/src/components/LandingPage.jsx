@@ -6,14 +6,6 @@ import { NavLink } from 'react-router-dom';
 
 function LandingPage() {
 
-    const myBgStyle = {
-        backgroundImage: `url(${landing})`,
-        width: '100%',
-        backgroundSize: 'contain',
-        backgroundRepeat: 'no-repeat',
-        backgroundPosition: 'center'
-    };
-
     return <>
         <main>
             <div className={styles.container}>

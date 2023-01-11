@@ -76,7 +76,7 @@ function BreedDetail() {
     return <>
         <Header />
         <main>
-            <div className={styles.section}>
+            <div className={styles.container}>
                 {state && state.message && <p className={styles.message}>({state.message})</p>}
                 <p className={styles.breedName}>{breed.item.name}</p>
 

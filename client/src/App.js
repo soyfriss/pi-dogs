@@ -4,11 +4,9 @@ import Home from './components/Home.jsx';
 import CreateBreed from './components/CreateBreed.jsx';
 import BreedDetail from './components/BreedDetail.jsx';
 import About from './components/About.jsx'
-import Error from './components/Error.jsx';
+import Error404 from './components/Error404.jsx';
 import { useEffect } from 'react';
 import LandingPage from './components/LandingPage.jsx';
-import * as errors from './constants/errors.js';
-
 
 function App() {
   useEffect(() => {
@@ -34,10 +32,7 @@ function App() {
           <About />
         </Route>
         <Route path='*'>
-          <Header />
-          <main>
-            <Error title='Oops!' message={errors.NOT_FOUND_MESSAGE} />
-          </main>
+          <Error404 />
         </Route>
       </Switch>
     </>

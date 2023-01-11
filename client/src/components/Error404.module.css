@@ -1,0 +1,153 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100vh;
+}
+
+.logo,
+.ctaTop,
+.errorMessage,
+.img {
+    margin-top: 1em;
+}
+
+.img {
+    margin-bottom: 1em;
+}
+
+.ctaTop,
+.img {
+    display: none;
+}
+
+.errorMessage {
+    text-align: center;
+}
+.errorMessage h3 {
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    color: #cf924d;
+    text-transform: uppercase;
+}
+
+.errorMessage h1 {
+    margin: 0;
+    line-height: 1.2;
+    font-size: 2.3rem;
+}
+
+.errorMessage p {
+    margin-top: 0.5em;
+    font-size: 1.2rem;
+}
+
+.errorMessage .errorCode {
+    font-size: 0.9rem;
+}
+
+.cta {
+    cursor: pointer;
+    border: none;
+    background-color: #4c3a27;
+    color: whitesmoke;
+    padding: 0.5em 1.5em;
+    font-size: 1.25em;
+    font-weight: 500;
+    font-family: inherit;
+    border-radius: 1.25em;
+}
+
+.cta:hover,
+.cta:focus {
+    opacity: 0.8;
+}
+
+.big {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-top: 1em;
+}
+
+.ctaBig {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.highlight {
+    background: linear-gradient(120deg, #cf924d 0%, #cf924d 100%);
+    background-repeat: no-repeat;
+    background-size: 100% 40%;
+    background-position: 0 90%;
+}
+
+/* 320px — 480px: Mobile devices
+481px — 768px: iPads, Tablets
+769px — 1024px: Small screens, laptops
+1025px — 1200px: Desktops, large screens
+1201px and more —  Extra large screens, TV */
+
+@media (min-width: 481px) {
+    .container {
+        gap: 2em;
+    }
+    .img {
+        display: block;
+        width: 100%;
+        background-image: url('../images/scared-dog.svg');
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center bottom;
+        flex-grow: 1;
+    }
+}
+
+@media (min-width: 1025px) {
+    .container {
+        justify-content:unset;
+        align-items:unset;
+    
+        display: grid;
+        grid-template-columns: repeat(6, 1fr);
+        grid-template-rows: repeat(4, 1fr);
+        gap: unset;
+        grid-column-gap: 2em;
+        /* grid-row-gap: 2em; */
+        grid-template-areas:
+            ". . logo logo . ."
+            ". errorMessage errorMessage img  img ."
+            ". errorMessage errorMessage img  img ."
+            ". . errorCode    .  . .";
+    }
+
+    .logo {
+        grid-area: logo;
+    }
+    
+    .ctaTop {
+        grid-area: ctaTop;
+        display: flex;
+        justify-content: flex-end;
+        align-items: flex-start;
+    }
+
+    .errorMessage {
+        grid-area: errorMessage;
+    }
+    
+    .errorCode {
+        grid-area: errorCode;
+        text-align: center;
+    }
+
+    .img {
+        grid-area: img;
+        background-position: 0 0;
+    }
+
+    .big {
+        margin-top: 0;
+    }
+}
