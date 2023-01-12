@@ -10,7 +10,7 @@
 .ctaTop,
 .breedExplorer,
 .img {
-    margin-top: 1em;
+    margin-top: 1.5em;
 }
 
 .img {
@@ -86,21 +86,6 @@
 1025px — 1200px: Desktops, large screens
 1201px and more —  Extra large screens, TV */
 
-@media (min-width: 481px) {
-    .container {
-        gap: 2em;
-    }
-    .img {
-        display: block;
-        width: 100%;
-        background-image: url('../images/man-walking-dog.png');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center bottom;
-        flex-grow: 1;
-    }
-}
-
 @media (min-width: 1025px) {
     .container {
         justify-content:unset;
@@ -140,12 +125,16 @@
     }
 
     .img {
-        display: unset;
+        display: block;
         grid-area: img;
-        background-position: top;
         /* overflow: hidden; */
         /* border: 2px solid green */
-    }
+        width: 100%;
+        background-image: url('../images/man-walking-dog.png');
+        background-position: top;
+        background-size: contain;
+        background-repeat: no-repeat;
+   }
 
     .big {
         margin-top: 0;

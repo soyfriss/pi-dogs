@@ -10,7 +10,7 @@
 .ctaTop,
 .errorMessage,
 .img {
-    margin-top: 1em;
+    margin-top: 1.5em;
 }
 
 .img {
@@ -23,8 +23,10 @@
 }
 
 .errorMessage {
+    /* border: 1px solid darkgreen; */
     text-align: center;
 }
+
 .errorMessage h3 {
     margin-top: 0;
     margin-bottom: 0.5em;
@@ -43,7 +45,11 @@
     font-size: 1.2rem;
 }
 
-.errorMessage .errorCode {
+.errorMessage div:nth-child(2) {
+    display: none;
+}
+
+.errorCode {
     font-size: 0.9rem;
 }
 
@@ -89,65 +95,30 @@
 1025px — 1200px: Desktops, large screens
 1201px and more —  Extra large screens, TV */
 
-@media (min-width: 481px) {
-    .container {
-        gap: 2em;
-    }
-    .img {
-        display: block;
-        width: 100%;
-        background-image: url('../images/scared-dog.svg');
-        background-size: contain;
-        background-repeat: no-repeat;
-        background-position: center bottom;
-        flex-grow: 1;
-    }
-}
-
-@media (min-width: 1025px) {
-    .container {
-        justify-content:unset;
-        align-items:unset;
-    
-        display: grid;
-        grid-template-columns: repeat(6, 1fr);
-        grid-template-rows: repeat(4, 1fr);
-        gap: unset;
-        grid-column-gap: 2em;
-        /* grid-row-gap: 2em; */
-        grid-template-areas:
-            ". . logo logo . ."
-            ". errorMessage errorMessage img  img ."
-            ". errorMessage errorMessage img  img ."
-            ". . errorCode    .  . .";
-    }
-
-    .logo {
-        grid-area: logo;
-    }
-    
-    .ctaTop {
-        grid-area: ctaTop;
-        display: flex;
-        justify-content: flex-end;
-        align-items: flex-start;
-    }
-
+@media (min-width: 769px) {
     .errorMessage {
-        grid-area: errorMessage;
+        display: flex;
+        align-items: center;
     }
-    
-    .errorCode {
-        grid-area: errorCode;
-        text-align: center;
+
+    .errorMessage div:nth-child(2) {
+        width: 250px;
+        height: 250px;
+        display: block;
     }
 
     .img {
-        grid-area: img;
-        background-position: 0 0;
+        width: 100%;
     }
 
     .big {
         margin-top: 0;
+    }
+}
+
+@media (min-width: 1025px) {
+    .errorMessage div:nth-child(2) {
+        width: 300px;
+        height: 300px;
     }
 }

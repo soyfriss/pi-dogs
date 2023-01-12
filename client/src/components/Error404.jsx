@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './Error404.module.css';
 import Logo from './Logo.jsx';
+import scaredDog from '../images/scared-dog.svg';
 import { NavLink } from 'react-router-dom';
 import * as errors from '../constants/errors.js';
 
@@ -12,14 +13,18 @@ function Error404() {
                     <Logo />
                 </div>
                 <div className={styles.errorMessage}>
-                    <h1>Oops!</h1>
-                    <p>{errors.NOT_FOUND_MESSAGE}</p>
-                    <NavLink to="/home">
-                        <button type='button' className={`${styles.cta} ${styles.big}`}>Go to home</button>
-                    </NavLink>
+                    <div>
+                        <h1>Oops!</h1>
+                        <p>{errors.NOT_FOUND_MESSAGE}</p>
+                        <NavLink to="/home">
+                            <button type='button' className={`${styles.cta} ${styles.big}`}>Go home</button>
+                        </NavLink>
+                    </div>
+                    <div>
+                        <img src={scaredDog}></img>
+                    </div>
                 </div>
                 <p className={styles.errorCode}>Error 404</p>
-                <div className={styles.img}></div>
             </div>
         </main>
     </>;
