@@ -293,6 +293,18 @@ export function filterBreeds() {
     }
 }
 
+export function checkBreed(breed) {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.BREED_CHECKED, payload: breed });
+    }
+}
+
+export function uncheckBreed(breedId) {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.BREED_UNCHECKED, payload: breedId });
+    }
+}
+
 function isFilterByTemperamentsOK(breed, filters) {
     if (filters.length === 0) {
         return true;

@@ -9,6 +9,7 @@ import Pagination from './Pagination.jsx';
 import Loader from './Loader.jsx';
 import Error from './Error.jsx';
 import Header from './Header.jsx';
+import CheckedBreeds from './CheckedBreeds.jsx';
 import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../redux/actions.js';
 import * as constants from '../constants/home.js';
 
@@ -88,6 +89,7 @@ function Home() {
             <div className={styles.content}>
                 <div className={styles.filters}>
                     <Filters />
+                    <CheckedBreeds />
                 </div>
                 <div className={styles.cards}>
                     {breeds.length > 1 &&

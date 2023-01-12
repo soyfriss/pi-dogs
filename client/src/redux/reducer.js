@@ -6,6 +6,7 @@ const initialState = {
         status: 'idle',
         error: null
     },
+    breedsChecked: [],
     temperaments: {
         items: [],
         status: 'idle',
@@ -59,7 +60,8 @@ export default function reducer(state = initialState, action) {
                     ...state.breeds,
                     items: action.payload.breeds
                 },
-                searchResults: action.payload.breeds
+                searchResults: action.payload.breeds,
+                breedsChecked: []
             }
         case actionTypes.FETCH_BREEDS_FAILED:
             return {
@@ -70,7 +72,8 @@ export default function reducer(state = initialState, action) {
                     status: 'failed',
                     error: action.payload
                 },
-                searchResults: []
+                searchResults: [],
+                breedsChecked: []
             }
         case actionTypes.FETCH_BREEDS_COMPLETED:
             return {
@@ -248,6 +251,16 @@ export default function reducer(state = initialState, action) {
                     error: action.payload,
                     items: []
                 }
+            }
+        case actionTypes.BREED_CHECKED:
+            return {
+                ...state,
+                breedsChecked: [...state.breedsChecked, action.payload]
+            }
+        case actionTypes.BREED_UNCHECKED:
+            return {
+                ...state,
+                breedsChecked: state.breedsChecked.filter(breed => breed.id !== action.payload)
             }
         default:
             return state;

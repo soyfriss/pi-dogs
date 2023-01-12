@@ -4,7 +4,7 @@ import styles from './Item.module.css';
 function Item({ id, name, remove }) {
     return <>
         <div className={styles.container}>
-            <p className={styles.filter}>{name}</p>
+            <p className={styles.name}>{name}</p>
             <button className={styles.remove} onClick={() => remove(id)}>X</button>
         </div>
     </>

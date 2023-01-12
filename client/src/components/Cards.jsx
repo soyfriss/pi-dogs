@@ -1,9 +1,13 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styles from './Cards.module.css';
 import Card from './Card.jsx';
 import useMediaQuery from '../hooks/useMediaQuery.js';
+import * as constants from '../constants/cards.js';
 
 function Cards({ breeds }) {
+    const showCompareBreedCheckbox = useSelector(state => state.breedsChecked.length < constants.MAX_BREEDS_TO_COMPARE);
+
     let nbColumns = 1;
     if (useMediaQuery('(min-width: 769px)')) {
         nbColumns = 2;
@@ -18,7 +22,7 @@ function Cards({ breeds }) {
         {console.log('Cards number of columns: ', nbColumns)}
         <div className={styles.container}>
             {orderedBreeds.map(breed => (
-                <Card key={`${breed.id}-${breed.name}`} breed={breed} />
+                <Card key={`${breed.id}-${breed.name}`} breed={breed} showCompareBreedCheckbox={showCompareBreedCheckbox} />
             ))}
         </div>
     </>
