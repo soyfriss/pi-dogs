@@ -101,6 +101,7 @@ input[type=number] {
   font-size: 1rem;
   font-family: inherit;
   border-radius: 5px;
+  text-decoration: none;
 }
 
 

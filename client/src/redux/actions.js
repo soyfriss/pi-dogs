@@ -305,6 +305,12 @@ export function uncheckBreed(breedId) {
     }
 }
 
+export function uncheckAllBreeds() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.BREEDS_ALL_UNCHECKED });
+    }
+}
+
 function isFilterByTemperamentsOK(breed, filters) {
     if (filters.length === 0) {
         return true;

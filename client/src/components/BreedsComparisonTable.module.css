@@ -1,0 +1,71 @@
+.tableContainer {
+    overflow: auto;
+    /* max-height: 500px; */
+}
+
+.table thead tr {
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    vertical-align: top;
+}
+
+.table thead th p {
+    font-size: 1.7rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    margin: 0;
+    padding: 0.5em 0;
+}
+
+.table [scope="colgroup"] span {
+    left: 1em;
+    position: sticky;
+}
+
+.table  {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.table td,
+.table th {
+    /* border: 1px solid #dddddd; */
+    border-bottom: 1px dashed #C0A597;
+
+    text-align: center;
+    padding: 0.5em;
+    min-width: 100px;
+}
+
+.table tbody th {
+    font-weight: normal;
+    text-align: left;
+}
+
+.table td {
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+.img {
+    border: 3px solid #C0A597;
+    object-fit: contain;
+    height: 200px;
+}
+
+.temperament {
+    width: 300px;
+    margin: 0 auto;
+}
+
+.table thead th .message {
+    font-size: 1rem;
+    font-weight: 500;
+    color: #C0A597;
+    text-align: center;
+    margin-top: 0;
+    margin-bottom: 1em;
+    padding: 0;
+}

@@ -4,6 +4,7 @@ import icon from '../images/search-icon.png';
 import styles from './SearchInput.module.css';
 import { useDispatch } from 'react-redux';
 import { fetchBreeds, changeSearchText, changeCurrentPage } from '../redux/actions.js';
+import * as constants from '../constants/searchInput.js';
 
 function SearchInput() {
     const dispatch = useDispatch();
@@ -31,6 +32,7 @@ function SearchInput() {
                 onKeyDown={(e) => {
                     if (e.key === 'Enter') handleFetchBreeds()
                 }}
+                maxLength={constants.SEARCH_INPUT_MAX_LENGTH}
             />
             <button
                 type="submit"

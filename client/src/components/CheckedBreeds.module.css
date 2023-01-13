@@ -13,3 +13,9 @@
     cursor: pointer;
     text-align: left;
 }
+
+.buttonsContainer {
+    display: flex;
+    justify-content: flex-start;
+    gap: 1em;
+}

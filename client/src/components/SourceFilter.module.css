@@ -1,6 +1,14 @@
 .item {
+    display: block;
     margin-left: 0.5em;
+    margin-top: 1em;
+    padding: 0;
     cursor: pointer;
+    border: none;
+    background-color: var(--primary-color);
+    color: var(--primary-text-color);
+    font-family: inherit;
+    font-size: 1em;
 }
 
 .item:hover,

@@ -1,0 +1,1 @@
+export const NO_CHECKED_BREEDS = "There aren't any breeds to compare.";

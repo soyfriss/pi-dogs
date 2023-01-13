@@ -7,27 +7,29 @@ import { NavLink } from 'react-router-dom';
 
 function Card({ breed, showCompareBreedCheckbox }) {
     const dispatch = useDispatch();
-
     const [isImgLoading, setIsImgLoading] = useState(true);
-    const breedChecked = useSelector(state => state.breedsChecked.find(b => b.id === breed.id));
-    const [isBreedChecked, setIsBreedChecked] = useState(breedChecked !== undefined);
+    const isBreedChecked = useSelector(state =>
+        state.checkedBreeds.find(b => b.name === breed.name) !== undefined
+    );
 
     useEffect(() => {
         console.log('Card useEffect()');
     }, []);
 
-    const handleBreedCheck = () => {
-        setIsBreedChecked(!isBreedChecked);
+    useEffect(() => {
+        console.log('Card isBreedChecked: ', isBreedChecked);
+    }, [isBreedChecked]);
+
+    const handleCheck = () => {
         if (isBreedChecked) {
             dispatch(uncheckBreed(breed.id));
         } else {
-            dispatch(checkBreed({ id: breed.id, name: breed.name }));
+            dispatch(checkBreed({ id: breed.id, name: breed.name, source: breed.source }));
         }
     }
 
-    console.log('Rendering Card');
-    console.log('breedChecked: ', breedChecked);
     return <>
+        {console.log('Rendering Card: ', breed.name)}
         <div className={`${styles.card} ${breed.notVisible && styles.notVisible}`}>
             <NavLink to={`/breed/${breed.id}?source=${breed.source}`} className={styles.navLink}>
                 <div className={styles.cardHeader}>
@@ -42,7 +44,11 @@ function Card({ breed, showCompareBreedCheckbox }) {
             {showCompareBreedCheckbox &&
                 <label>
                     <div className={styles.breedCheckedContainer}>
-                        <input type='checkbox' className={styles.breedChecked} onChange={handleBreedCheck} checked={isBreedChecked} />
+                        <input
+                            type='checkbox'
+                            className={styles.breedChecked}
+                            onChange={handleCheck}
+                            checked={isBreedChecked} />
                         <p className={styles.breedCheckedLabel}>COMPARE BREED</p>
                     </div>
                 </label>

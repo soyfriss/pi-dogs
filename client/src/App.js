@@ -7,6 +7,7 @@ import About from './components/About.jsx'
 import Error404 from './components/Error404.jsx';
 import { useEffect } from 'react';
 import LandingPage from './components/LandingPage.jsx';
+import BreedsCompare from './components/BreedsCompare.jsx';
 
 function App() {
   useEffect(() => {
@@ -30,6 +31,9 @@ function App() {
         </Route>
         <Route exact path="/about">
           <About />
+        </Route>
+        <Route exact path="/breeds/compare">
+          <BreedsCompare />
         </Route>
         <Route path='*'>
           <Error404 />

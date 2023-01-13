@@ -50,6 +50,7 @@ function TemperamentFilter({ addTemperamentFilter }) {
         {console.log('render TemperamentFilter')}
         {filterSlice.map(filter =>
             <button
+                type='button'
                 key={filter.id}
                 className={styles.item}
                 onClick={event => handleFilterClicked(event, filter)}

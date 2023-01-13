@@ -6,7 +6,7 @@ import useMediaQuery from '../hooks/useMediaQuery.js';
 import * as constants from '../constants/cards.js';
 
 function Cards({ breeds }) {
-    const showCompareBreedCheckbox = useSelector(state => state.breedsChecked.length < constants.MAX_BREEDS_TO_COMPARE);
+    const showCompareBreedCheckbox = useSelector(state => state.checkedBreeds.length < constants.MAX_BREEDS_TO_COMPARE);
 
     let nbColumns = 1;
     if (useMediaQuery('(min-width: 769px)')) {
@@ -16,43 +16,44 @@ function Cards({ breeds }) {
         nbColumns = 4;
     }
 
-    let orderedBreeds = masonryOrder(breeds, nbColumns);
+    let orderedBreeds = sortMasonryLayout(breeds, nbColumns);
 
     return <>
         {console.log('Cards number of columns: ', nbColumns)}
         <div className={styles.container}>
             {orderedBreeds.map(breed => (
-                <Card key={`${breed.id}-${breed.name}`} breed={breed} showCompareBreedCheckbox={showCompareBreedCheckbox} />
+                <Card
+                    key={breed.name}
+                    breed={breed}
+                    showCompareBreedCheckbox={showCompareBreedCheckbox} />
             ))}
         </div>
     </>
 }
 
-function masonryOrder(breeds, columns) {
+function sortMasonryLayout(breeds, columns) {
     if (columns === 1) {
         return [...breeds];
     }
 
-    const breedsPerPage = 8;
+    // Case when breeds < breeds per page
+    // Fill with empty cards up to breedsPerPage, so the cards are ordered correctly
+    // const breedsPerPage = 8;
     const breedsFilled = [...breeds];
-    if (breedsFilled.length < breedsPerPage) {
-        for (let i = breeds.length; i < breedsPerPage; i++) {
+    if (breedsFilled.length < constants.BREEDS_PER_PAGE) {
+        for (let i = breeds.length; i < constants.BREEDS_PER_PAGE; i++) {
             const breed = {}
-            breed.id = 100000 + i;
-            breed.name = 'name';
+            breed.id = 0;
+            breed.name = `${breeds[breeds.length - 1].name} #${i}`;
             breed.weight = ''
             breed.notVisible = true;
             breedsFilled.push(breed);
         }
     }
 
+    // Algorithm to reorder cards 
     const result = [];
-    
     let index;
-    // console.log('breeds before masonry order: ', breedsFilled);
-
-
-
     for (let c = 0; c < columns; c++) {
         for (let i = 0; i < breedsFilled.length; i++) {
             index = (columns * i) + c;
@@ -64,7 +65,6 @@ function masonryOrder(breeds, columns) {
             }
         }
     }
-
     // console.log('masonryOrder: ', result);
 
     return result;

@@ -35,12 +35,12 @@ function SourceFilter() {
 
         // Local & External sources
         return <>
-            <p className={styles.item} onClick={() => applyFilter('external')}>
+            <button type='button' className={styles.item} onClick={() => applyFilter('external')}>
                 External ({countExternal})
-            </p>
-            <p className={styles.item} onClick={() => applyFilter('local')}>
+            </button>
+            <button type='button' className={styles.item} onClick={() => applyFilter('local')}>
                 Local ({countLocal})
-            </p>
+            </button>
         </>;
     }
     return <></>;
