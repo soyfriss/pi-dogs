@@ -23,14 +23,18 @@ function SourceFilter() {
         const countLocal = countBreeds('local');
         const countExternal = countBreeds('external');
 
-        // Only local source
-        if (countExternal === 0) {
-            return <p>All breeds are from local source</p>;
-        }
-
-        // Only external source
-        if (countLocal === 0) {
-            return <p>All breeds are from external source</p>;
+        // Only local or external source
+        if (countExternal === 0 || countLocal === 0) {
+            return <>
+                <div className={styles.container}>
+                    {countExternal === 0 &&
+                        <p>All breeds are from local source</p>
+                    }
+                    {countLocal === 0 &&
+                        <p>All breeds are from external source</p>
+                    }
+                </div>
+            </>
         }
 
         // Local & External sources

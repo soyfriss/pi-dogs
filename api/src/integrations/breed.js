@@ -4,7 +4,15 @@ const { Breed, Temperament } = require('../db.js');
 const getBreeds = async (name, exactSearch) => {
     const options = {};
     if (name) {
-        options.where = { name: { [Op.iLike]: exactSearch ? `${name}` : `${name}%` } };
+        if (exactSearch) {
+            options.where = { name: { [Op.iLike]: name.trim() } };
+        } else {
+            if (name.length === 1) {
+                options.where = { name: { [Op.iLike]: `${name}%` } };
+            } else {
+                options.where = { name: { [Op.iLike]: `%${name}%` } };
+            }
+        }
     }
     options.attributes = ['id', 'name', 'weight'];
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];

@@ -3,6 +3,7 @@ import * as errors from '../constants/errors.js';
 import * as httpStatusCodes from '../constants/httpStatusCodes.js';
 
 axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.timeout = 15000;
 
 export async function getBreeds(searchText, exactSearch = false) {
     try {

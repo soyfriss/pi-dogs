@@ -27,7 +27,12 @@ const getBreeds = async (name, exactSearch) => {
             if (exactSearch) {
                 return breed.name === name;
             }
-            return breed.name.toLowerCase().startsWith(name.toLowerCase());
+            if(name.length === 1) {
+                return breed.name.toLowerCase().startsWith(name.toLowerCase());
+            } else {
+                // return breed.name.toLowerCase().startsWith(name.toLowerCase());
+                return breed.name.toLowerCase().includes(name.toLowerCase());
+            }
         });
     }
 

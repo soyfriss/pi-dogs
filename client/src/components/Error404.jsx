@@ -21,7 +21,7 @@ function Error404() {
                         </NavLink>
                     </div>
                     <div>
-                        <img src={scaredDog}></img>
+                        <img src={scaredDog} alt="Scared dog"></img>
                     </div>
                 </div>
                 <p className={styles.errorCode}>Error 404</p>

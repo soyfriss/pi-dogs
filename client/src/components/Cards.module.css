@@ -20,7 +20,7 @@
   }
 }
 
-@media (min-width: 1025px) {
+@media (min-width: 1201px) {
   .container {
     -moz-column-count: 4;
     -webkit-column-count: 4;

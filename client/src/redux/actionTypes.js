@@ -28,3 +28,5 @@ export const EXPAND_SOURCE_FILTER = 'breeds/sourceFilterExpanded';
 export const BREED_CHECKED = 'breeds/breedChecked';
 export const BREED_UNCHECKED = 'breeds/breedUnchecked';
 export const BREEDS_ALL_UNCHECKED = 'breeds/allBreedsUnchecked';
+export const COLLAPSE_CHECKED_BREEDS = 'breeds/checkedBreedsCollapsed';
+export const EXPAND_CHECKED_BREEDS = 'breeds/checkedBreedsExpanded';

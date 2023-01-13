@@ -40,8 +40,8 @@
         grid-column-gap: 1em;
         grid-row-gap: 2em;
         grid-template-areas:
-            "element1 element1 element1 element1 element1 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element1 element1 element3 element3 element3 element3 element3 element3 element3";
+            "element1 element1 element1 element1 element1 element1 element2 element2 element2 element2 element2 element2"
+            "element1 element1 element1 element1 element1 element1 element3 element3 element3 element3 element3 element3";
     }
 
     /* .searchInput {
@@ -68,8 +68,8 @@
         grid-column-gap: 1em;
         grid-row-gap: 2em;
         grid-template-areas:
-            "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
+            "element1 element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2"
+            "element1 element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3";
     }
 
     .searchInput {
@@ -88,10 +88,10 @@
     
 }
 
-/* @media (min-width: 1025px) {
+@media (min-width: 1025px) {
     .content {
         grid-template-areas:
-            "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
-    }
-} */
+        "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
+        "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
+}
+}

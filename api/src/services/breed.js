@@ -1,3 +1,4 @@
+// const {setTimeout} = require('timers/promises');
 const {
     getBreeds: getBreedsFromDB,
     getBreed: getBreedFromDB,
@@ -13,6 +14,7 @@ const { findOrCreateTemperaments, getTemperament } = require('./temperament.js')
 const AppError = require('../utils/AppError.js');
 const httpStatusCodes = require('../utils/httpStatusCodes.js');
 const constants = require('../utils/constants.js');
+
 
 const getBreeds = async (name, exactSearch = false) => {
 
@@ -56,7 +58,12 @@ const getBreed = async (id, source) => {
         throw new AppError(`Breed with id ${id} not found`, httpStatusCodes.NOT_FOUND);
     }
 
-    return breed;
+    // // Test: add delay
+    // console.log('Before delay');
+    // await setTimeout(20000);
+    // console.log('After delay');
+    
+    return breed;       
 }
 
 const createBreed = async (name, height, weight, lifeSpan, temperaments, image) => {

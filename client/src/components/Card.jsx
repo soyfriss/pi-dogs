@@ -4,6 +4,7 @@ import { checkBreed, uncheckBreed } from '../redux/actions.js';
 import styles from './Card.module.css';
 import noImage from '../images/no-image.png';
 import { NavLink } from 'react-router-dom';
+import * as constants from '../constants/cards.js';
 
 function Card({ breed, showCompareBreedCheckbox }) {
     const dispatch = useDispatch();
@@ -16,10 +17,6 @@ function Card({ breed, showCompareBreedCheckbox }) {
         console.log('Card useEffect()');
     }, []);
 
-    useEffect(() => {
-        console.log('Card isBreedChecked: ', isBreedChecked);
-    }, [isBreedChecked]);
-
     const handleCheck = () => {
         if (isBreedChecked) {
             dispatch(uncheckBreed(breed.id));
@@ -29,7 +26,7 @@ function Card({ breed, showCompareBreedCheckbox }) {
     }
 
     return <>
-        {console.log('Rendering Card: ', breed.name)}
+        {/* {console.log('Rendering Card: ', breed.name)} */}
         <div className={`${styles.card} ${breed.notVisible && styles.notVisible}`}>
             <NavLink to={`/breed/${breed.id}?source=${breed.source}`} className={styles.navLink}>
                 <div className={styles.cardHeader}>
@@ -49,7 +46,7 @@ function Card({ breed, showCompareBreedCheckbox }) {
                             className={styles.breedChecked}
                             onChange={handleCheck}
                             checked={isBreedChecked} />
-                        <p className={styles.breedCheckedLabel}>COMPARE BREED</p>
+                        <p className={styles.breedCheckedLabel}>{constants.COMPARE_BREED_LABEL}</p>
                     </div>
                 </label>
             }

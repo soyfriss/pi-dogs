@@ -7,6 +7,7 @@ const initialState = {
         error: null
     },
     checkedBreeds: [],
+    isCheckedBreedsCollapsed: false,
     temperaments: {
         items: [],
         status: 'idle',
@@ -54,18 +55,30 @@ export default function reducer(state = initialState, action) {
                 filters: action.payload.keepFilters ? state.filters : {
                     temperaments: [],
                     source: '',
-                    weight: { min: 0, max: 0 }
+                    weight: { min: 0, max: 0 },
+                    isTemperamentCollapsed: false,
+                    isWeightCollapsed: false,
+                    isSourceCollapsed: false
                 },
                 breeds: {
                     ...state.breeds,
                     items: action.payload.breeds
                 },
                 searchResults: action.payload.breeds,
-                checkedBreeds: []
+                checkedBreeds: [],
+                isCheckedBreedsCollapsed: false
             }
         case actionTypes.FETCH_BREEDS_FAILED:
             return {
                 ...state,
+                filters: {
+                    temperaments: [],
+                    source: '',
+                    weight: { min: 0, max: 0 },
+                    isTemperamentCollapsed: false,
+                    isWeightCollapsed: false,
+                    isSourceCollapsed: false
+                },
                 breeds: {
                     ...state.breeds,
                     items: [],
@@ -73,7 +86,8 @@ export default function reducer(state = initialState, action) {
                     error: action.payload
                 },
                 searchResults: [],
-                checkedBreeds: []
+                checkedBreeds: [],
+                isCheckedBreedsCollapsed: false
             }
         case actionTypes.FETCH_BREEDS_COMPLETED:
             return {
@@ -260,12 +274,24 @@ export default function reducer(state = initialState, action) {
         case actionTypes.BREED_UNCHECKED:
             return {
                 ...state,
-                checkedBreeds: state.checkedBreeds.filter(breed => breed.id !== action.payload)
+                checkedBreeds: state.checkedBreeds.filter(breed =>
+                    !(breed.id === action.payload.id && breed.source === action.payload.source)
+                )
             }
         case actionTypes.BREEDS_ALL_UNCHECKED:
             return {
                 ...state,
                 checkedBreeds: []
+            }
+        case actionTypes.COLLAPSE_CHECKED_BREEDS:
+            return {
+                ...state,
+                isCheckedBreedsCollapsed: true
+            }
+        case actionTypes.EXPAND_CHECKED_BREEDS:
+            return {
+                ...state,
+                isCheckedBreedsCollapsed: false
             }
         default:
             return state;

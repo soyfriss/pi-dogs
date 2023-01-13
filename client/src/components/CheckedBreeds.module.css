@@ -4,6 +4,7 @@
     justify-content: flex-start;
     flex-wrap: wrap;
     gap: 0.5em;
+    margin-left: 0.5em;
     margin-bottom: 2em;
 }
 
@@ -11,11 +12,24 @@
     font-weight: 700;
     margin-top: 2em;
     cursor: pointer;
-    text-align: left;
+    text-align: center;
+}
+
+.collapse {
+    margin-left: 0.5em;
+}
+
+@media (min-width: 481px) {
+    .filterTitle {
+        text-align: left;
+    }
 }
 
 .buttonsContainer {
     display: flex;
+    flex-direction: column;
     justify-content: flex-start;
-    gap: 1em;
+    align-items: flex-start;
+    gap: 2em;
+    margin-left: 0.5em;
 }

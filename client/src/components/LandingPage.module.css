@@ -4,6 +4,8 @@
     justify-content: space-between;
     align-items: center;
     height: 100vh;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .logo,
@@ -13,11 +15,8 @@
     margin-top: 1.5em;
 }
 
-.img {
-    margin-bottom: 1em;
-}
-
 .ctaTop,
+.ctaLeft,
 .img {
     display: none;
 }
@@ -25,7 +24,7 @@
 .breedExplorer h3 {
     margin-top: 0;
     margin-bottom: 0.5em;
-    color: #cf924d;
+    color: var(--accent-color);
     text-transform: uppercase;
 }
 
@@ -47,8 +46,8 @@
 .cta {
     cursor: pointer;
     border: none;
-    background-color: #4c3a27;
-    color: whitesmoke;
+    background-color: var(--accent-color);
+    color: var(--primary-text-color);
     padding: 0.5em 1.5em;
     font-size: 1.25em;
     font-weight: 500;
@@ -67,14 +66,8 @@
     margin-top: 1em;
 }
 
-.ctaBig {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .highlight {
-    background: linear-gradient(120deg, #cf924d 0%, #cf924d 100%);
+    background: linear-gradient(120deg, var(--accent-color) 0%, var(--accent-color) 100%);
     background-repeat: no-repeat;
     background-size: 100% 40%;
     background-position: 0 90%;
@@ -86,6 +79,18 @@
 1025px — 1200px: Desktops, large screens
 1201px and more —  Extra large screens, TV */
 
+@media (min-width: 481px) {
+    .img {
+        display: block;
+    }
+
+    .img img {
+        width: 100%;
+        /* object-fit: cover; */
+    }
+
+}
+
 @media (min-width: 1025px) {
     .container {
         justify-content:unset;
@@ -93,6 +98,7 @@
     
         display: grid;
         grid-template-columns: repeat(6, 1fr);
+        /* grid-template-rows: repeat(4, 1fr); */
         grid-template-rows: repeat(4, 1fr);
         gap: unset;
         grid-column-gap: 2em;
@@ -100,8 +106,8 @@
         grid-template-areas:
             "logo          logo          logo ctaTop ctaTop ctaTop"
             "breedExplorer breedExplorer img  img    img    img"
-            "ctaBig        ctaBig        img  img    img    img"
-            "ctaBig        ctaBig        img  img    img    img";
+            "breedExplorer breedExplorer img  img    img    img"
+            "breedExplorer breedExplorer img  img    img    img";
     }
 
     .logo {
@@ -119,24 +125,15 @@
         grid-area: breedExplorer;
     }
     
-    .ctaBig {
-        grid-area: ctaBig;
-        align-items: unset;
+    .ctaLeft {
+        display: block;
+    }
+
+    .ctaBottom {
+        display: none;
     }
 
     .img {
-        display: block;
         grid-area: img;
-        /* overflow: hidden; */
-        /* border: 2px solid green */
-        width: 100%;
-        background-image: url('../images/man-walking-dog.png');
-        background-position: top;
-        background-size: contain;
-        background-repeat: no-repeat;
    }
-
-    .big {
-        margin-top: 0;
-    }
 }

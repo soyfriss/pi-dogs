@@ -12,14 +12,14 @@ function Cards({ breeds }) {
     if (useMediaQuery('(min-width: 769px)')) {
         nbColumns = 2;
     }
-    if (useMediaQuery('(min-width: 1025px)')) {
+    if (useMediaQuery('(min-width: 1201px)')) {
         nbColumns = 4;
     }
 
     let orderedBreeds = sortMasonryLayout(breeds, nbColumns);
 
     return <>
-        {console.log('Cards number of columns: ', nbColumns)}
+        {/* {console.log('Cards number of columns: ', nbColumns)} */}
         <div className={styles.container}>
             {orderedBreeds.map(breed => (
                 <Card
@@ -57,7 +57,7 @@ function sortMasonryLayout(breeds, columns) {
     for (let c = 0; c < columns; c++) {
         for (let i = 0; i < breedsFilled.length; i++) {
             index = (columns * i) + c;
-            console.log('index: ', index);
+            // console.log('index: ', index);
             if (index < breedsFilled.length) {
                 result.push(breedsFilled[index])
             } else {

@@ -227,7 +227,6 @@ export function expandSourceFilter() {
     }
 }
 
-
 export function changeCurrentPage(value) {
     return function (dispatch) {
         dispatch({ type: actionTypes.CURRENT_PAGE_CHANGED, payload: value });
@@ -299,15 +298,27 @@ export function checkBreed(breed) {
     }
 }
 
-export function uncheckBreed(breedId) {
+export function uncheckBreed(breedId, source) {
     return function (dispatch) {
-        dispatch({ type: actionTypes.BREED_UNCHECKED, payload: breedId });
+        dispatch({ type: actionTypes.BREED_UNCHECKED, payload: {id: breedId, source} });
     }
 }
 
 export function uncheckAllBreeds() {
     return function (dispatch) {
         dispatch({ type: actionTypes.BREEDS_ALL_UNCHECKED });
+    }
+}
+
+export function collapseCheckedBreeds() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.COLLAPSE_CHECKED_BREEDS });
+    }
+}
+
+export function expandCheckedBreeds() {
+    return function (dispatch) {
+        dispatch({ type: actionTypes.EXPAND_CHECKED_BREEDS });
     }
 }
 
