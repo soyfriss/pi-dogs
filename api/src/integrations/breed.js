@@ -18,7 +18,7 @@ const getBreeds = async (name, exactSearch) => {
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];
 
     let breeds = await Breed.findAll(options);
-    console.log('options and breeds from db: ', options, breeds);
+    // console.log('options and breeds from db: ', options, breeds);
 
     breeds = breeds.map(breed => ({
         id: breed.dataValues.id,

@@ -20,7 +20,7 @@ router.get(
     }
 );
 
-// GET /dogs/{idRaza}
+// GET /dogs/{idRaza}?source=local|external
 router.get(
     '/:id',
     async (req, res, next) => {

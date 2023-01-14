@@ -172,7 +172,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
     // Create new temperaments
     const temperamentsList = await findOrCreateTemperaments(temperaments);
-    // console.log('newTemperaments', temperamentsList);
+    console.log('newTemperaments', temperamentsList);
 
     // Create breed
     const newBreed = await createBreedFromDB(

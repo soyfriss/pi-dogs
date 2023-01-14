@@ -7,7 +7,7 @@ module.exports = (sequelize) => {
             autoIncrement: true,
             primaryKey: true,
             field: 'Id'
-        }
+        },
     }, {
         timestamps: false,
         freezeTableName: true

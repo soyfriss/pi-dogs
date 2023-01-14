@@ -19,7 +19,7 @@ const getBreedsFromApi = async () => {
 };
 
 const getBreeds = async (name, exactSearch) => {
-    console.log('exactSearch: ', exactSearch);
+    // console.log('exactSearch: ', exactSearch);
     let breeds = await getBreedsFromApi();
     
     if (name) {
