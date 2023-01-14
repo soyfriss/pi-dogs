@@ -5,7 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 function Logo() {
     return <>
-        <NavLink to="/" className={styles.logoLink}>
+        <NavLink to="/home" className={styles.logoLink}>
             <div className={styles.container}>
                 <button className={styles.logo}>BX</button>
                 <p className={styles.text}>BREED EXPLORER</p>

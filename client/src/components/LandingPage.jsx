@@ -1,22 +1,24 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from './LandingPage.module.css';
 import Logo from './Logo.jsx';
-import landing from '../images/landing3.png';
-import { NavLink } from 'react-router-dom';
+import landing from '../images/landing.png';
 
 function LandingPage() {
 
     return <>
+        <header className={styles.header}>
+            <div className={styles.logo}>
+                <Logo />
+            </div>
+            <div className={styles.ctaTop}>
+                <NavLink to="/home">
+                    <button type='button' className={styles.cta}>Try it free</button>
+                </NavLink>
+            </div>
+        </header>
         <main>
             <div className={styles.container}>
-                <div className={styles.logo}>
-                    <Logo />
-                </div>
-                <div className={styles.ctaTop}>
-                    <NavLink to="/home">
-                        <button type='button' className={styles.cta}>Try it free</button>
-                    </NavLink>
-                </div>
                 <div className={styles.breedExplorer}>
                     <h3>#1 breed explorer</h3>
                     <h1>Find the Best Dog Breed <span className={styles.highlight}>for You</span>!</h1>
@@ -29,7 +31,7 @@ function LandingPage() {
                     </div>
                 </div>
                 <div className={styles.img}>
-                    <img src={landing} />
+                    <img src={landing} alt="Dog breeds" />
                 </div>
                 <div className={styles.ctaBottom}>
                     <NavLink to="/home">

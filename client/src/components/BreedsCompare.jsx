@@ -118,7 +118,7 @@ function BreedsCompare() {
 
     return <>
         <Header />
-        <main>
+        <main className={styles.main}>
             <div className={styles.container}>
                 <BreedsComparisonTable breeds={breeds.items} />
                 <div className={styles.footer}>

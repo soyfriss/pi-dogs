@@ -1,6 +1,7 @@
 import React from 'react';
 import styles from './BreedsComparisonTable.module.css';
 import noImage from '../images/no-image.png';
+import PlaceholderImg from './PlaceholderImg.jsx';
 
 function BreedsComparisonTable({ breeds }) {
     console.log('BreedsComparisonTable breeds: ', breeds);
@@ -11,15 +12,16 @@ function BreedsComparisonTable({ breeds }) {
                     <tr>
                         {breeds.map(breed => {
                             return <th scope='col' key={breed.name}>
-                                <img className={styles.img} src={breed.image ? breed.image : noImage} alt="breed" />
+                                <PlaceholderImg
+                                    placeholderSrc={noImage}
+                                    src={breed.image}
+                                    className={styles.img}
+                                    alt={`${breed.name} breed`}
+                                />
                                 <p>{breed.name}</p>
-                                {breed.newBreedMessage ? <p className={styles.message}>({breed.newBreedMessage})</p> : ''}
+                                {breed.message ? <p className={styles.message}>({breed.message})</p> : ''}
                             </th>
                         })}
-                        {/* <th scope="col">
-                            <img className={styles.img} src={akita} alt="breed" />
-                            <p>AKITA</p>
-                        </th> */}
                     </tr>
                 </thead>
                 <tbody>
@@ -27,21 +29,21 @@ function BreedsComparisonTable({ breeds }) {
                         <th scope="colgroup" colSpan="5"><span>Weight (Kg)</span></th>
                     </tr>
                     <tr>
-                        {breeds.map(breed => <td key={breed.name}>{breed.weight}</td>)}
+                        {breeds.map(breed => <td key={breed.name}>{breed.weight ? breed.weight : '-'}</td>)}
                     </tr>
 
                     <tr className={styles.mobileColumnGroup}>
                         <th scope="colgroup" colSpan="5"><span>Height (cm)</span></th>
                     </tr>
                     <tr>
-                        {breeds.map(breed => <td key={breed.name}>{breed.height}</td>)}
+                        {breeds.map(breed => <td key={breed.name}>{breed.height ? breed.height : '-'}</td>)}
                     </tr>
 
                     <tr className={styles.mobileColumnGroup}>
                         <th scope="colgroup" colSpan="5"><span>Life Span (years)</span></th>
                     </tr>
                     <tr>
-                        {breeds.map(breed => <td key={breed.name}>{breed.lifeSpan}</td>)}
+                        {breeds.map(breed => <td key={breed.name}>{breed.lifeSpan ? breed.lifeSpan : '-'}</td>)}
                     </tr>
 
                     <tr className={styles.mobileColumnGroup}>
@@ -51,7 +53,7 @@ function BreedsComparisonTable({ breeds }) {
                         {breeds.map(breed => {
                             return <td key={breed.name}>
                                 <div className={styles.temperament}>
-                                    {breed.temperament}
+                                    {breed.temperament ? breed.temperament : '-'}
                                 </div>
                             </td>
                         })}

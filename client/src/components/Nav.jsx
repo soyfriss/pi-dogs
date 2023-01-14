@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './Nav.module.css';
 import github from '../images/github-mark.png';
 import linkedin from '../images/linkedin.png';
@@ -7,6 +8,7 @@ import Logo from './Logo.jsx';
 
 function Nav() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)
+    const showCompareLink = useSelector(state => state.checkedBreeds.length >= 2);
 
     return <>
         <nav className={styles.navigation}>
@@ -35,7 +37,9 @@ function Nav() {
                 <ul>
                     <li><NavLink to="/home" className={styles.link} activeClassName={styles.activeLink}>HOME.</NavLink></li>
                     <li><NavLink to="/breed/create" className={styles.link} activeClassName={styles.activeLink}>NEW BREED.</NavLink></li>
-                    <li><NavLink to="/about" className={styles.link} activeClassName={styles.activeLink}>ABOUT.</NavLink></li>
+                    {showCompareLink &&
+                        <li><NavLink to="/breeds/compare" className={styles.link} activeClassName={styles.activeLink}>COMPARE.</NavLink></li>
+                    }
                     <li><a href="https://www.linkedin.com/in/soyfriss/" target="_blank" rel="noreferrer"><img className={styles.img} src={linkedin} alt='linkedin' /></a></li>
                     <li><a href="https://github.com/soyfriss" target="_blank" rel="noreferrer"><img className={styles.img} src={github} alt='github' /></a></li>
                 </ul>

@@ -14,7 +14,7 @@ const getBreeds = async (name, exactSearch) => {
             }
         }
     }
-    options.attributes = ['id', 'name', 'weight'];
+    options.attributes = ['id', 'name', 'weight', 'image'];
     options.include = [{ model: Temperament, attributes: ['id', 'name'] }];
 
     let breeds = await Breed.findAll(options);

@@ -1,6 +1,7 @@
 .tableContainer {
     overflow: auto;
-    /* max-height: 500px; */
+    /* max-width: 1200px; */
+    /* border: 1px solid burlywood; */
 }
 
 .table thead tr {
@@ -63,7 +64,6 @@
 .table thead th .message {
     font-size: 1rem;
     font-weight: 500;
-    color: #C0A597;
     text-align: center;
     margin-top: 0;
     margin-bottom: 1em;

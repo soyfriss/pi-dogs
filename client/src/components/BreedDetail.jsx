@@ -4,9 +4,8 @@ import styles from './BreedDetail.module.css';
 import Loader from './Loader.jsx';
 import Header from './Header.jsx';
 import Error from './Error.jsx';
-import noImage from '../images/no-image.png';
+import BreedsComparisonTable from './BreedsComparisonTable.jsx';
 import { getBreed } from '../integrations/api.js';
-import * as constants from '../constants/breedDetail.js';
 import * as errors from '../constants/errors.js';
 
 function BreedDetail() {
@@ -21,7 +20,7 @@ function BreedDetail() {
 
     useEffect(() => {
         console.log('BreedDetail useEffect() to fetch breed');
-        async function fetchBreed(id, source) {
+        async function fetchBreed(id, source, state) {
             try {
                 const response = await getBreed(id, source);
 
@@ -29,7 +28,10 @@ function BreedDetail() {
                     setBreed(breed => ({
                         ...breed,
                         status: 'succeeded',
-                        item: response.data
+                        item: {
+                            ...response.data,
+                            message: state && state.message
+                        }
                     }));
                 } else {
                     console.log('response: ', response);
@@ -52,8 +54,8 @@ function BreedDetail() {
                 }));
             }
         }
-        fetchBreed(id, search);
-    }, [id, search]);
+        fetchBreed(id, search, state);
+    }, [id, search, state]);
 
     if (breed.status === 'loading') {
         return <>
@@ -77,20 +79,7 @@ function BreedDetail() {
         <Header />
         <main>
             <div className={styles.container}>
-                {state && state.message && <p className={styles.message}>({state.message})</p>}
-                <p className={styles.breedName}>{breed.item.name}</p>
-
-                <div className={styles.body}>
-                    <div className={styles.imgContainer}>
-                        <img className={styles.img} src={breed.item.image ? breed.item.image : noImage} alt="breed" />
-                    </div>
-                    <div className={styles.data}>
-                        <p><span className={styles.subtitle}>{`${breed.item.weight} Kg`}</span> weight</p>
-                        <p><span className={styles.subtitle}>{`${breed.item.height} cm`}</span> height</p>
-                        <p><span className={styles.subtitle}>{breed.item.lifeSpan}</span> life span</p>
-                        <p><span className={styles.subtitle}>{breed.item.temperament ? breed.item.temperament : constants.NO_TEMPERAMENTS}</span></p>
-                    </div>
-                </div>
+                <BreedsComparisonTable breeds={[breed.item]} />
                 <div className={styles.footer}>
                     <NavLink to="/home" className={styles.navLink}>
                         Explore more breeds

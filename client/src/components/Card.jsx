@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { checkBreed, uncheckBreed } from '../redux/actions.js';
 import styles from './Card.module.css';
 import noImage from '../images/no-image.png';
+import PlaceholderImg from './PlaceholderImg.jsx';
 import { NavLink } from 'react-router-dom';
 import * as constants from '../constants/cards.js';
 
@@ -30,7 +31,12 @@ function Card({ breed, showCompareBreedCheckbox }) {
         <div className={`${styles.card} ${breed.notVisible && styles.notVisible}`}>
             <NavLink to={`/breed/${breed.id}?source=${breed.source}`} className={styles.navLink}>
                 <div className={styles.cardHeader}>
-                    <img className={styles.img} src={isImgLoading ? noImage : breed.image ? breed.image : noImage} alt="breed" onLoad={() => setIsImgLoading(false)} />
+                    <PlaceholderImg
+                        placeholderSrc={noImage}
+                        src={breed.image}
+                        className={styles.img}
+                        alt={`${breed.name} breed`}
+                    />
                 </div>
                 <div className={styles.cardBody}>
                     <p className={styles.breedName}>{breed.name}</p>

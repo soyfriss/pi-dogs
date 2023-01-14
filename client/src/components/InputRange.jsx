@@ -2,7 +2,17 @@ import React, { useState } from 'react';
 import styles from './InputRange.module.css';
 import * as constants from '../constants/inputRange.js';
 
-function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, onChange, showButton = false, handleButtonClick }) {
+function InputRange({
+    name,
+    label,
+    isRequired,
+    validRange = [0, 0],
+    min,
+    max,
+    onChange,
+    showButton = false,
+    handleButtonClick,
+    ...props }) {
     // console.log('InputRange, min max: ', min, max);
     const validate = (min, max) => {
         // Only one value entered?
@@ -42,7 +52,7 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
         // console.log('isValidRangePresent: ', (validRange[0] && validRange[1]));
         return !!(validRange[0] || validRange[1]);
     }
-    
+
     const [input, setInput] = useState({
         min,
         max,
@@ -52,7 +62,7 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
 
     const handleChangeMin = (event) => {
         const error = validate(event.target.value, input.max);
-        
+
         setInput(oldInput => ({
             ...oldInput,
             min: event.target.value,
@@ -64,7 +74,7 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
 
     const handleChangeMax = (event) => {
         const error = validate(input.min, event.target.value);
-        
+
         setInput(oldInput => ({
             ...oldInput,
             max: event.target.value,
@@ -92,6 +102,7 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
                     onChange={handleChangeMin}
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
+                    {...{ ...props }}
                 />
                 <p className={styles.separator}>-</p>
                 <input
@@ -103,6 +114,7 @@ function InputRange({ name, label, isRequired, validRange = [0, 0], min, max, on
                     onChange={handleChangeMax}
                     onFocus={() => setShowError(false)}
                     onBlur={() => setShowError(true)}
+                    {...{ ...props }}
                 />
                 {showButton &&
                     <button

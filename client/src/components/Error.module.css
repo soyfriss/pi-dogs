@@ -1,5 +1,7 @@
 .container {
     text-align: center;
+    max-width: 769px;
+    margin: 0 auto;
 }
 
 .title {
