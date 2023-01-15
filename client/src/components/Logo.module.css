@@ -1,5 +1,6 @@
 .container {
     display: flex;
+    align-items: center;
 }
 
 .logoLink {
@@ -30,6 +31,13 @@
 }
 
 .text {
-    font-size: 1.5rem;
+    font-size: 1rem;
     padding: 0.3em 0.1em;
+    padding: 0 0.1em;
+}
+
+@media (min-width: 481px) {
+    .text {
+        font-size: 1.2rem;
+    }
 }
