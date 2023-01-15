@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { changeWeightFilter, filterBreeds, changeCurrentPage } from '../redux/actions.js';
+import { changeWeightFilter, filterBreeds, changeCurrentPage, changeCurrentFilterPage } from '../redux/actions.js';
 import styles from './WeightFilter.module.css';
 import InputRange from './InputRange.jsx';
 
@@ -19,6 +19,7 @@ function WeightFilter() {
         dispatch(changeWeightFilter({ min: Number(min), max: Number(max) }))
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
+        dispatch(changeCurrentFilterPage(1));
     }
 
     return <>

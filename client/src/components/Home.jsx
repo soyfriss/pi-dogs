@@ -20,7 +20,7 @@ function Home() {
     const fetchBreedsError = useSelector(state => state.breeds.error);
     const fetchTemperamentsStatus = useSelector(state => state.temperaments.status);
     const fetchTemperamentsError = useSelector(state => state.temperaments.error);
-    const currentPage = useSelector(state => state.currentPage);
+    const currentPage = useSelector(state => state.pagination.currentPage);
 
     useEffect(() => {
         console.log('Home useEffect()');

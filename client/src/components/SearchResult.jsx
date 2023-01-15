@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import styles from './SearchResult.module.css';
 
 function SearchResult({ totalBreeds }) {
-    const searchedText = useSelector(state => state.searchText);
+    const searchedText = useSelector(state => state.filters.searchText);
 
     let searchedTextToShow = searchedText ? searchedText : 'All breeds';
     if (searchedText.length === 1) {

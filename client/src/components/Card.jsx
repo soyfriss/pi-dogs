@@ -11,7 +11,7 @@ function Card({ breed, showCompareBreedCheckbox }) {
     const dispatch = useDispatch();
     const [isImgLoading, setIsImgLoading] = useState(true);
     const isBreedChecked = useSelector(state =>
-        state.checkedBreeds.find(b => b.name === breed.name) !== undefined
+        state.compareBreeds.items.find(b => b.name === breed.name) !== undefined
     );
 
     useEffect(() => {

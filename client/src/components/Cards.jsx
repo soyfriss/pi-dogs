@@ -6,7 +6,7 @@ import useMediaQuery from '../hooks/useMediaQuery.js';
 import * as constants from '../constants/cards.js';
 
 function Cards({ breeds }) {
-    const showCompareBreedCheckbox = useSelector(state => state.checkedBreeds.length < constants.MAX_BREEDS_TO_COMPARE);
+    const showCompareBreedCheckbox = useSelector(state => state.compareBreeds.items.length < constants.MAX_BREEDS_TO_COMPARE);
 
     let nbColumns = 1;
     if (useMediaQuery('(min-width: 769px)')) {

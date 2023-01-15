@@ -15,7 +15,7 @@ function TemperamentFilter({ addTemperamentFilter }) {
     const [filters, setFilters] = useState([]);
 
     // Pagination variables
-    const currentPage = useSelector(state => state.currentFilterPage);
+    const currentPage = useSelector(state => state.pagination.currentFilterPage);
     const filtersPerPage = constants.FILTERS_PER_PAGE;
     const totalFilters = filters.length;
 

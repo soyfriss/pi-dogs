@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { changeSourceFilter, filterBreeds, changeCurrentPage } from '../redux/actions';
+import { changeSourceFilter, filterBreeds, changeCurrentPage, changeCurrentFilterPage } from '../redux/actions';
 import styles from './SourceFilter.module.css';
 
 function SourceFilter() {
@@ -16,6 +16,7 @@ function SourceFilter() {
         dispatch(changeSourceFilter(source));
         dispatch(filterBreeds());
         dispatch(changeCurrentPage(1));
+        dispatch(changeCurrentFilterPage(1));
     }
 
     if (activeFilter === '') {

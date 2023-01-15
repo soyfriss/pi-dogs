@@ -13,8 +13,8 @@ export function fetchBreeds(keepFilters = false) {
         try {
             dispatch({ type: actionTypes.FETCH_BREEDS_REQUESTED });
 
-            const { searchText } = getState();
-            const response = await getBreeds(searchText);
+            const { filters } = getState();
+            const response = await getBreeds(filters.searchText);
 
             if (!response.ok) {
                 return dispatch({
@@ -30,8 +30,8 @@ export function fetchBreeds(keepFilters = false) {
                 dispatch(filterBreeds());
             } else {
                 // Sorting
-                const { sort } = getState();
-                dispatch(sortBreeds(sort));
+                const { breeds } = getState();
+                dispatch(sortBreeds(breeds.sort));
             }
 
 
@@ -252,23 +252,23 @@ export function clearAllFilters() {
 
 export function filterBreeds() {
     return function (dispatch, getState) {
-        const { searchResults, filters, sort } = getState();
+        const { breeds, filters } = getState();
 
-        const breeds = [...searchResults];
+        const breedsCopy = [...breeds.searchResults];
 
         // Return all breeds if filters are empty
         if (filters.temperaments.length === 0 &&
             (filters.weight.min === 0 && filters.weight.max === 0) &&
             filters.source === ''
         ) {
-            dispatch({ type: actionTypes.BREEDS_FILTERED, payload: breeds });
-            return dispatch(sortBreeds(sort));
+            dispatch({ type: actionTypes.BREEDS_FILTERED, payload: breedsCopy });
+            return dispatch(sortBreeds(breeds.sort));
         }
 
         // Filter breeds
         const filteredBreeds = [];
 
-        for (const breed of breeds) {
+        for (const breed of breedsCopy) {
             // Filter by temperaments
             if (!isFilterByTemperamentsOK(breed, filters.temperaments)) {
                 continue;
@@ -288,7 +288,7 @@ export function filterBreeds() {
         }
 
         dispatch({ type: actionTypes.BREEDS_FILTERED, payload: filteredBreeds });
-        dispatch(sortBreeds(sort));
+        dispatch(sortBreeds(breeds.sort));
     }
 }
 

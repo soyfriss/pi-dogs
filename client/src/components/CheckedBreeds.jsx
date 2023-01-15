@@ -13,8 +13,8 @@ import * as constants from '../constants/cards.js'
 
 function CheckedBreeds() {
     const dispatch = useDispatch();
-    const breeds = useSelector(state => state.checkedBreeds);
-    const isCollapsed = useSelector(state => state.isCheckedBreedsCollapsed)
+    const breeds = useSelector(state => state.compareBreeds.items);
+    const isCollapsed = useSelector(state => state.compareBreeds.isCollapsed)
 
     const handleRemove = (id, source) => {
         dispatch(uncheckBreed(id, source));

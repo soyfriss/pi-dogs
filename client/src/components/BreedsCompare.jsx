@@ -11,7 +11,7 @@ import * as errors from '../constants/errors.js';
 import * as constants from '../constants/breedsCompare.js';
 
 function BreedsCompare() {
-    const checkedBreeds = useSelector(state => state.checkedBreeds);
+    const checkedBreeds = useSelector(state => state.compareBreeds.items);
 
     const [breeds, setBreeds] = useState({
         items: {},

@@ -6,7 +6,7 @@ import { sortBreeds } from '../redux/actions.js';
 
 function Sort() {
     const dispatch = useDispatch();
-    const sort = useSelector(state => state.sort);
+    const sort = useSelector(state => state.breeds.sort);
 
     const handleChange = (event) => {
         dispatch(sortBreeds(event.target.value));

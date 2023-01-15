@@ -13,11 +13,6 @@ const initialState = {
         status: 'idle',
         error: null
     },
-    newBreed: {
-        item: {},
-        status: 'idle',
-        error: null
-    },
     searchResults: [],
     searchText: '',
     filters: {

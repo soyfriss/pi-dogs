@@ -8,7 +8,7 @@ import Logo from './Logo.jsx';
 
 function Nav() {
     const [isNavExpanded, setIsNavExpanded] = useState(false)
-    const showCompareLink = useSelector(state => state.checkedBreeds.length >= 2);
+    const showCompareLink = useSelector(state => state.compareBreeds.items.length >= 2);
 
     return <>
         <nav className={styles.navigation}>

@@ -9,7 +9,7 @@ import * as constants from '../constants/searchInput.js';
 function SearchInput() {
     const dispatch = useDispatch();
     const [searchText, setSearchText] = useState('');
-    const oldSearchText = useSelector(state => state.searchText);
+    const oldSearchText = useSelector(state => state.filters.searchText);
 
     useEffect(() => {
         setSearchText(oldSearchText);
