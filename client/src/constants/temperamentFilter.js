@@ -1,0 +1,1 @@
+export const FILTERS_PER_PAGE = 12;

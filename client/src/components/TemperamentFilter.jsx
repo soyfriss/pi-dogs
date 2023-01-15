@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import styles from './TemperamentFilter.module.css';
 import Pagination from './Pagination.jsx';
 import { changeCurrentFilterPage } from '../redux/actions.js';
+import * as constants from '../constants/temperamentFilter.js';
 
 function TemperamentFilter({ addTemperamentFilter }) {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function TemperamentFilter({ addTemperamentFilter }) {
 
     // Pagination variables
     const currentPage = useSelector(state => state.currentFilterPage);
-    const filtersPerPage = 10;
+    const filtersPerPage = constants.FILTERS_PER_PAGE;
     const totalFilters = filters.length;
 
     const indexOfLastFilter = currentPage * filtersPerPage;
