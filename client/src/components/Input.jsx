@@ -19,7 +19,7 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, p
         value: value,
         error: parentError !== '' ? parentError : validateInput(value)
     })
-    const [showError, setShowError] = useState( parentError !== '' ? true : false);
+    const [showError, setShowError] = useState(parentError !== '' ? true : false);
 
 
     const handleChange = (event) => {
@@ -30,14 +30,20 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, p
             error
         });
 
-        onChange(name, event.target.value, error);
+        if (typeof onChange === 'function') {
+            onChange(name, event.target.value, error);
+        }
     }
 
     return <>
         <div className={styles.container}>
-            <label className="largeLabel">{label || 'label'} {isRequired && <span className="required">*</span>}</label>
+            <label htmlFor={name}
+                className="largeLabel">{label || 'label'} {isRequired && <span className="required">*</span>}
+            </label>
             <input
+                data-testid="input"
                 type="text"
+                id={name}
                 name={name}
                 placeholder={label}
                 value={input.value}
@@ -46,8 +52,8 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, p
                 onFocus={() => setShowError(false)}
                 onBlur={() => setShowError(true)}
             />
-            { showError && input.error &&
-                <p className="error">{input.error}</p>
+            {showError && input.error &&
+                <p data-testid="error" className="error">{input.error}</p>
             }
         </div>
     </>

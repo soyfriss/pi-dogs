@@ -1,9 +1,9 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import LandingPage from "../components/LandingPage.jsx";
+import LandingPage from '../components/LandingPage.jsx';
 
 describe('Landing Page', () => {
-    it("should contain the logo text", () => {
+    it('should contain the logo text', () => {
         render(
             <BrowserRouter>
                 <LandingPage />
@@ -12,7 +12,7 @@ describe('Landing Page', () => {
         expect(screen.getAllByText(/BREED EXPLORER/)).toBeDefined();
     });
 
-    it("should contain cta buttons", () => {
+    it('should contain cta buttons', () => {
         render(
             <BrowserRouter>
                 <LandingPage />
