@@ -8,7 +8,7 @@ const breed = {
   image: ''
 }
 
-xdescribe('Breed model', () => {
+describe('Breed model', () => {
   before(() => conn.authenticate()
     .catch((err) => {
       console.error('Unable to connect to the database:', err);

@@ -1,6 +1,6 @@
 const { Temperament, conn } = require('../../src/db.js');
 
-xdescribe('Temperament model', () => {
+describe('Temperament model', () => {
   before(() => conn.authenticate()
     .catch((err) => {
       console.error('Unable to connect to the database:', err);

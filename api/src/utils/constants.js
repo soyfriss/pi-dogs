@@ -9,7 +9,8 @@ const breedValidations = {
     INVALID_DATA: 'Field has invalid data',
     INCORRECT_TYPE: 'Type is incorrect',
     INVALID_RANGE: 'Field has an invalid range',
-    MAX_LENGTH_EXCEEDED: 'The maximum length of the field has been exceeded'
+    MAX_LENGTH_EXCEEDED: 'The maximum length of the field has been exceeded',
+    DUPLICATED_NAME: 'The breed already exists'
 }
 
 module.exports = breedValidations;

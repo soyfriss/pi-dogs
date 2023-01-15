@@ -54,9 +54,9 @@ router.post(
 
             const breed = await
                 createBreed(
-                    name.trim(),
-                    height.trim(),
-                    weight.trim(),
+                    name && name.trim(),
+                    height && height.trim(),
+                    weight && weight.trim(),
                     lifeSpan && lifeSpan.trim(),
                     temperaments,
                     image && image.trim()

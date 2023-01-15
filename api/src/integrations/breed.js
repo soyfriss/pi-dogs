@@ -66,7 +66,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
     }
 
     breed.source = 'local';
-    console.log('new breed: ', breed);
+    // console.log('new breed: ', breed);
 
     return breed;
 }

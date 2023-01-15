@@ -62,8 +62,8 @@ const getBreed = async (id, source) => {
     // console.log('Before delay');
     // await setTimeout(20000);
     // console.log('After delay');
-    
-    return breed;       
+
+    return breed;
 }
 
 const createBreed = async (name, height, weight, lifeSpan, temperaments, image) => {
@@ -116,17 +116,33 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
     if (name.length > constants.MAX_LENGTH_NAME) {
         throw new AppError(`name: ${constants.MAX_LENGTH_EXCEEDED} (max: ${constants.MAX_LENGTH_NAME})`, httpStatusCodes.BAD_REQUEST);
     }
+    // duplicated name ?
+    let isNameDuplicated = true;
+    try {
+        await getBreeds(name, true);
+    } catch (error) {
+        isNameDuplicated = false;
+    }
+    if (isNameDuplicated) {
+        throw new AppError(`name: ${constants.DUPLICATED_NAME}`, httpStatusCodes.BAD_REQUEST);
+    }
 
     // Ranges
     let error = '';
 
     // height
+    if (!height) {
+        throw new AppError(`height: ${constants.FIELD_REQUIRED}`, httpStatusCodes.BAD_REQUEST);
+    }
     error = validateRange(height, true, constants.VALID_RANGE_HEIGHT);
     if (error) {
         throw new AppError(`height: ${error}`, httpStatusCodes.BAD_REQUEST);
     }
 
     // weight
+    if (!weight) {
+        throw new AppError(`weight: ${constants.FIELD_REQUIRED}`, httpStatusCodes.BAD_REQUEST);
+    }
     error = validateRange(weight, true, constants.VALID_RANGE_WEIGHT);
     if (error) {
         throw new AppError(`weight: ${error}`, httpStatusCodes.BAD_REQUEST);
@@ -139,6 +155,9 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
     }
 
     // temperaments
+    if (!temperaments) {
+        throw new AppError(`temperaments: ${constants.FIELD_REQUIRED}`, httpStatusCodes.BAD_REQUEST);
+    }
     if (Array.isArray(temperaments)) {
         for (let temperament of temperaments) {
             // temperament type
@@ -151,7 +170,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
             }
             // Verify if temperament exists
             const temperamentInDB = await getTemperament(temperament.trim());
-            console.log('temperamentInDB: ', temperamentInDB);
+            // console.log('temperamentInDB: ', temperamentInDB);
 
             if (!temperamentInDB) {
                 throw new AppError(`${temperament}: ${constants.TEMPERAMENT_NOT_IN_LIST}`, httpStatusCodes.BAD_REQUEST);
@@ -172,7 +191,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
     // Create new temperaments
     const temperamentsList = await findOrCreateTemperaments(temperaments);
-    console.log('newTemperaments', temperamentsList);
+    // console.log('newTemperaments', temperamentsList);
 
     // Create breed
     const newBreed = await createBreedFromDB(
