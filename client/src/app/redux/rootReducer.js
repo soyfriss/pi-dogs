@@ -1,9 +1,9 @@
 import { combineReducers } from 'redux';
 
-import breedsReducer from './redux/breedsReducer.js';
-import temperamentsReducer from './redux/temperamentsReducer.js';
-import filtersReducer from './redux/filtersReducer.js';
-import compareBreedsReducer from './redux/compareBreedsReducer';
+import breedsReducer from './breedsReducer.js';
+import temperamentsReducer from './temperamentsReducer.js';
+import filtersReducer from './filtersReducer.js';
+import compareBreedsReducer from './compareBreedsReducer';
 
 const rootReducer = combineReducers({
     breeds: breedsReducer,
