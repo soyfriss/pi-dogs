@@ -1,7 +1,7 @@
 import { render, cleanup, fireEvent, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import Input from '../components/Input.jsx';
-import * as constants from '../constants/input';
+import Input from '../features/ui/Input.jsx';
+import * as constants from '../common/constants/input.js';
 
 describe('Input', () => {
 

@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
-import LandingPage from '../components/LandingPage.jsx';
+import LandingPage from '../pages/LandingPage.jsx';
 
 describe('Landing Page', () => {
     it('should contain the logo text', () => {
