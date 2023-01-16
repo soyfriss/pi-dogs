@@ -5,13 +5,10 @@ import Cards from '../features/breeds/Cards.jsx';
 import CheckedBreeds from '../features/compare-breeds/CheckedBreeds.jsx';
 import SearchInput from '../features/filters/SearchInput.jsx';
 import Filters from '../features/filters/Filters.jsx';
-// import Pagination from '../features/ui/Pagination.jsx';
-// import Sort from '../features/breeds/Sort.jsx';
 import Loader from '../features/ui/Loader.jsx';
 import Error from '../features/ui/Error.jsx';
 import Header from '../features/ui/Header.jsx';
-import { fetchBreeds, fetchTemperaments, changeCurrentPage } from '../common/redux/actions.js';
-import * as constants from '../common/constants/home.js';
+import { fetchBreeds, fetchTemperaments } from '../common/redux/actions.js';
 
 function Home() {
     const dispatch = useDispatch();
@@ -73,7 +70,7 @@ function Home() {
                 <SearchInput />
             </div>
             <div className={styles.content}>
-                <div className={styles.filters}>
+                <div className={styles.left}>
                     <Filters />
                     <CheckedBreeds />
                 </div>

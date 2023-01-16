@@ -1,17 +1,23 @@
 .content {
+    display: flex;
+    flex-wrap: wrap;
     margin-bottom: 2em;
-    /* border: 1px dashed darkgoldenrod; */
 }
 
-.filters {
-    grid-area: element1;
-    /* border: 1px solid blue; */
+/* Responsive layout - makes a one column-layout instead of two columns */
+.left {
+    flex: 100%;
+    max-width: 100%;
+    margin-bottom: 2em;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
+/* Responsive layout - makes a one column-layout instead of two columns */
 .cards {
-    grid-area: element2;
-    margin-top: 3em;
-    /* border: 1px solid green; */
+    flex: 100%;
+    max-width: 100%;
 }
 
 /* 320px — 480px: Mobile devices
@@ -20,29 +26,31 @@
 1025px — 1200px: Desktops, large screens
 1201px and more —  Extra large screens, TV */
 
-@media (min-width: 481px) {
-    .content {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: auto auto;
-        grid-column-gap: 1em;
-        grid-row-gap: 2em;
-        grid-template-areas:
-            "element1 element1 element1 element1 element1 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element1 element1 element3 element3 element3 element3 element3 element3 element3";
+/* Responsive layout - makes a two column-layout */
+@media (min-width: 600px) {
+    .left {
+        align-items: flex-start;
+        flex: 40%;
+        max-width: 40%;
+        padding-right: 1em;
+    }
+
+    .cards {
+        flex: 60%;
+        max-width: 60%;
     }
 }
 
 @media (min-width: 769px) {
-    .content {
-        display: grid;
-        grid-template-columns: repeat(12, 1fr);
-        grid-template-rows: auto auto;
-        grid-column-gap: 1em;
-        grid-row-gap: 2em;
-        grid-template-areas:
-            "element1 element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3";
+
+    .left {
+        flex: 30%;
+        max-width: 30%;
+    }
+
+    .cards {
+        flex: 70%;
+        max-width: 70%;
     }
 
     .searchInput {
@@ -52,10 +60,15 @@
 
 }
 
-@media (min-width: 1025px) {
-    .content {
-        grid-template-areas:
-            "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
-            "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
+@media (min-width: 1201px) {
+    .left {
+        flex: 20%;
+        max-width: 20%;
     }
+
+    .cards {
+        flex: 80%;
+        max-width: 80%;
+    }
+
 }

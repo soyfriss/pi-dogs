@@ -36,7 +36,7 @@
   }
 }
 
-/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+/* Responsive layout - makes a four column-layout */
 @media screen and (min-width: 1201px) {
   .column {
     flex: 25%;
