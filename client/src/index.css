@@ -11,12 +11,24 @@ html {
 
 :root {
   /* https://colorhunt.co/palette/f4f3f3dfdfdfbfd8d5b1bed5 */
-  --primary-color: #F4F3F3;
+  --primary-color: #FEFCF3;
+  --primary-text-color: #151922;
+  --error-text-color: red;
+  --secondary-color: #F5EBE0;
+  --card-bg-color: #F5EBE0;
+  --accent-color: #DBA39A;
+  --search-input-bg-color: var(--secondary-color);
+  --border-hover-color: #df85c6;
+  
+  /* Original*/
+  /* --primary-color: #F4F3F3;
   --primary-text-color: #151922;
   --error-text-color: red;
   --secondary-color: #DFDFDF;
   --accent-color: #C0A597;
-  --card-bg-color: white;
+  --search-input-bg-color: #D1B6A9;
+  --search-input-border-hover-color: #df85c6;
+  --card-bg-color: white; */
 }
 
 body {

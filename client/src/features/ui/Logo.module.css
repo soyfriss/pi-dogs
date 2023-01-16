@@ -18,7 +18,7 @@
     background-color: var(--accent-color);
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
-    text-transform: lowercase;
+    /* text-transform: lowercase; */
     font-family: inherit;
     font-size: 1rem;
     font-weight: bold;

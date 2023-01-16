@@ -9,7 +9,7 @@
 
 .card:focus,
 .card:hover {
-    border-color: #df85c6;
+    border-color: var(--border-hover-color);
 }
 
 .navLink {
