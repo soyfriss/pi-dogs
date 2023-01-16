@@ -92,7 +92,7 @@ function Filters() {
                 <p className={styles.filterTitle} onClick={handleCollapseTemperamentFilter}>TEMPERAMENTS <span className={styles.collapse}>{filters.isTemperamentCollapsed ? '[+]' : '[-]'}</span></p>
                 {!filters.isTemperamentCollapsed && <TemperamentFilter addTemperamentFilter={addTemperamentFilter} />}
 
-                <p className={styles.filterTitle} onClick={handleCollapseWeightFilter}>WEIGHT <span className={styles.collapse}>{filters.isWeightCollapsed ? '[+]' : '[-]'}</span></p>
+                <p className={styles.filterTitle} onClick={handleCollapseWeightFilter}>MIN WEIGHT <span className={styles.collapse}>{filters.isWeightCollapsed ? '[+]' : '[-]'}</span></p>
                 {!filters.isWeightCollapsed && <WeightFilter />}
 
                 {filters.source === '' && <p className={styles.filterTitle} onClick={handleCollapseSourceFilter}>SOURCE <span className={styles.collapse}>{filters.isSourceCollapsed ? '[+]' : '[-]'}</span></p>}

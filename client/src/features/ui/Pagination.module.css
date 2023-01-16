@@ -1,6 +1,6 @@
 .pagination {
     display: flex;
-    justify-content:flex-start;
+    justify-content: flex-start;
 }
 
 .pages {
@@ -22,4 +22,11 @@
 .next:focus,
 .next:hover {
     font-weight: 500;
+}
+
+.disabled,
+.disabled:hover,
+.disabled:focus {
+    cursor: auto;
+    font-weight: normal;
 }

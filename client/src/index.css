@@ -1,4 +1,5 @@
 html {
+  /* avoid scrollbar jumping */
   overflow-y: scroll;
 }
 

@@ -1,12 +1,31 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import styles from './Cards.module.css';
 import Card from './Card.jsx';
+import Sort from './Sort.jsx';
+import Pagination from '../ui/Pagination.jsx';
 import useMediaQuery from '../../common/hooks/useMediaQuery.js';
+import { changeCurrentPage } from '../../common/redux/actions.js';
 import * as constants from '../../common/constants/cards.js';
 
-function Cards({ breeds }) {
-    const showCompareBreedCheckbox = useSelector(state => state.compareBreeds.items.length < constants.MAX_BREEDS_TO_COMPARE);
+function Cards() {
+    const dispatch = useDispatch();
+    const showCompareBreedCheckbox = useSelector(
+        state =>
+            state.compareBreeds.items.length < constants.MAX_BREEDS_TO_COMPARE
+    );
+    const breeds = useSelector(state => state.breeds.items);
+    const currentPage = useSelector(state => state.breeds.currentPage);
+
+    const breedsPerPage = constants.BREEDS_PER_PAGE;
+    const totalBreeds = breeds.length;
+    const indexOfLastBreed = currentPage * breedsPerPage;
+    const indexOfFirstBreed = indexOfLastBreed - breedsPerPage;
+    const breedsSlice = breeds.slice(indexOfFirstBreed, indexOfLastBreed);
+
+    const setCurrentPage = (value) => {
+        dispatch(changeCurrentPage(value));
+    }
 
     let nbColumns = 1;
     if (useMediaQuery('(min-width: 769px)')) {
@@ -16,18 +35,175 @@ function Cards({ breeds }) {
         nbColumns = 4;
     }
 
-    let orderedBreeds = sortMasonryLayout(breeds, nbColumns);
+    // let orderedBreeds = sortMasonryLayout(breeds, nbColumns);
 
     return <>
-        {/* {console.log('Cards number of columns: ', nbColumns)} */}
-        <div className={styles.container}>
-            {orderedBreeds.map(breed => (
-                <Card
-                    key={breed.name}
-                    breed={breed}
-                    showCompareBreedCheckbox={showCompareBreedCheckbox} />
-            ))}
+
+        {breedsSlice.length > 1 &&
+            <div className={styles.sort}>
+                <Sort />
+            </div>
+        }
+
+        {nbColumns === 1 &&
+            <div className={styles.container}>
+                <div className={styles.column}>
+                    {breedsSlice.map(breed => {
+                        return <Card
+                            key={breed.name}
+                            breed={breed}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    })}
+                </div>
+            </div>
+        }
+
+        {nbColumns === 2 &&
+            <div className={styles.container}>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 1 &&
+                        <Card
+                            key={breedsSlice[0].name}
+                            breed={breedsSlice[0]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 3 &&
+                        <Card
+                            key={breedsSlice[2].name}
+                            breed={breedsSlice[2]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 5 &&
+                        <Card
+                            key={breedsSlice[4].name}
+                            breed={breedsSlice[4]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 7 &&
+                        <Card
+                            key={breedsSlice[6].name}
+                            breed={breedsSlice[6]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 2 &&
+                        <Card
+                            key={breedsSlice[1].name}
+                            breed={breedsSlice[1]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 4 &&
+                        <Card
+                            key={breedsSlice[3].name}
+                            breed={breedsSlice[3]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 6 &&
+                        <Card
+                            key={breedsSlice[5].name}
+                            breed={breedsSlice[5]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 8 &&
+                        <Card
+                            key={breedsSlice[7].name}
+                            breed={breedsSlice[7]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+            </div>
+        }
+
+        {nbColumns === 4 &&
+            <div className={styles.container}>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 0 &&
+                        <Card
+                            key={breedsSlice[0].name}
+                            breed={breedsSlice[0]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 5 &&
+                        <Card
+                            key={breedsSlice[4].name}
+                            breed={breedsSlice[4]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 2 &&
+                        <Card
+                            key={breedsSlice[1].name}
+                            breed={breedsSlice[1]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 6 &&
+                        <Card
+                            key={breedsSlice[5].name}
+                            breed={breedsSlice[5]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 3 &&
+                        <Card
+                            key={breedsSlice[2].name}
+                            breed={breedsSlice[2]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 7 &&
+                        <Card
+                            key={breedsSlice[6].name}
+                            breed={breedsSlice[6]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+                <div className={styles.column}>
+                    {breedsSlice.length >= 4 &&
+                        <Card
+                            key={breedsSlice[3].name}
+                            breed={breedsSlice[3]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                    {breedsSlice.length >= 8 &&
+                        <Card
+                            key={breedsSlice[7].name}
+                            breed={breedsSlice[7]}
+                            showCompareBreedCheckbox={showCompareBreedCheckbox}
+                        />
+                    }
+                </div>
+            </div>
+        }
+
+        <div className={styles.pagination}>
+            {totalBreeds > breedsPerPage && (
+                <Pagination
+                    totalItems={totalBreeds}
+                    itemsPerPage={breedsPerPage}
+                    currentPage={currentPage}
+                    setCurrentPage={setCurrentPage}
+                />
+            )}
         </div>
+
     </>
 }
 

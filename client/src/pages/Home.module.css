@@ -8,22 +8,10 @@
     /* border: 1px solid blue; */
 }
 
-.sort {
-    justify-content: flex-start;
-    margin-bottom: 2em;
-}
-
 .cards {
     grid-area: element2;
     margin-top: 3em;
     /* border: 1px solid green; */
-}
-
-.pagination {
-    grid-area: element3;
-    display: flex;
-    justify-content: center;
-    /* border: 1px dotted seagreen; */
 }
 
 /* 320px — 480px: Mobile devices
@@ -43,21 +31,6 @@
             "element1 element1 element1 element1 element1 element2 element2 element2 element2 element2 element2 element2"
             "element1 element1 element1 element1 element1 element3 element3 element3 element3 element3 element3 element3";
     }
-
-    /* .searchInput {
-        width: 50%;
-        margin: 0 auto;
-    } */
-
-    .sort {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .cards {
-        margin-top: 0;
-    }
-    
 }
 
 @media (min-width: 769px) {
@@ -77,21 +50,12 @@
         margin: 0 auto;
     }
 
-    .sort {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    .cards {
-        margin-top: 0;
-    }
-    
 }
 
 @media (min-width: 1025px) {
     .content {
         grid-template-areas:
-        "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
-        "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
-}
+            "element1 element1 element1 element2 element2 element2 element2 element2 element2 element2 element2 element2"
+            "element1 element1 element1 element3 element3 element3 element3 element3 element3 element3 element3 element3";
+    }
 }

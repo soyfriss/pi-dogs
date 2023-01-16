@@ -14,9 +14,9 @@ function Pagination({ totalItems, itemsPerPage, currentPage, setCurrentPage, ena
     }
 
     return <>
-        <div className={`${styles.pagination} pagination`}>
+        <div className={styles.pagination}>
             <button
-                className={styles.previous}
+                className={currentPage === 1 ? `${styles.previous} ${styles.disabled}` : styles.previous }
                 onClick={() => paginate(-1)}
                 disabled={currentPage === 1}
             >
@@ -24,7 +24,7 @@ function Pagination({ totalItems, itemsPerPage, currentPage, setCurrentPage, ena
             </button>
             <p className={styles.pages}>{`${currentPage} of ${totalPages}`}</p>
             <button
-                className={styles.next}
+                className={currentPage === totalPages ? `${styles.next} ${styles.disabled}` : styles.next }
                 onClick={() => paginate(1)}
                 disabled={currentPage === totalPages}
             >
