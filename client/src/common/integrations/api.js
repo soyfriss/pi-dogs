@@ -2,7 +2,7 @@ import axios from 'axios';
 import * as errors from '../../common/constants/errors.js';
 import * as httpStatusCodes from '../../common/constants/httpStatusCodes.js';
 
-axios.defaults.baseURL = "http://localhost:3001";
+axios.defaults.baseURL = "http://10.1.20.20:3001";
 axios.defaults.timeout = 15000;
 
 export async function getBreeds(searchText, exactSearch = false) {
