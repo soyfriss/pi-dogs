@@ -7,13 +7,8 @@ const url = 'https://api.thedogapi.com/v1';
 
 const getBreedsFromApi = async () => {
     let endPoint = `${url}/breeds`;
-    // if (name) {
-    //     endPoint = `${url}/breeds/search?q=${name}`;
-    // }
-    // console.log('endPoint: ', endPoint);
 
     let breeds = await axios.get(endPoint);
-    // console.log('breeds: ', breeds.data);
 
     return breeds.data;
 };
@@ -39,7 +34,7 @@ const getBreeds = async (name, exactSearch) => {
     breeds = breeds.map(breed => ({
         id: breed.id,
         name: breed.name,
-        weight: breed.weight.metric,
+        weight: formatWeight(breed.weight),
         image: breed.image?.url,
         temperament: breed.temperament,
         source: 'external'
@@ -53,15 +48,15 @@ const getBreed = async (id) => {
     // console.log('breeds: ', breeds.data);
 
     let breed = breeds.find(breed => breed.id === Number(id));
-
+    console.log('weight: ', breed.weight.metric)
     if (breed) {
         breed = {
             id: breed.id,
             name: breed.name,
-            weight: breed.weight.metric,
+            weight: formatWeight(breed.weight),
             height: breed.height.metric,
             lifeSpan: breed.life_span,
-            image: breed.image.url,
+            image: breed.image?.url,
             temperament: breed.temperament,
             source: 'external'
         }
@@ -69,6 +64,10 @@ const getBreed = async (id) => {
 
     return breed;
 };
+
+const formatWeight = (weight) => {
+    return weight ? (weight.metric.includes('NaN') ? '' : weight.metric) : '';
+}
 
 const getTemperaments = async () => {
     const breeds = await axios.get(`${url}/breeds`)

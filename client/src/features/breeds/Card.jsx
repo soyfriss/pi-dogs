@@ -39,7 +39,7 @@ function Card({ breed, showCompareBreedCheckbox }) {
                 </div>
                 <div className={styles.cardBody}>
                     <p className={styles.breedName}>{breed.name}</p>
-                    <p>Weight: <span className={styles.weight}>{`${breed.weight} Kg`}</span></p>
+                    <p>Weight: <span className={styles.weight}>{breed.weight ? `${breed.weight} Kg` : constants.BREED_WEIGHT_UNKNOW}</span></p>
                     <p className={styles.temperaments}>{breed.temperament}</p>
                 </div>
             </NavLink>
