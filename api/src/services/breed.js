@@ -190,6 +190,9 @@ async function validateBreed(name, height, weight, lifeSpan, temperaments, image
         if (image && !(/^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(image.toLowerCase()))) {
             return `image: ${constants.INVALID_DATA}`;
         }
+        if (image.length > constants.MAX_LENGTH_IMAGE) {
+            return `image: ${constants.MAX_LENGTH_EXCEEDED} (max: ${constants.MAX_LENGTH_IMAGE})`;
+        }
 
         return '';
     } catch (error) {

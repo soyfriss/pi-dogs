@@ -7,18 +7,18 @@ const initialState = {
 
 export default function compareBreedsReducer(state = initialState, action) {
     switch (action.type) {
-        case actionTypes.FETCH_BREEDS_SUCCEEDED:
-            return {
-                ...state,
-                items: [],
-                isCollapsed: false
-            }
-        case actionTypes.FETCH_BREEDS_FAILED:
-            return {
-                ...state,
-                items: [],
-                isCollapsed: false
-            }
+        // case actionTypes.FETCH_BREEDS_SUCCEEDED:
+        //     return {
+        //         ...state,
+        //         items: [],
+        //         isCollapsed: false
+        //     }
+        // case actionTypes.FETCH_BREEDS_FAILED:
+        //     return {
+        //         ...state,
+        //         items: [],
+        //         isCollapsed: false
+        //     }
         case actionTypes.BREED_CHECKED:
             return {
                 ...state,

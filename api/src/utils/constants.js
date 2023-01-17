@@ -3,6 +3,7 @@ const breedValidations = {
     VALID_RANGE_WEIGHT: [0.5, 150],
     NO_RANGE: [0, 0],
     MAX_LENGTH_NAME: 35,
+    MAX_LENGTH_IMAGE: 500,
     FIELD_REQUIRED: 'Field is required',
     EMPTY_ITEM_IN_LIST: "One or more items are empty",
     TEMPERAMENT_NOT_IN_LIST: "Temperament not in list",

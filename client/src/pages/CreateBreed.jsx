@@ -19,7 +19,7 @@ function CreateBreed() {
 
     const [breed, setBreed] = useState({
         name: '',
-        nameError: '',
+        nameError: 'error',
         breedExistsError: '',
         heightMin: '',
         heightMax: '',
@@ -101,7 +101,7 @@ function CreateBreed() {
     };
 
     const isImgUrlOK = (url) => {
-        console.log('isImgUrlOK: ', /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase()));
+        // console.log('isImgUrlOK: ', /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase()));
         return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase());
     };
 
@@ -335,6 +335,7 @@ function CreateBreed() {
                             <Input
                                 name="image"
                                 label="Image URL"
+                                maxLength={constants.MAX_LENGTH_IMAGE}
                                 isRequired={false}
                                 value={breed.image}
                                 onChange={handleImageChange}
