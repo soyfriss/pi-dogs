@@ -10,14 +10,12 @@ html {
 }
 
 :root {
-  /* https://colorhunt.co/palette/f4f3f3dfdfdfbfd8d5b1bed5 */
+  /* https://colorhunt.co */
   --primary-color: #FEFCF3;
   --primary-text-color: #151922;
   --error-text-color: red;
   --secondary-color: #F5EBE0;
-  --card-bg-color: #F5EBE0;
   --accent-color: #DBA39A;
-  --search-input-bg-color: var(--secondary-color);
   --border-hover-color: #df85c6;
   
   /* Original*/
@@ -32,8 +30,6 @@ html {
 }
 
 body {
-  /* font-family: 'Raleway', sans-serif; */
-  /* font-family: 'Open Sans', sans-serif; */
   font-family: 'Montserrat', sans-serif;
   color: var(--primary-text-color);
   background-color: var(--primary-color);

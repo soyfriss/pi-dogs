@@ -8,7 +8,7 @@ import Select from '../features/ui/Select.jsx';
 import Loader from '../features/ui/Loader.jsx';
 import Error from '../features/ui/Error.jsx';
 import Header from '../features/ui/Header.jsx';
-import {fetchTemperaments } from '../features/filters/temperamentsActions.js';
+import { fetchTemperaments } from '../features/filters/temperamentsActions.js';
 import { fetchBreeds } from '../features/breeds/breedsActions.js';
 import * as constants from '../common/constants/createBreed.js';
 import * as errors from '../common/constants/errors.js';
@@ -108,50 +108,50 @@ function CreateBreed() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // Validate data
+        if (breed.nameError !== '' ||
+            breed.heightError !== '' ||
+            breed.weightError !== '' ||
+            breed.lifeSpanError !== '' ||
+            breed.temperamentsError !== '' ||
+            breed.imageUrlError !== '' ||
+            breed.imageError !== ''
+        ) {
+            console.log('data with errors: ', breed);
+            return;
+        }
+
         setNewBreed(breed => ({
             ...breed,
             status: 'creating'
         }));
 
-        // Create new breed
-        // console.log('handleSubmit creating new breed');
-        if (breed.nameError === '' &&
-            breed.heightError === '' &&
-            breed.weightError === '' &&
-            breed.lifeSpanError === '' &&
-            breed.temperamentsError === '' &&
-            breed.imageUrlError === '' &&
-            breed.imageError === ''
-        ) {
-            // breed exists ?
-            // console.log('handleSubmit breed exists?');
-            if (!await isBreedOK(breed.name)) {
-                // console.log('breed exists');
-                setBreed(breed => ({
-                    ...breed,
-                    breedExistsError: constants.BREED_EXISTS_MESSAGE
-                }));
+        // breed exists ?
+        // console.log('handleSubmit breed exists?');
+        if (!await isBreedOK(breed.name)) {
+            // console.log('breed exists');
+            setBreed(breed => ({
+                ...breed,
+                breedExistsError: constants.BREED_EXISTS_MESSAGE
+            }));
 
-                // console.log('setting new breed status to idle');
-                setNewBreed(breed => ({
-                    ...breed,
-                    status: 'idle'
-                }));
+            // console.log('setting new breed status to idle');
+            setNewBreed(breed => ({
+                ...breed,
+                status: 'idle'
+            }));
 
-                return;
-            }
-
-            const newBreed = {
-                name: breed.name,
-                height: `${breed.heightMin} - ${breed.heightMax}`,
-                weight: `${breed.weightMin} - ${breed.weightMax}`,
-                lifeSpan: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
-                temperaments: breed.temperaments.map(t => t.name),
-                image: breed.image
-            }
-
-            createBreed(newBreed);
+            return;
         }
+
+        createBreed({
+            name: breed.name,
+            height: `${breed.heightMin} - ${breed.heightMax}`,
+            weight: `${breed.weightMin} - ${breed.weightMax}`,
+            lifeSpan: (breed.lifeSpanMin && breed.lifeSpanMax) ? `${breed.lifeSpanMin} - ${breed.lifeSpanMax}` : '',
+            temperaments: breed.temperaments.map(t => t.name),
+            image: breed.image
+        });
     }
 
     const createBreed = async (breed) => {
@@ -358,6 +358,10 @@ function CreateBreed() {
                             </button>
                         </div>
                     </form>
+                </div>
+                <div className={styles.infoContainer}>
+                    <p><span className="required">*</span> {constants.INFO_REQUIRED_FIELDS}</p>
+                    <p>{constants.INFO_ALLOWED_IMAGES_FORMAT}</p>
                 </div>
             </div >
         </main>

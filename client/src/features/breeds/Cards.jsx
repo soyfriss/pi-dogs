@@ -4,6 +4,7 @@ import styles from './Cards.module.css';
 import Card from './Card.jsx';
 import Sort from './Sort.jsx';
 import Pagination from '../ui/Pagination.jsx';
+import Error from '../ui/Error.jsx';
 import useMediaQuery from '../../common/hooks/useMediaQuery.js';
 import { changeCurrentPage } from './breedsActions.js';
 import * as constants from '../../common/constants/cards.js';
@@ -35,10 +36,11 @@ function Cards() {
         nbColumns = 4;
     }
 
-    // let orderedBreeds = sortMasonryLayout(breeds, nbColumns);
+    if (breedsSlice.length === 0) {
+        return <Error title='Oops!' message={constants.BREEDS_NOT_FOUND} />;
+    }
 
     return <>
-
         {breedsSlice.length > 1 &&
             <div className={styles.sort}>
                 <Sort />

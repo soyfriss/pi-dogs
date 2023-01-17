@@ -29,10 +29,12 @@ function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, value = [],
     }
 
     const addTemperament = () => {
-        // console.log('selectRef: ', selectRef.current.value);
         const id = Number(input.value);
-        // // const temperament = temperaments.find(t => t.id === id);
-        // // setSelectedTemperaments(old => [...old, temperament]);
+        // Validate id
+        if (isNaN(id) || !temperaments.find(t => t.id === id)) {
+            return;
+        }
+
         onChangeSelect(id, 'add');
         setInput(oldInput => ({
             ...oldInput,

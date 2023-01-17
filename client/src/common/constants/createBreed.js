@@ -6,3 +6,5 @@ export const MAX_LENGTH_NAME = 35;
 export const MAX_ERROR_COUNT = 3;
 export const BREED_EXISTS_MESSAGE = 'This breed already exists';
 export const IMAGE_URL_MESSAGE = 'Check the image url';
+export const INFO_REQUIRED_FIELDS = 'Fields are required.';
+export const INFO_ALLOWED_IMAGES_FORMAT = 'The following image formats are allowed: jpg, jpeg, png, webp, avif, gif, svg.';

@@ -10,6 +10,10 @@
     gap: 2rem;
 }
 
+.infoContainer {
+    margin-top: 5em;
+}
+
 /* .fullWidth {
     grid-column: span 2;
 } */
@@ -43,19 +47,15 @@
 .form textarea:focus {
     outline: none;
     border: 2px solid var(--primary-text-color);
-    /* box-shadow: 0 0 0 4px hsl(213, 90%, 70%); */
 }
 
 .form input[type="text"],
 .form input[type="email"],
-/* .form select, */
 .form textarea {
-    /* font: 1.25rem / 1.5 sans-serif; */
     font-size: 1.25rem;
     line-height: 1.5;
     font-family: inherit;
     display: block;
-    /* box-sizing: border-box; */
     width: 100%;
     padding: 0.5rem 0.75rem;
 }
@@ -68,7 +68,6 @@
     display: inline-block;
     width: 100%;
     padding: 0.5rem 0.75rem;
-    /* margin-bottom: 1em; */
 }
 
 .largeLabel {
@@ -185,7 +184,7 @@
         grid-template-areas:
             "name lifeSpan"
             "height weight"
-            "temperaments image"
+            "image temperaments"
             "submit .";
     }
 
