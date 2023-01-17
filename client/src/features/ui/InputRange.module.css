@@ -28,7 +28,7 @@
 
 .btn:hover,
 .btn:focus {
-    opacity: 0.8;
+    box-shadow: 0 1px 5px var(--accent-color);
 }
 
 .btnDisabled,
@@ -36,4 +36,5 @@
 .btnDisabled:focus {
     cursor: auto;
     opacity: 0.4;
+    box-shadow: none;
 }

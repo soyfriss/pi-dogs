@@ -110,7 +110,7 @@
 .form .btn:focus,
 .form .btnSelect:hover,
 .form .btnSelect:focus {
-    opacity: 0.8;
+    box-shadow: 0 1px 5px var(--accent-color);
 }
 
 .form .btnDisabled,
@@ -118,6 +118,7 @@
 .form .btnDisabled:focus {
     cursor: auto;
     opacity: 0.4;
+    box-shadow: none;
 }
 
 

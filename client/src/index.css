@@ -101,17 +101,6 @@ input[type=number] {
   border-radius: 5px;
 }
 
-.btn-primary:hover,
-.btn-primary:focus {
-  opacity: 0.8;
-}
-
-.btn-disabled,
-.btn-disabled:hover,
-.btn-disabled:focus {
-  cursor: auto;
-  opacity: 0.4;
-}
 
 .btn-small {
   cursor: pointer;
@@ -125,6 +114,20 @@ input[type=number] {
   text-decoration: none;
 }
 
+.btn-primary:hover,
+.btn-primary:focus,
+.btn-small:hover,
+.btn-small:focus {
+  box-shadow: 0 1px 5px var(--accent-color);
+}
+
+.btn-disabled,
+.btn-disabled:hover,
+.btn-disabled:focus {
+  cursor: auto;
+  opacity: 0.4;
+  box-shadow: none;
+}
 
 /* Loader */
 .animated-paw {
