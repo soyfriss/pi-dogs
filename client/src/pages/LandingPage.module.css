@@ -58,7 +58,8 @@
 
 .cta:hover,
 .cta:focus {
-    opacity: 0.8;
+    /* opacity: 0.8; */
+    box-shadow: 0 1px 5px var(--accent-color);
 }
 
 .big {
@@ -129,6 +130,12 @@
     
     .ctaLeft {
         display: block;
+    }
+
+    .ctaLeft div {
+        display: inline-flex;
+        flex-direction: column;
+        align-items: center;
     }
 
     .ctaBottom {

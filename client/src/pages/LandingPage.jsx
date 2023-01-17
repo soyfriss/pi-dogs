@@ -24,10 +24,12 @@ function LandingPage() {
                     <h1>Find the Best Dog Breed <span className={styles.highlight}>for You</span>!</h1>
                     <p>Search, filter and discover breeds you didn't know.</p>
                     <div className={styles.ctaLeft}>
-                        <NavLink to="/home">
-                            <button type='button' className={`${styles.cta} ${styles.big}`}>Try it free</button>
-                        </NavLink>
-                        <p className={styles.small}>No registration required</p>
+                        <div>
+                            <NavLink to="/home">
+                                <button type='button' className={`${styles.cta} ${styles.big}`}>Try it free</button>
+                            </NavLink>
+                            <p className={styles.small}>No registration required</p>
+                        </div>
                     </div>
                 </div>
                 <div className={styles.img}>
