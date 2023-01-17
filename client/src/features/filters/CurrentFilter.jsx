@@ -5,7 +5,7 @@ function CurrentFilter({ filter, removeFilter }) {
     return <>
         <div className={styles.container}>
             <p className={styles.filter}>{filter}</p>
-            <button className={styles.remove} onClick={() => removeFilter(filter)}>X</button>
+            <button type="button" className={styles.remove} onClick={() => removeFilter(filter)}>X</button>
         </div>
     </>
 }

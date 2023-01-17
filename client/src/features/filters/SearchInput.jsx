@@ -37,7 +37,7 @@ function SearchInput() {
                 maxLength={constants.SEARCH_INPUT_MAX_LENGTH}
             />
             <button
-                type="submit"
+                type="button"
                 className={styles.submit}
                 onClick={handleFetchBreeds}
             >

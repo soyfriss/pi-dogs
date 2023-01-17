@@ -7,6 +7,7 @@ const breedValidations = {
     EMPTY_ITEM_IN_LIST: "One or more items are empty",
     TEMPERAMENT_NOT_IN_LIST: "Temperament not in list",
     INVALID_DATA: 'Field has invalid data',
+    VALIDATION_ERRORS: 'Validation errors',
     INCORRECT_TYPE: 'Type is incorrect',
     INVALID_RANGE: 'Field has an invalid range',
     MAX_LENGTH_EXCEEDED: 'The maximum length of the field has been exceeded',

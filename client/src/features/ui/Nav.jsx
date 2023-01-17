@@ -14,6 +14,7 @@ function Nav() {
         <nav className={styles.navigation}>
             <Logo />
             <button
+                type="button"
                 className={styles.hamburger}
                 onClick={() => {
                     setIsNavExpanded(!isNavExpanded);

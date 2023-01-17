@@ -118,6 +118,7 @@ function InputRange({
                 />
                 {showButton &&
                     <button
+                        type="button"
                         className={`${styles.btn} ${(input.error || (input.min === '' && input.max === '')) && styles.btnDisabled}`}
                         disabled={(input.error || (input.min === '' && input.max === ''))}
                         onClick={() => {

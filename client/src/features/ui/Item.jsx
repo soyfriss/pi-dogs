@@ -5,7 +5,7 @@ function Item({ id, source, name, remove }) {
     return <>
         <div className={styles.container}>
             <p className={styles.name}>{name}</p>
-            <button className={styles.remove} onClick={() => remove(id, source)}>X</button>
+            <button type="button" className={styles.remove} onClick={() => remove(id, source)}>X</button>
         </div>
     </>
 }

@@ -54,12 +54,12 @@ router.post(
 
             const breed = await
                 createBreed(
-                    name && name.trim(),
-                    height && height.trim(),
-                    weight && weight.trim(),
-                    lifeSpan && lifeSpan.trim(),
+                    name,
+                    height,
+                    weight,
+                    lifeSpan,
                     temperaments,
-                    image && image.trim()
+                    image
                 );
 
                 res.status(httpStatusCodes.OK).json(breed);

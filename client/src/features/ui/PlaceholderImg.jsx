@@ -4,8 +4,8 @@ const PlaceholderImg = ({ placeholderSrc, src, ...props }) => {
     const [imgSrc, setImgSrc] = useState(placeholderSrc || src);
 
     useEffect(() => {
+        let img = new Image();
         // console.log('src: ', src);
-        const img = new Image();
         img.src = src;
         img.onload = () => {
             setImgSrc(src);
@@ -13,6 +13,13 @@ const PlaceholderImg = ({ placeholderSrc, src, ...props }) => {
         // img.onerror = (event) => {
         //     console.log(event);
         // }
+        return () => {
+            if ( ! img ) {
+                return;
+            }
+            img.onload = function(){};
+            img = null;
+        }
     }, [src]);
 
     return (

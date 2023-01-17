@@ -45,6 +45,7 @@ function Select({ label, minItemsSelected = 0, maxItemsSelected = 0, value = [],
 
     const removeTemperament = (id) => {
         // setSelectedTemperaments(selectedTemperaments.filter(t => t.id !== id));
+        console.log('remove temperament: ', id);
         onChangeSelect(id, 'remove');
     }
 

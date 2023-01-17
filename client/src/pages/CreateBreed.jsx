@@ -108,6 +108,8 @@ function CreateBreed() {
     const handleSubmit = async (event) => {
         event.preventDefault();
 
+        // console.log('handle submit called');
+
         // Validate data
         if (breed.nameError !== '' ||
             breed.heightError !== '' ||

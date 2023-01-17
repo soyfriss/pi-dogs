@@ -37,7 +37,6 @@ function WeightFilter() {
                 max={max}
                 validRange={[0, 150]}
                 onChange={handleRangeChange}
-                canShowError={true}
                 showButton={true}
                 handleButtonClick={changeWeight}
                 style={{ maxWidth: "5rem" }} />
