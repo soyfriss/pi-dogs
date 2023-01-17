@@ -1,6 +1,12 @@
 import { sortBreeds } from '../breeds/breedsActions.js';
 import * as actionTypes from '../../common/constants/actionTypes.js';
 
+export function changeSearchText(value) {
+    return function (dispatch) {
+        dispatch({ type: 'breeds/searchTextChanged', payload: value });
+    }
+}
+
 export function addTemperamentFilter(temperament) {
     return function (dispatch) {
         dispatch({ type: actionTypes.TEMPERAMENT_FILTER_ADDED, payload: temperament });

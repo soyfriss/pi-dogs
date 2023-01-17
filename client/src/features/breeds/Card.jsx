@@ -19,7 +19,7 @@ function Card({ breed, showCompareBreedCheckbox }) {
 
     const handleCheck = () => {
         if (isBreedChecked) {
-            dispatch(uncheckBreed(breed.id));
+            dispatch(uncheckBreed(breed.id, breed.source));
         } else {
             dispatch(checkBreed({ id: breed.id, name: breed.name, source: breed.source }));
         }

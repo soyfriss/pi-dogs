@@ -3,12 +3,11 @@ import styles from './Input.module.css';
 import * as constants from '../../common/constants/input.js';
 
 function Input({ name, label, isRequired, maxLength = 524288, value, onChange, parentError }) {
-    // console.log('InputRange');
     const validateInput = (value) => {
         if (isRequired && !value) {
             return constants.FIELD_REQUIRED;
         }
-        if (maxLength && value.length > maxLength) {
+        if (maxLength && value && value.length > maxLength) {
             return `${constants.MAX_LENGTH_EXCEEDED} (max: ${maxLength})`;
         }
 
@@ -17,9 +16,9 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, p
 
     const [input, setInput] = useState({
         value: value,
-        error: parentError !== '' ? parentError : validateInput(value)
+        error: validateInput(value)
     })
-    const [showError, setShowError] = useState(parentError !== '' ? true : false);
+    const [showError, setShowError] = useState(parentError !== '');
 
 
     const handleChange = (event) => {
@@ -52,8 +51,8 @@ function Input({ name, label, isRequired, maxLength = 524288, value, onChange, p
                 onFocus={() => setShowError(false)}
                 onBlur={() => setShowError(true)}
             />
-            {showError && input.error &&
-                <p data-testid="error" className="error">{input.error}</p>
+            {showError && (input.error || parentError ) &&
+                <p data-testid="error" className="error">{input.error || parentError}</p>
             }
         </div>
     </>

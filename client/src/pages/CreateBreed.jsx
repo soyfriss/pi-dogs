@@ -71,7 +71,7 @@ function CreateBreed() {
             ...breed,
             [name]: value,
             [`${name}Error`]: error,
-            imageUrlError: ''
+            imageUrlError: value ? (isImgUrlOK(value) ? '' : errors.INVALID_DATA) : ''
         })
     }
 
@@ -100,15 +100,14 @@ function CreateBreed() {
         }
     };
 
-    const isImgUrl = async (url) => {
+    const isImgUrlOK = (url) => {
+        console.log('isImgUrlOK: ', /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase()));
         return /^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(url.toLowerCase());
     };
 
     const handleSubmit = async (event) => {
-        // console.log('handleSubmit()', event);
         event.preventDefault();
 
-        // console.log('handleSubmit setting new breed status = creating ');
         setNewBreed(breed => ({
             ...breed,
             status: 'creating'
@@ -121,6 +120,7 @@ function CreateBreed() {
             breed.weightError === '' &&
             breed.lifeSpanError === '' &&
             breed.temperamentsError === '' &&
+            breed.imageUrlError === '' &&
             breed.imageError === ''
         ) {
             // breed exists ?
@@ -130,24 +130,6 @@ function CreateBreed() {
                 setBreed(breed => ({
                     ...breed,
                     breedExistsError: constants.BREED_EXISTS_MESSAGE
-                }));
-
-                // console.log('setting new breed status to idle');
-                setNewBreed(breed => ({
-                    ...breed,
-                    status: 'idle'
-                }));
-
-                return;
-            }
-
-            // Is image URL ok ?
-            if (breed.image && !await isImgUrl(breed.image)) {
-                // console.log('image url is not ok');
-
-                setBreed(breed => ({
-                    ...breed,
-                    imageUrlError: constants.IMAGE_URL_MESSAGE
                 }));
 
                 // console.log('setting new breed status to idle');
@@ -325,16 +307,6 @@ function CreateBreed() {
                                 onChange={handleRangeChange}
                             />
                         </div>
-                        <div className={styles.image}>
-                            <Input
-                                name="image"
-                                label="Image URL"
-                                isRequired={false}
-                                value={breed.image}
-                                onChange={handleImageChange}
-                                parentError={breed.imageUrlError}
-                            />
-                        </div>
                         <div className={styles.height}>
                             <InputRange
                                 name="height"
@@ -355,6 +327,16 @@ function CreateBreed() {
                                 min={breed.weightMin}
                                 max={breed.weightMax}
                                 onChange={handleRangeChange}
+                            />
+                        </div>
+                        <div className={styles.image}>
+                            <Input
+                                name="image"
+                                label="Image URL"
+                                isRequired={false}
+                                value={breed.image}
+                                onChange={handleImageChange}
+                                parentError={breed.imageUrlError}
                             />
                         </div>
                         <div className={styles.temperaments}>

@@ -3,7 +3,8 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import styles from './SearchInput.module.css';
 import icon from '../../images/search-icon.png';
-import { fetchBreeds, changeSearchText, changeCurrentPage } from '../../common/redux/actions.js';
+import { fetchBreeds, changeCurrentPage } from '../breeds/breedsActions.js';
+import { changeSearchText, changeCurrentFilterPage } from './filtersActions.js';
 import * as constants from '../../common/constants/searchInput.js';
 
 function SearchInput() {
@@ -19,6 +20,7 @@ function SearchInput() {
         dispatch(changeSearchText(searchText.trim()));
         dispatch(fetchBreeds());
         dispatch(changeCurrentPage(1));
+        dispatch(changeCurrentFilterPage(1));
     }
 
     return <>

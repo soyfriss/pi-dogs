@@ -34,7 +34,7 @@
 .form select,
 .form textarea {
     border: 2px solid var(--accent-color);
-    background-color: white;
+    background-color: var(--primary-color);
     /* border-radius: 0.25rem; */
 }
 
@@ -178,14 +178,13 @@
 
     .form {
         grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(5, auto);
+        grid-template-rows: repeat(4, auto);
         grid-column-gap: 1em;
         grid-row-gap: 2em;
         grid-template-areas:
-            "name name"
-            "lifeSpan image"
+            "name lifeSpan"
             "height weight"
-            "temperaments temperaments"
+            "temperaments image"
             "submit .";
     }
 

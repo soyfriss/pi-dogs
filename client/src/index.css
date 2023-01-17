@@ -118,8 +118,8 @@ input[type=number] {
   border: none;
   background-color: var(--accent-color);
   color: var(--primary-text-color);
-  padding: 0.25em;
-  font-size: 1rem;
+  padding: 0.5em 1em;
+  font-size: 0.9rem;
   font-family: inherit;
   border-radius: 5px;
   text-decoration: none;

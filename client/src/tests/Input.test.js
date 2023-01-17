@@ -21,7 +21,7 @@ describe('Input', () => {
     });
     it('Show error from parent', () => {
         render(
-            <Input name='parent' label='parent' isRequired={true} parentError='The Parent Error' />
+            <Input name='parent' label='parent' isRequired={true} value='parent' parentError='The Parent Error' />
         );
         expect(screen.getByText('The Parent Error')).toBeDefined();
     });
