@@ -63,7 +63,7 @@ function BreedDetail() {
             <main>
                 <Loader />;
             </main>
-        </>;
+        </>
     }
 
     if (breed.status === 'failed') {
@@ -72,7 +72,7 @@ function BreedDetail() {
             <main>
                 <Error title='Oops!' message={breed.error.message} />;
             </main>
-        </>;
+        </>
     }
 
     return <>
@@ -87,7 +87,7 @@ function BreedDetail() {
                 </div>
             </div>
         </main>
-    </>;
+    </>
 }
 
 export default BreedDetail;
