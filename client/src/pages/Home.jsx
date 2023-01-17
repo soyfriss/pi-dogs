@@ -8,7 +8,8 @@ import Filters from '../features/filters/Filters.jsx';
 import Loader from '../features/ui/Loader.jsx';
 import Error from '../features/ui/Error.jsx';
 import Header from '../features/ui/Header.jsx';
-import { fetchBreeds, fetchTemperaments } from '../common/redux/actions.js';
+import { fetchTemperaments } from '../features/filters/temperamentsActions.js';
+import { fetchBreeds } from '../features/breeds/breedsActions.js';
 
 function Home() {
     const dispatch = useDispatch();

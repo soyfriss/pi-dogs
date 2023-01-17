@@ -7,14 +7,15 @@ import {
     changeWeightFilter,
     changeSourceFilter,
     filterBreeds,
-    changeCurrentPage,
     collapseTemperamentFilter,
     expandTemperamentFilter,
     collapseWeightFilter,
     expandWeightFilter,
     collapseSourceFilter,
-    expandSourceFilter
-} from '../../common/redux/actions.js';
+    expandSourceFilter,
+    clearAllFilters
+} from './filtersActions.js';
+import { changeCurrentPage } from '../breeds/breedsActions';
 import SearchResult from './SearchResult.jsx';
 import CurrentFilters from './CurrentFilters.jsx';
 import TemperamentFilter from './TemperamentFilter.jsx';
@@ -54,6 +55,12 @@ function Filters() {
         dispatch(changeCurrentPage(1));
     }
 
+    const handleClearAll = () => {
+        dispatch(clearAllFilters());
+        dispatch(filterBreeds());
+        dispatch(changeCurrentPage(1));
+    }
+
     const handleCollapseTemperamentFilter = () => {
         if (filters.isTemperamentCollapsed) {
             dispatch(expandTemperamentFilter());
@@ -85,6 +92,7 @@ function Filters() {
             removeTemperamentFilter={removeTemperamentFilter}
             removeWeight={removeWeight}
             removeSource={removeSource}
+            handleClearAll={handleClearAll}
         />
 
         {breeds && breeds.length > 1 &&

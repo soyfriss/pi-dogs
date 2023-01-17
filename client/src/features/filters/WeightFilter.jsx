@@ -4,9 +4,9 @@ import styles from './WeightFilter.module.css';
 import {
     changeWeightFilter,
     filterBreeds,
-    changeCurrentPage,
     changeCurrentFilterPage
-} from '../../common/redux/actions.js';
+} from './filtersActions.js';
+import { changeCurrentPage } from '../breeds/breedsActions.js';
 import InputRange from '../ui/InputRange.jsx';
 
 function WeightFilter() {

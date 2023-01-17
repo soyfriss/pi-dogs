@@ -6,7 +6,7 @@ import {
     uncheckAllBreeds,
     collapseCheckedBreeds,
     expandCheckedBreeds
-} from '../../common/redux/actions';
+} from './compareBreedsActions.js';
 import styles from './CheckedBreeds.module.css';
 import Item from '../ui/Item.jsx';
 import * as constants from '../../common/constants/cards.js'

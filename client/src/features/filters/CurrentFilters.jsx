@@ -2,12 +2,24 @@ import React from 'react';
 import styles from './CurrentFilters.module.css';
 import CurrentFilter from './CurrentFilter.jsx';
 
-function CurrentFilters({ filters, removeTemperamentFilter, removeWeight, removeSource }) {
-    if (filters.temperaments.length === 0 &&
-        filters.source === '' &&
-        filters.weight.min === 0 &&
-        filters.weight.max === 0
-    ) {
+function CurrentFilters({ filters, removeTemperamentFilter, removeWeight, removeSource, handleClearAll }) {
+    // if (filters.temperaments.length === 0 &&
+    //     filters.source === '' &&
+    //     filters.weight.min === 0 &&
+    //     filters.weight.max === 0
+    // ) {
+    //     return <></>;
+    // }
+
+    const isFiltersExist = () => {
+        return (filters.temperaments.length !== 0 ||
+            filters.source !== '' ||
+            filters.weight.min !== 0 ||
+            filters.weight.max !== 0
+        );
+    }
+
+    if (!isFiltersExist()) {
         return <></>;
     }
 
@@ -35,6 +47,13 @@ function CurrentFilters({ filters, removeTemperamentFilter, removeWeight, remove
                     removeFilter={removeSource}
                 />}
         </div>
+        {isFiltersExist() &&
+            <div>
+                <button type='button' className='btn-small' onClick={handleClearAll}>
+                    CLEAR ALL
+                </button>
+            </div>
+        }
     </>
 }
 

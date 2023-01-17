@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { checkBreed, uncheckBreed } from '../../common/redux/actions.js';
+import { checkBreed, uncheckBreed } from '../compare-breeds/compareBreedsActions.js';
 import styles from './Card.module.css';
 import noImage from '../../images/no-image.png';
 import PlaceholderImg from '../ui/PlaceholderImg.jsx';

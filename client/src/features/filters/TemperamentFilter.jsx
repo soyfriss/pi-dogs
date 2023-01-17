@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './TemperamentFilter.module.css';
 import Pagination from '../ui/Pagination.jsx';
-import { changeCurrentFilterPage } from '../../common/redux/actions.js';
+import { changeCurrentFilterPage } from './filtersActions.js';
 import * as constants from '../../common/constants/temperamentFilter.js';
 
 function TemperamentFilter({ addTemperamentFilter }) {

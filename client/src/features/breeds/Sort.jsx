@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styles from './Sort.module.css';
 import orderBy from '../../images/order-by.svg';
-import { sortBreeds } from '../../common/redux/actions.js';
+import { sortBreeds } from './breedsActions.js';
 
 function Sort() {
     const dispatch = useDispatch();
@@ -23,8 +23,8 @@ function Sort() {
             >
                 <option value="nameAsc">Breed name A-Z</option>
                 <option value="nameDesc">Breed name Z-A</option>
-                <option value="minWeight">Min Weight</option>
-                <option value="maxWeight">Max Weight</option>
+                <option value="minWeight">Min Weight Asc</option>
+                <option value="maxWeight">Min Weight Desc</option>
             </select>
         </div>
     </>

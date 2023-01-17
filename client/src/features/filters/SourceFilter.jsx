@@ -1,10 +1,12 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import styles from './SourceFilter.module.css';
-import { changeSourceFilter, 
-    filterBreeds, 
-    changeCurrentPage, 
-    changeCurrentFilterPage } from '../../common/redux/actions';
+import {
+    changeSourceFilter,
+    filterBreeds,
+    changeCurrentFilterPage
+} from './filtersActions.js';
+import { changeCurrentPage } from '../breeds/breedsActions';
 
 function SourceFilter() {
     const dispatch = useDispatch();

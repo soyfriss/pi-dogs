@@ -5,7 +5,7 @@ import Card from './Card.jsx';
 import Sort from './Sort.jsx';
 import Pagination from '../ui/Pagination.jsx';
 import useMediaQuery from '../../common/hooks/useMediaQuery.js';
-import { changeCurrentPage } from '../../common/redux/actions.js';
+import { changeCurrentPage } from './breedsActions.js';
 import * as constants from '../../common/constants/cards.js';
 
 function Cards() {
@@ -207,43 +207,43 @@ function Cards() {
     </>
 }
 
-function sortMasonryLayout(breeds, columns) {
-    if (columns === 1) {
-        return [...breeds];
-    }
+// function sortMasonryLayout(breeds, columns) {
+//     if (columns === 1) {
+//         return [...breeds];
+//     }
 
-    // Case when breeds < breeds per page
-    // Fill with empty cards up to breedsPerPage, so the cards are ordered correctly
-    // const breedsPerPage = 8;
-    const breedsFilled = [...breeds];
-    if (breedsFilled.length < constants.BREEDS_PER_PAGE) {
-        for (let i = breeds.length; i < constants.BREEDS_PER_PAGE; i++) {
-            const breed = {}
-            breed.id = 0;
-            breed.name = `${breeds[breeds.length - 1].name} #${i}`;
-            breed.weight = ''
-            breed.notVisible = true;
-            breedsFilled.push(breed);
-        }
-    }
+//     // Case when breeds < breeds per page
+//     // Fill with empty cards up to breedsPerPage, so the cards are ordered correctly
+//     // const breedsPerPage = 8;
+//     const breedsFilled = [...breeds];
+//     if (breedsFilled.length < constants.BREEDS_PER_PAGE) {
+//         for (let i = breeds.length; i < constants.BREEDS_PER_PAGE; i++) {
+//             const breed = {}
+//             breed.id = 0;
+//             breed.name = `${breeds[breeds.length - 1].name} #${i}`;
+//             breed.weight = ''
+//             breed.notVisible = true;
+//             breedsFilled.push(breed);
+//         }
+//     }
 
-    // Algorithm to reorder cards 
-    const result = [];
-    let index;
-    for (let c = 0; c < columns; c++) {
-        for (let i = 0; i < breedsFilled.length; i++) {
-            index = (columns * i) + c;
-            // console.log('index: ', index);
-            if (index < breedsFilled.length) {
-                result.push(breedsFilled[index])
-            } else {
-                break;
-            }
-        }
-    }
-    // console.log('masonryOrder: ', result);
+//     // Algorithm to reorder cards 
+//     const result = [];
+//     let index;
+//     for (let c = 0; c < columns; c++) {
+//         for (let i = 0; i < breedsFilled.length; i++) {
+//             index = (columns * i) + c;
+//             // console.log('index: ', index);
+//             if (index < breedsFilled.length) {
+//                 result.push(breedsFilled[index])
+//             } else {
+//                 break;
+//             }
+//         }
+//     }
+//     // console.log('masonryOrder: ', result);
 
-    return result;
-}
+//     return result;
+// }
 
 export default Cards;
