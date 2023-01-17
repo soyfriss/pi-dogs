@@ -34,9 +34,15 @@ function InputRange({
         if (Number.isNaN(Number(min)) || Number.isNaN(Number(max))) {
             return constants.INVALID_DATA;
         }
-
+        
         const minValue = Number(min);
         const maxValue = Number(max);
+        
+        // '0 - 0' case
+        if (min && max && minValue === 0 && maxValue === 0) {
+            // console.log('min, max, minValue, maxValue', min, max, minValue, maxValue);
+            return `${constants.INVALID_RANGE} (0 - 0)`;
+        }
 
         if (minValue > maxValue) {
             return `${constants.INVALID_RANGE} (min > max)`;
