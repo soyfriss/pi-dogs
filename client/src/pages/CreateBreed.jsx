@@ -88,9 +88,8 @@ function CreateBreed() {
         try {
             const response = await getBreeds(value, true);
 
-            // console.log('checkBreedName breed exists ?: ', response.data);
-
-            if (response.ok && response.data) {
+            // console.log('checkBreedName breed exists ?: ', response);
+            if (response.data) {
                 return false;
             }
 

@@ -1,85 +1,27 @@
-// const {setTimeout} = require('timers/promises');
-const {
-    getBreeds: getBreedsFromDB,
-    getBreed: getBreedFromDB,
-    createBreed: createBreedFromDB,
-    breedExists: breedExistsInDB
-} = require('../integrations/breed.js');
-const {
-    getBreeds: getBreedsFromApi,
-    getBreed: getBreedFromApi,
-    breedExists: breedExistsInAPI
-} = require('../integrations/theDogApi.js');
-const { findOrCreateTemperaments, getTemperament } = require('./temperament.js');
-const AppError = require('../utils/AppError.js');
-const httpStatusCodes = require('../utils/httpStatusCodes.js');
+const db = require('../integrations/db/create-breed.js');
+const { getBreed } = require('../integrations/db/get-breed.js');
+
+const AppError = require('../utils/app-error.js');
+const httpStatusCodes = require('../utils/http-status-codes.js');
 const constants = require('../utils/constants.js');
 
-
-const getBreeds = async (name, exactSearch = false) => {
-
-    let breeds;
-
-    // Get breeds from DB
-    const breedsFromDB = await getBreedsFromDB(name, exactSearch);
-
-    // Get breeds from thedogapi
-    const breedsFromApi = await getBreedsFromApi(name, exactSearch);
-
-    breeds = [...breedsFromDB, ...breedsFromApi];
-    // console.log('breeds from services: ', breeds);
-
-    if (name && breeds.length === 0) {
-        throw new AppError(`${name} breed not found`, httpStatusCodes.NOT_FOUND);
-    }
-
-    return breeds;
-}
-
-const getBreed = async (id, source) => {
-    // 'source' validation
-    if (source !== 'local' && source !== 'external') {
-        throw new AppError('Source value is invalid', httpStatusCodes.BAD_REQUEST);
-    }
-
-    let breed;
-
-    // Get breed from DB
-    if (source === 'local') {
-        breed = await getBreedFromDB(id);
-    }
-
-    // Get breed from external API
-    if (source === 'external') {
-        breed = await getBreedFromApi(id);
-    }
-
-    if (!breed) {
-        throw new AppError(`Breed with id ${id} not found`, httpStatusCodes.NOT_FOUND);
-    }
-
-    // // Test: add delay
-    // console.log('Before delay');
-    // await setTimeout(20000);
-    // console.log('After delay');
-
-    return breed;
-}
+const { getTemperament } = require('../integrations/db/get-temperament.js');
+const { createTemperaments } = require('../integrations/db/create-temperaments.js')
 
 const createBreed = async (name, height, weight, lifeSpan, temperaments, image) => {
-    
+
     // Validate data
     const error = await validateBreed(name, height, weight, lifeSpan, temperaments, image);
     if (error) {
         throw new AppError(error, httpStatusCodes.BAD_REQUEST);
     }
-    
+
     // Create new temperaments
     const temperamentsList = await findOrCreateTemperaments(temperaments);
     // console.log('newTemperaments', temperamentsList);
 
     // Create breed
-    const newBreed = await createBreedFromDB(
+    const newBreed = await db.createBreed(
         name.trim().toUpperCase(),
         height.trim(),
         weight.trim(),
@@ -88,7 +30,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
         image && image.trim()
     );
 
-    return await getBreedFromDB(newBreed.dataValues.id);
+    return await getBreed(newBreed.dataValues.id);
 }
 
 async function validateBreed(name, height, weight, lifeSpan, temperaments, image) {
@@ -246,9 +188,4 @@ function validateRange(value, isRequired, validationRange) {
     return '';
 }
 
-
-module.exports = {
-    getBreeds,
-    getBreed,
-    createBreed,
-}
+module.exports = { createBreed };

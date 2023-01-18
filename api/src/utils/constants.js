@@ -12,7 +12,8 @@ const breedValidations = {
     INCORRECT_TYPE: 'Type is incorrect',
     INVALID_RANGE: 'Field has an invalid range',
     MAX_LENGTH_EXCEEDED: 'The maximum length of the field has been exceeded',
-    DUPLICATED_NAME: 'The breed already exists'
+    DUPLICATED_NAME: 'The breed already exists',
+    THE_DOG_API_BASE_URL: 'https://api.thedogapi.com/v1'
 }
 
 module.exports = breedValidations;

@@ -1,5 +1,7 @@
 const { Router } = require('express');
-const { getTemperaments } = require('../services/temperament.js');
+const { getTemperaments } = require('../services/get-temperaments.js');
+
+const httpStatusCodes = require('../utils/http-status-codes.js');
 
 const router = Router();
 
@@ -10,7 +12,7 @@ router.get(
         try {
             const temperaments = await getTemperaments();
 
-            res.status(200).json(temperaments);
+            res.status(httpStatusCodes.OK).json(temperaments);
         } catch (error) {
             next(error);
         }
