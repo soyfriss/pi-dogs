@@ -1,5 +1,6 @@
 const db = require('../integrations/db/create-breed.js');
-const { getBreeds, getBreed } = require('../integrations/db/get-breeds.js');
+const { getBreed } = require('../integrations/db/get-breeds.js');
+const { getBreeds } = require('./get-breeds.js');
 const { getTemperament } = require('../integrations/db/get-temperaments.js');
 const { createTemperaments } = require('../integrations/db/create-temperaments.js');
 
@@ -35,7 +36,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
 async function validateBreed(name, height, weight, lifeSpan, temperaments, image) {
     try {
-        console.log('validateBreed()');
+        // console.log('validateBreed()');
 
         // Test breed data
         const breed = {
