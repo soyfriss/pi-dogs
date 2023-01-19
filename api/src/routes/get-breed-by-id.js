@@ -1,5 +1,5 @@
 const { Router } = require('express');
-const { getBreed } = require('../services/get-breed.js');
+const { getBreed } = require('../services/get-breeds.js');
 
 const httpStatusCodes = require('../utils/http-status-codes.js');
 

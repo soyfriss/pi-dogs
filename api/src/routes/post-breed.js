@@ -5,7 +5,7 @@ const httpStatusCodes = require('../utils/http-status-codes.js');
 
 const router = Router();
 
-
+// POST /dogs
 router.post(
     '/',
     async (req, res, next) => {

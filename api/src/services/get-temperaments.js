@@ -17,4 +17,13 @@ const getTemperaments = async () => {
     return temperaments;
 }
 
-module.exports = { getTemperaments };
+const getTemperament = async (name) => {
+    if (!name.trim()) {
+        return null;
+    }
+
+    return await getTemperament(name.trim());
+}
+
+
+module.exports = { getTemperaments, getTemperament };

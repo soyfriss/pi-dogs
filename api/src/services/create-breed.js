@@ -1,23 +1,23 @@
 const db = require('../integrations/db/create-breed.js');
-const { getBreed } = require('../integrations/db/get-breed.js');
+const { getBreeds, getBreed } = require('../integrations/db/get-breeds.js');
+const { getTemperament } = require('../integrations/db/get-temperaments.js');
+const { createTemperaments } = require('../integrations/db/create-temperaments.js');
 
 const AppError = require('../utils/app-error.js');
 const httpStatusCodes = require('../utils/http-status-codes.js');
 const constants = require('../utils/constants.js');
-
-const { getTemperament } = require('../integrations/db/get-temperament.js');
-const { createTemperaments } = require('../integrations/db/create-temperaments.js')
 
 const createBreed = async (name, height, weight, lifeSpan, temperaments, image) => {
 
     // Validate data
     const error = await validateBreed(name, height, weight, lifeSpan, temperaments, image);
     if (error) {
+        console.log('createBreed error: ', error);
         throw new AppError(error, httpStatusCodes.BAD_REQUEST);
     }
 
     // Create new temperaments
-    const temperamentsList = await findOrCreateTemperaments(temperaments);
+    const temperamentsList = await createTemperaments(temperaments);
     // console.log('newTemperaments', temperamentsList);
 
     // Create breed
@@ -35,7 +35,7 @@ const createBreed = async (name, height, weight, lifeSpan, temperaments, image) 
 
 async function validateBreed(name, height, weight, lifeSpan, temperaments, image) {
     try {
-        // console.log('validateBreed()');
+        console.log('validateBreed()');
 
         // Test breed data
         const breed = {
@@ -132,12 +132,13 @@ async function validateBreed(name, height, weight, lifeSpan, temperaments, image
         if (image && !(/^https?:\/\/.+\.(jpg|jpeg|png|webp|avif|gif|svg)$/.test(image.toLowerCase()))) {
             return `image: ${constants.INVALID_DATA}`;
         }
-        if (image.length > constants.MAX_LENGTH_IMAGE) {
+        if (image && image.length > constants.MAX_LENGTH_IMAGE) {
             return `image: ${constants.MAX_LENGTH_EXCEEDED} (max: ${constants.MAX_LENGTH_IMAGE})`;
         }
 
         return '';
     } catch (error) {
+        console.log('Validation error: ', error);
         return constants.VALIDATION_ERRORS;
     }
 }

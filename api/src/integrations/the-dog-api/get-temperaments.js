@@ -1,11 +1,11 @@
-const { getAllBreeds } = require('./get-all-breeds.js');
+const { getBreeds } = require('./get-breeds.js');
 
 const getTemperaments = async () => {
-    const breeds = getAllBreeds;
+    const breeds = await getBreeds();
     let temperaments = new Set();
 
     // Remove duplicate temperaments
-    for (const breed of breeds.data) {
+    for (const breed of breeds) {
         // console.log('breed: ', breed);
         if (breed.temperament) {
             let temperamentsArr = breed.temperament.split(', ');

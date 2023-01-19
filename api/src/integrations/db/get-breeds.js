@@ -32,4 +32,24 @@ const getBreeds = async (name, exactSearch) => {
     return breeds;
 }
 
-module.exports = { getBreeds };
+const getBreed = async (id) => {
+    let breed = await Breed.findByPk(id, { include: [Temperament] });
+    // console.log('breed: ', breed);
+
+    if (breed) {
+        breed = {
+            id: breed.dataValues.id,
+            name: breed.dataValues.name,
+            weight: breed.dataValues.weight,
+            height: breed.dataValues.height,
+            lifeSpan: breed.dataValues.lifeSpan,
+            image: breed.dataValues.image,
+            temperament: breed.dataValues.Temperaments.map(temperament => temperament.name).join(', '),
+            source: 'local'
+        }
+    }
+
+    return breed;
+}
+
+module.exports = { getBreeds, getBreed };

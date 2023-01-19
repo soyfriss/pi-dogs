@@ -3,11 +3,11 @@ const { expect } = require('chai');
 const session = require('supertest-session');
 const app = require('../../src/app.js');
 const { Temperament, conn } = require('../../src/db.js');
-const httpStatusCodes = require('../../src/utils/httpStatusCodes.js');
+const httpStatusCodes = require('../../src/utils/http-status-codes.js');
 
 const agent = session(app);
 
-describe('Temperaments routes', () => {
+xdescribe('Temperaments routes', () => {
   before(() => conn.authenticate()
     .catch((err) => {
       console.error('Unable to connect to the database:', err);

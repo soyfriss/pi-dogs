@@ -17,4 +17,13 @@ const getTemperaments = async () => {
     return flat(temperaments);
 }
 
-module.exports = { getTemperaments };
+const getTemperament = async (name) => {
+    const temperament = await Temperament.findOne({
+        where: { name: name }
+    });
+
+    return temperament;
+}
+
+
+module.exports = { getTemperaments, getTemperament };
