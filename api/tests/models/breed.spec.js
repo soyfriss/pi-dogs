@@ -2,10 +2,11 @@ const { Breed, conn } = require('../../src/db.js');
 
 describe('Breed model', () => {
 
-  before(() => conn.sync({ force: true })
-      .catch((err) => {
-        console.error('Unable to connect to the database:', err);
-      })
+  before(() => conn.authenticate()
+    .then(() => Breed.sync({ force: true }))
+    .catch((err) => {
+      console.error('Unable to connect to the database:', err);
+    })
   );
 
   describe('name', () => {
@@ -24,15 +25,14 @@ describe('Breed model', () => {
         height: '2 - 2',
         weight: '2 - 2'
       })
-      .then((breed) => {
-        console.log('breed created: ', breed);
-        return done();
-      })
-      .catch(error => done(new Error('should work when its a valid name: ', error)));
+        .then((breed) => {
+          return done();
+        })
+        .catch(error => done(new Error('should work when its a valid name: ', error)));
     });
   });
 
-  xdescribe('unique name', () => {
+  describe('unique name', () => {
     it('should throw an error if name is not unique', (done) => {
       Breed.create({
         name: 'Jack Russell Terrier 1',
@@ -52,7 +52,7 @@ describe('Breed model', () => {
     });
   });
 
-  xdescribe('weight', () => {
+  describe('weight', () => {
     it('should throw an error if weight is null', (done) => {
       Breed.create({
         name: 'Jack Russell Terrier 3',
@@ -71,7 +71,7 @@ describe('Breed model', () => {
     });
   });
 
-  xdescribe('height', () => {
+  describe('height', () => {
     it('should throw an error if height is null', (done) => {
       Breed.create({
         name: 'Jack Russell Terrier 4',
