@@ -1,0 +1,27 @@
+{
+  "files": {
+    "main.css": "/static/css/main.cd370690.chunk.css",
+    "main.js": "/static/js/main.c0614753.chunk.js",
+    "main.js.map": "/static/js/main.c0614753.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.5169a808.js",
+    "runtime-main.js.map": "/static/js/runtime-main.5169a808.js.map",
+    "static/js/2.bbf59e57.chunk.js": "/static/js/2.bbf59e57.chunk.js",
+    "static/js/2.bbf59e57.chunk.js.map": "/static/js/2.bbf59e57.chunk.js.map",
+    "index.html": "/index.html",
+    "static/css/main.cd370690.chunk.css.map": "/static/css/main.cd370690.chunk.css.map",
+    "static/js/2.bbf59e57.chunk.js.LICENSE.txt": "/static/js/2.bbf59e57.chunk.js.LICENSE.txt",
+    "static/media/CreateBreed.module.css": "/static/media/down-arrow.24dcde7f.svg",
+    "static/media/landing.2d85e529.png": "/static/media/landing.2d85e529.png",
+    "static/media/linkedin.9a1a7f81.png": "/static/media/linkedin.9a1a7f81.png",
+    "static/media/order-by.89fd7f8c.svg": "/static/media/order-by.89fd7f8c.svg",
+    "static/media/paw-solid.f790083d.svg": "/static/media/paw-solid.f790083d.svg",
+    "static/media/scared-dog.f7a50b00.svg": "/static/media/scared-dog.f7a50b00.svg",
+    "static/media/search-icon.c32d5c62.png": "/static/media/search-icon.c32d5c62.png"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.5169a808.js",
+    "static/js/2.bbf59e57.chunk.js",
+    "static/css/main.cd370690.chunk.css",
+    "static/js/main.c0614753.chunk.js"
+  ]
+}
